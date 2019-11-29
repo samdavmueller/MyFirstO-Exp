@@ -7,3 +7,26 @@ This result shows that whenever individuals who have to make a common decision f
 Previous experimental research on decision making in committees was designed to understand the effect of different decision makign rules on the voting behavior of individuals. Their findings suggested that individuals act less strategic than predicited by formal models. Furthermore, communication always improved the performance of those committees (Guarnaschelli et al. 2000, Goeree and Yariv 2005). In these experiments individuals played together to decide on the state of the world which was depicted as a blue or a red urn. All committee members received individual and independent signals that were correlated with the true state of the world. In some experimental settings participants were also able to participate in a straw vote to signal their own private signal to their committee members.
 
 These experiments can help to understand the strategic behavior of individuals concerning rules. However, they are unable to show the strategic behavior concerning a difference in the information processing of individuals. The first and most important reason is, that in these experiments participants do not interact long enough to understand the information processing of the other individuals. Further, the exercise is so abstract that several possible cognitive biases like confirmation bias do not affect information processing. To solve these problems and enable us to observe strategic information sharing behavior caused by differences in information processing, I suggest to play a variant of the original urn draw experiment but only with bots. Bots have the advantage that their information processing, sharing and voting behavior can be determined by the experimenter. This makes the behavior known. Further it enables the experimenter to tell the participants how the committee members react. This puts participants in the position to affect the final decision with their information sharing behavior. The exact experimental design is described in the next paragraph.
+
+## Experimental task
+In the experiment one human participant interacts with two bots in a three member committee. The committee has to make a decision whether they face a blue or a red urn based on signals they received. A priori both urns have the same possibility to be chosen. While the red urn contains 6 red and 4 blue balls, the blue contains 6 blue and 4 red balls. Committee members receive between 0 and 3 signals in form of independent draws from the urn that was was chosen. Each committee member receives each possible signal with a probability of p=0.7. The following table shows the probability that committee members receive a certain number of signals:
+
+|number of signals | probability|
+|------------------|------------|
+|0                 |0.027       |
+|1                 |0.189       |
+|2                 |0.441       |
+|3                 |0.343       |
+
+After receiving their signals participants can decide to show their signals to the other committee members or not. The decision can be made individually for each signals the participant received. Signals are assumed to be verifiable and therefore they can only be hidden or presented but not changed. Since the number of signals that a participants received is unknown, neither bots nor humans can infer whether signals were hidden or not. After sharing or pooling their signals, committee members have to make an individual vote whether the urn is red or blue. The committee decision is made by single majority.
+
+## Treatments: Bots
+To adjust the own sharing behavior to the information processes of other committee members, they have to understand the strategies and information behavior of bots. Bots have a full information sharing strategy and sincere voting strategy, meaning they share all signals they receive and vote according their posterior beliefs. The strategy is known by all participants. However, bots have different updating functions depending on the treatment group that participants are in:
+
+| Group               | Condition to vote red               | condition to vote blue      |
+|---------------------|-------------------------------------|-----------------------------|
+| Control             | \#red - \#blue \geqslant 0          |\#red - \#blue < 0           | 
+| Low Bias Treatment  | 1.3\times \#red - \#blue \geqslant 0| 1.3\cdots \#red - \#blue < 0|
+| High Bias Treatment | 1.7\times \#red - \#blue \geqslant 0| 1.7\cdots \#red - \#blue < 0|
+
+

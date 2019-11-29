@@ -25,8 +25,18 @@ To adjust the own sharing behavior to the information processes of other committ
 
 | Group               | Condition to vote red               | condition to vote blue      |
 |---------------------|-------------------------------------|-----------------------------|
-| Control             | \#red - \#blue \geqslant 0          |\#red - \#blue < 0           | 
-| Low Bias Treatment  | 1.3\times \#red - \#blue \geqslant 0| 1.3\cdots \#red - \#blue < 0|
-| High Bias Treatment | 1.7\times \#red - \#blue \geqslant 0| 1.7\cdots \#red - \#blue < 0|
+| Control             | \#red - \#blue >= 0          |\#red - \#blue < 0           | 
+| Low Bias Treatment  | 1.3 * \#red - \#blue \geqslant 0| 1.3\cdots \#red - \#blue < 0|
+| High Bias Treatment | 1.7$$ \times $$ \#red - \#blue \geqslant 0| 1.7\cdots \#red - \#blue < 0|
 
+Based on those treatment groups and the (limited) rationality that humans present in these experiments, I have the following (preliminary) hypothesis about the sharing behavior of individuals:
 
+H1: The higher the bias that bots have in information processing, the more frequently do humans hide information.
+
+However, hiding information might be a risky strategy as it is an active manipulation of the information pool of participants. More risk loving participants should be more willing to manipulate the information they present in order to change the bots behavior:
+
+H2: The more risk loving a participant is, the more frequently does the participant hide information.
+
+I plan to use a risk task by Holt and Laury (2002). This task is a standard measurement for the risk behavior of individuals and gives a relatively finegrained measurement of risk attitudes.
+
+## Sequence of play

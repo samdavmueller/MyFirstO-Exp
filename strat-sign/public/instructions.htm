@@ -1,0 +1,35 @@
+<!doctype html>
+<title>INSTRUCTIONS</title>
+<link rel="stylesheet" href="/lib/bootstrap/bootstrap.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+<body>
+  <div id="container">
+    <h1>Instructions for the Signal Sharing Game</h1>
+    <h3>Please read them carefully</h3>
+    <div id="instructions">
+      <br>
+      This game is played by one human player and two automated player.
+      <br><br>
+      In each round, you and the automated players have to decide whether an urn is blue or red.
+      Both colors are equally likely.
+      <br><br>
+      In the beginning, each player receives between 0 and 3 signals (the probability to receive each of those three signals is 0.7).<br>
+      Then you can decide whether you want to share any single signal with the automated players or hide it from them.<br>
+      The signals show the true color of the urn with a probability of 0.7 and the wrong color with a probability of 0.3.<br>
+      The automated players always share all of their signals.
+<br><br>
+      Next, you receive all the signals each player deciced to share and you have to make a voting decision that indicates your belief of the true color of the urn.<br>
+      The automated players make their voting decion in the following way:<br>
+        1. They count the number of shared signals that show 'red' and multiply it by <span id="bias"></span>.<br>
+        2. Then they count the number of shared signals that show 'blue' and multiply if by <span id="bias2"></span>.<br>
+        3. Finally, the automated players compare the numbers they received and vote for the color that has the larger number.
+<br><br>
+      In the end all the votes for 'blue' and 'red' are counted and the color with more votes is the group decision.
+      If the decision has the same color as the true color of the urn, you earn 2 USD.
+      <br><br>
+      The game is repeated a certain number of rounds, and each round the color of the urn might change.
+      <br><br>
+    </div>
+    If you understood the instructions correctly press the "DONE" button to proceed to the game.
+  </div>
+</body>

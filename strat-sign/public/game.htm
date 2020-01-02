@@ -1,0 +1,42 @@
+<!doctype html>
+<title>Game</title>
+<link rel="stylesheet" href="/lib/bootstrap/bootstrap.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+<body>
+  <div id="container">
+    <h2>Signals</h2>
+    <div id="game">
+      <div id="signal1">
+      <h4>You received the following signals that show with a probablity of 0.7 the true color of the urn. With a probability of 0.3 the wrong color is shown.</h4>
+      <h4>Please, choose which signals you want to share or hide:</h4>
+      Signal 1: <span id="ps1" ></span>.
+      <input type="radio" id="share1" name="decision1"/>
+      <label for ="share1" >Share</label>
+      <input type="radio" id="hide1" name="decision1"/>
+      <label for ="hide1" >Hide</label>
+      </br>
+    </div>
+
+    <div id="signal2">
+    Signal 2: <span id="ps2"></span>.
+    <input type="radio" id="share2" name="decision2"/>
+    <label for ="share2" >Share</label>
+    <input type="radio" id="hide2" name="decision2"/>
+    <label for ="hide2" >Hide</label>
+    </br>
+    </div>
+
+    <div id="signal3">
+  Signal 3: <span id="ps3"></span>.
+  <input type="radio" id="share3" name="decision3"/>
+  <label for ="share3" >Share</label>
+  <input type="radio" id="hide3" name="decision3"/>
+  <label for ="hide3" >Hide</label>
+  </br>
+  </div>
+
+      <input type="button" value="submit" name="submitSignals" id="submitSignals" class="btn" />
+      <br/>
+    </div>
+  </div>
+</body>

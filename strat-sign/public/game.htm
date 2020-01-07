@@ -6,9 +6,11 @@
   <div id="container">
     <h2>Signals</h2>
     <div id="game">
-      <div id="signal1">
+
       <h4>You received the following signals that show with a probablity of 0.7 the true color of the urn. With a probability of 0.3 the wrong color is shown.</h4>
       <h4>Please, choose which signals you want to share or hide:</h4>
+
+        <div id="signal1">
       Signal 1: <span id="ps1" ></span>.
       <input type="radio" id="share1" name="decision1"/>
       <label for ="share1" >Share</label>
@@ -34,9 +36,12 @@
   <label for ="hide3" >Hide</label>
   </br>
   </div>
-
-      <input type="button" value="submit" name="submitSignals" id="submitSignals" class="btn" />
+    <center>
+    <h2>
+      <input type="button" value="Submit" name="submitSignals" id="submitSignals" class="btn" style="font-size:20px; font-weight: bold; color: grey; background-color: green; height:75px; width:150px"/>
       <br/>
+    </h2>
+    </center>
     </div>
   </div>
 </body>

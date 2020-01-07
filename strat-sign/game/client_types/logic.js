@@ -30,31 +30,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.extendStep('signals', {
-/*      matcher: {
-            roles: [ 'HUMAN', 'COMP'],
-            match: 'roundrobin', // or 'random_pairs'
-            cycle: 'repeat_invert', // or 'repeat', 'mirror', 'mirror_invert'
-            // skipBye: false,
-            // setPartner: true,
-        },
-*/   /*   cb: function() {
-          if ( Math.random()>0.5){
-            urncolor= 'red';
-            noturncolor= 'blue';
-          }
-          else{
-            urncolor='blue';
-            noturncolor= 'red';
-          }
-          var player = channel.registry.getClient();
 
-          node.say('URNCOLOR', player.id , urncolor);
-          node.say('NOTURNCOLOR', player.id , noturncolor);
-        },*/
 
         cb: function() {
           var decision1, decision2, decision3, urncolor, noturncolor,
               plyrsignal1, plyrsignal2, plyrsignal3, sharesignals;
+
+          // when the player is done all necessary information is send to the Logic
+          // I don't think it is actually necessary to create these variables but I do it anyway
            node.on.data('done', function(msg) {
 
                 decision1 = msg.data.decision1;
@@ -67,49 +50,33 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 plyrsignal3 = msg.data.plyrsignal3;
                 sharesignals = msg.data.sharesignal1;
 
-              /*  var sharesignals=[];
-                // Validate incoming offer.
-               if (decision1 == 1) {
-                    sharesignals.push(plyrsignal1)
-                  }
-               if (decision2 == 1) {
-                    sharesignals.push(plyrsignal2)
-                  }
-              if (decision3 == 1) {
-                   sharesignals.push(plyrsignal3)
-                 }
-              // var player = channel.registry.getClient(msg.from);
 
-                node.set({sharesignal1: sharesignals});*/
-
-                // console.log(plyrsignal1);
-                // console.log(player);
-                // Send the decision to the other player.
-                // node.say('SIGNALS', player.id , plyrsignal1);
 
             });
 
-          //  console.log('Game round: ' + node.player.stage.round);
+
         }
     });
 
+    // next the voting step which is mainly done in the logic
     stager.extendStep('voting', {
 
       cb: function() {
-        var playsig=node.game.memory.select('sharesignal1').fetchArray('sharesignal1')[0][0];
 
-        var urncolor=node.game.memory.select('sharesignal1').fetchArray('urncolor')[0][0];
-        var noturncolor=node.game.memory.select('sharesignal1').fetchArray('noturncolor')[0][0];
+        // all data is retrieved from memory by using the getPreviousStep command
+
+        var playsig=node.game.memory.stage[node.game.getPreviousStep()].fetchArray('sharesignal1')[0][0];
+        var urncolor=node.game.memory.stage[node.game.getPreviousStep()].fetchArray('urncolor')[0][0];
+        var noturncolor=node.game.memory.stage[node.game.getPreviousStep()].fetchArray('noturncolor')[0][0];
 
 
-        console.log(urncolor);
-        console.log(noturncolor);
 
-        // the shar_sig_array is used to caluclate the voting behavior of the bots
+
         //now the bots are programmed
         var b1s1, b1s2, b1s3, b2s1, b2s2, b2s3, fdecision;
 
-        //for bot1
+        // signals for bot1 are created the same way as they have been created for the participant.
+        // I also create a string to display the signals that are shared by bot 1
         var b1sig='';
         if (Math.random()< node.game.settings.getsignal) {
           if (Math.random()< node.game.settings.correctsignal){
@@ -157,8 +124,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         b1sig = b1sig.slice(1);
 
 
-        // now for  bot2
-
+        // signals for bot2 are created the same way as they have been created for the participant.
+        // I also create a string to display the signals that are shared by bot 2
         var b2sig='';
         if (Math.random()< node.game.settings.getsignal) {
           if (Math.random()< node.game.settings.correctsignal){
@@ -209,17 +176,17 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           b2s3= '';
           }
         b2sig = b2sig.slice(1);
-// the shared signals are shown to the player
+
+          // the shared signals are shown to the player
           var player = node.game.pl.each(function(player){
-          //console.log(player);
               node.say('SIG_P', player.id , playsig);
               node.say('SIG_B1', player.id , b1sig);
               node.say('SIG_B2', player.id , b2sig);
           });
 // the shar_sig_array is used to caluclate the voting behavior of the bots
 // since both bots always vote the same way, they determine the final decision
-        var shar_sig_array=node.game.memory.select('sharesignal1').fetchArray('sig_array')[0];
-// I add the shared signals of the bootstrap
+        var shar_sig_array=node.game.memory.stage[node.game.getPreviousStep()].fetchArray('sig_array')[0];
+// I add the shared signals of the bots
         if (b1s1==="red"){
           shar_sig_array.push(1);
         }
@@ -256,20 +223,21 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         if (b2s3==="blue"){
           shar_sig_array.push(0);
         }
-        console.log(shar_sig_array);
 
+        // now I calculate how many signals indicate that the urn is blue
         var blue_vot= 1+shar_sig_array.length-shar_sig_array.reduce((a, b) => a+b, 0);
+        // and how many indicate that the urn is red
         var red_vot= shar_sig_array.reduce((a, b) => a+b, 0);
-        if (node.game.settings.bias*red_vot>blue_vot){
+        // the decision is made. It depends on the treatment.
+        if (node.game.settings.bias*red_vot>=node.game.settings.bias2*blue_vot){
           fdecision='red';
         }
         else{
           fdecision='blue';
         }
 
-
-        console.log(fdecision);
-
+        // because I was unable to save the decision from the logic I send it to
+        // the player to save it using 'done'
         var player = node.game.pl.each(function(player){
           node.say('FDECISION', player.id , fdecision);
       });
@@ -278,26 +246,30 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       }
     });
 
+
+    // In the feedback stage, I just need to recall everything that was done before.
     stager.extendStep('feedback', {
 
       cb: function(){
         var correct, payed;
-        var urncolor=node.game.memory.select('sharesignal1').fetchArray('urncolor')[0][0];
-        console.log(node.game.memory.select().fetch());
+        // I get the urncolor form the signals step
+        var urncolor=node.game.memory.stage[node.game.getPreviousStep(2)].fetchArray('urncolor')[0][0];
+        // I get the decision from the previous step
+        var fdecision=node.game.memory.stage[node.game.getPreviousStep(1)].fetchArray('fdecision')[0][0];
 
-        var fdecision=node.game.memory.select('fdecision').fetchArray('fdecision')[0][0];
-
+        // If the decision was correct the players are paid 2$. However they should also be added to their final account
         if (urncolor===fdecision){
           correct='correct';
           payed=2;
         }
+        // Else they receive nothing
         else{
           correct='false';
           payed=0;
         }
 
+        // The information is sent to the players.
         var player = node.game.pl.each(function(player){
-        //console.log(player);
             node.say('URNCOLOR', player.id , urncolor);
             node.say('FDECISION', player.id , fdecision);
             node.say('CORRECT', player.id , correct);
@@ -308,7 +280,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
 
-
+    // in the last stage the data is saved.
     stager.extendStep('end', {
         cb: function() {
             node.game.memory.save('data.json');

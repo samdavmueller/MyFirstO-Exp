@@ -28,19 +28,16 @@ module.exports = {
      * If a step name is found here, then the value of the property is
      * used to initialize the game timer for the step.
      */
-    TIMER: {
-        instructions: 60000
-    },
+     // Since players play alone, I don't think I need any timer at all.
+    //TIMER: {
+        //instructions: 60000
+    //},
 
     // # Game specific properties
     // Variables shared by all treatments.
 
     // Number of game rounds repetitions.
-    REPEAT: 4,
-
-    // In case an incoming offer does not pass validation, which indicates
-    // cheating, re-set the dictator's offer to this value.
-    defaultOffer: 100,
+    REPEAT: 3,
 
     // # Treatments definition.
 
@@ -52,22 +49,37 @@ module.exports = {
 
     treatments: {
 
-        standard: {
-            description: "Longer time",
-            bidTime: 30000,
+        control: {
+            description: "The bots are not biased at all",
+            //bidTime: 30000,
             getsignal: 0.7,
-            correctsignal: 0.7,
-            bias: 0.5,
-            bias2: 1
+            correctsignal: 0.6,
+            bias: 1,
+            bias2: 1,
+            right_decision: 'BLUE',
+            wrong_decision: 'RED'
         },
 
-        pressure: {
-            description: "Short times to take decisions",
-            bidTime: 30000,
+        weak: {
+            description: "The bots are barely biased and hiding is usually not rational.",
+            //bidTime: 30000,
             getsignal: 0.7,
-            correctsignal: 0.7,
-            bias: 1,
-            bias2: 1
+            correctsignal: 0.6,
+            bias: 1.3,
+            bias2: 1,
+            right_decision: 'BLUE',
+            wrong_decision: 'RED'
+        },
+
+        strong: {
+            description: "The bots are very biased and hiding is usually rational.",
+            //bidTime: 30000,
+            getsignal: 0.7,
+            correctsignal: 0.6,
+            bias: 1.7,
+            bias2: 1,
+            right_decision: 'RED',
+            wrong_decision: 'BLUE'
         }
 
     }

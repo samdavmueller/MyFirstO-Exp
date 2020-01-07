@@ -13,7 +13,11 @@ module.exports = function(stager, settings) {
 
      stager
         .next('instructions')
-        .next('game')
+        .next('quiz')
+        .repeat('game', settings.REPEAT)
+        .next('risk')
+        .next('CRT')
+        .next('questionnaire')
         .next('end')
         .gameover();
 
@@ -25,5 +29,10 @@ module.exports = function(stager, settings) {
             ]
         });
     // Modify the stager to skip one stage.
-    // stager.skip('instructions');
+     // stager.skip('instructions');
+     // stager.skip('quiz');
+     // stager.skip('game');
+     // stager.skip('risk');
+     // stager.skip('CRT');
+     // stager.skip('questionnaire');
 };

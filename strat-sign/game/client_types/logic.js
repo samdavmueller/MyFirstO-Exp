@@ -224,16 +224,17 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           shar_sig_array.push(0);
         }
 
+        console.log(shar_sig_array.length);
         // now I calculate how many signals indicate that the urn is blue
-        var blue_vot= 1+shar_sig_array.length-shar_sig_array.reduce((a, b) => a+b, 0);
+        var blue_vot= shar_sig_array.length-shar_sig_array.reduce((a, b) => a+b, 0);
         // and how many indicate that the urn is red
         var red_vot= shar_sig_array.reduce((a, b) => a+b, 0);
         // the decision is made. It depends on the treatment.
-        if (node.game.settings.bias*red_vot>=node.game.settings.bias2*blue_vot){
-          fdecision='red';
+        if (node.game.settings.bias*red_vot<node.game.settings.bias2*blue_vot){
+          fdecision='blue';
         }
         else{
-          fdecision='blue';
+          fdecision='red';
         }
 
         // because I was unable to save the decision from the logic I send it to

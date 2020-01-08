@@ -493,13 +493,16 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         requiredChoice: true
       });
 
-
       // As far as I understand it, this function should save the answers that the participants gave.
-      BatBall.getValues();
-      machines.getValues();
-      lillys.getValues();
-      race.getValues();
-      sheep.getValues();
+      donebutton.onclick=function(){
+        node.done({
+          CRT1: BatBall.getValues(),
+          CRT2: machines.getValues(),
+          CRT3: lillys.getValues(),
+          CRT4: race.getValues(),
+          CRT5: sheep.getValues()
+        })
+      }
 
     }
 

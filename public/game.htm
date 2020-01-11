@@ -1,0 +1,66 @@
+<!doctype html>
+<title>Game</title>
+<link rel="stylesheet" href="/lib/bootstrap/bootstrap.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+<body>
+  <div id="container">
+    <h2>Your Signals</h2>
+    <div id="game">
+      </br>
+      <h4>
+        In this stage you receive up to <strong>3 independent signals</strong> about the urn you are facing.
+        The other players do not know which signals you received.
+      </h4>
+      </br>
+      <h4>
+        For each signal there is a <span id="correctsignal", style="font-weight:bold"></span>%
+        chance that the true color of the urn is shown. With a probability of <span id="wrongsignal", style="font-weight:bold"></span>%
+        the wrong color is shown.
+      </h4>
+      </br>
+      <h3>
+        Please, choose which signals you want to <strong>share</strong> or <strong>hide</strong>:
+      </h3>
+</br>
+      <h3>
+        <div id="signal1">
+      Signal 1: <span id="ps1" , style="font-weight:bold"></span>
+      <input type="radio" id="share1" name="decision1"/>
+      <label for ="share1" >Share</label>
+      <input type="radio" id="hide1" name="decision1"/>
+      <label for ="hide1" >Hide</label>
+      </br>
+    </div>
+
+    <div id="signal2">
+    Signal 2: <span id="ps2", style="font-weight:bold"></span>
+    <input type="radio" id="share2" name="decision2"/>
+    <label for ="share2" >Share</label>
+    <input type="radio" id="hide2" name="decision2"/>
+    <label for ="hide2" >Hide</label>
+    </br>
+    </div>
+
+    <div id="signal3">
+  Signal 3: <span id="ps3", style="font-weight:bold"></span>
+  <input type="radio" id="share3" name="decision3"/>
+  <label for ="share3" >Share</label>
+  <input type="radio" id="hide3" name="decision3"/>
+  <label for ="hide3" >Hide</label>
+  </br>
+  </div>
+  </h3>
+    <center>
+    <h3>
+      <input type="button" value="Submit" name="submitSignals" id="submitSignals" class="btn-success" style="font-size:25px; font-weight: bold; height:75px; width:150px"/>
+      <br>
+      <br>
+    <div id="warning" style="display: none; font-size:20px; font-weight:bold; color:red">
+      You have to make a decision for all signals!
+    </div>
+
+  </h3>
+    </center>
+    </div>
+  </div>
+</body>

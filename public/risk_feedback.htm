@@ -1,0 +1,32 @@
+<!doctype html>
+<title>Risk Feedback</title>
+<link rel="stylesheet" href="/lib/bootstrap/bootstrap.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+<body>
+  <div id="container">
+    <div id="expl">
+      <h3> This is a summary of the risk decision you made. </h3></br>
+      <h4> A random process drew one of the rows in which you made a decision about the lottery you want to play. </h4></br>
+      <h4> The row drawn is <span id="cell" style="font-weight:bold"></span>.<h4></br>
+      <h4> The lottery you chose in this row is: </h4>
+      <span id="lottery" style="font-size:20px; font-weight:bold"></span></br></br>
+      <h4> The lottery is played as follows: </h4>
+      <h4> 1. A number between 1 and 10 is randomly drawn. </h4>
+      <h4> 2. If the random number is smaller than or equal to <span id="cell" style="font-weight:bold"></span>, you receive the high prize. </h4>
+      <h4> 3. If the random number is larger than <span id="cell" style="font-weight:bold"></span>, you receive the low prize. </h4>
+      <h3> To play the lottery, press the button below. </h3>
+      <center>
+        <input type="button" value="Run" name="Run" id="Run" class="btn-warning" style="font-size:25px; font-weight: bold; height:75px; width:150px"/>
+      </center>
+    </div>
+    <div id="result" style="display: none">
+      <h4> The random number drawn was <span id="rand" style="font-weight:bold"></span>.</h4>
+      <h4> This means you won <strong>$<span id="win" style="font-weight:bold"></span></strong>.</h4>
+      <h4> The value was added to your final payoff. To continue to the next stage, click continue.</h4>
+      <center>
+        <input type="button" value="Continue" name="Continue" id="Continue_button" class="btn-success" style="font-size:20px; font-weight: bold; height:75px; width:150px"/>
+      </center>
+    </div>
+
+  </div>
+</body>

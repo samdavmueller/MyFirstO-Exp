@@ -1,0 +1,38 @@
+<!doctype html>
+<title>INSTRUCTIONS</title>
+<link rel="stylesheet" href="/lib/bootstrap/bootstrap.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+<body>
+  <div id="container">
+    <h1>Instructions for the Signal Sharing Game</h1>
+    <h3>Please, read them carefully!</h3>
+    <div id="instructions">
+      <br>
+      This game is played by one human player and two automated player.
+      <br><br>
+      In each round, you and the automated players have to <strong>decide as a group whether an urn is <span style="color:blue">blue</span> or <span style="color:red">red</span></strong>.
+      Both colors are equally likely.
+      <br><br>
+      In the beginning, each player receives between <strong> 0 and 3 private signals</strong>. This means, that no other player has the same signal or knows how many or which signals you received.<br>
+      There is a <span id="getsignal" style="font-weight:bold"></span>% chance that a signal contains a color, but with a chance of <span id="getnosignal" style="font-weight:bold"></span>% the signal is empty and therefore not shown.<br><br>
+      If a signal shows a color, there is a <span id="correctsignal" style="font-weight:bold"></span>% chance that the color shown is the same as that of the urn and a <span id="wrongsignal" style="font-weight:bold"></span>% chance that the color is different.<br><br>
+      In the first part of the game you have to decide whether you want to <strong>share any single signal with the automated players or hide it from them</strong>.<br><br>
+      <strong>The automated players always share all of their signals.</strong>
+<br><br>
+      After your decision about sharing or hiding signals, you <strong>see all the signals each player decided to share</strong> and you have to <strong>make a voting decision</strong> that indicates your belief about the true color of the urn.<br><br>
+      The automated players receive all signals that were shared too. <strong>Then they make their voting decion in the following way:</strong><br>
+        1. They count the <strong>number of shared signals that show '<span style="color:red">red</span>'</strong> and multiply it by <span id="bias" style="font-weight:bold; color: red"></span>.<br>
+        2. Then they count the <strong>number of shared signals that show '<span style="color:blue">blue</span>'</strong> and multiply if by <span id="bias2" style="font-weight:bold; color: blue"></span>.<br>
+        3. Finally, the automated players compare the numbers they received and <strong>vote for the color that has the larger number</strong>. If both number are the <strong>same</strong>, they decide for '<span style="color:red; font-weight:bold">red</span>'.
+<br><br>
+      In the end all the votes for '<span style="color:blue">blue</span>' and '<span style="color:red">red</span>' are counted and the <strong>color with more votes is the group decision</strong>.<br>
+      If the decision has the <strong>same color as the true color</strong> of the urn, you earn <strong>$1.5</strong>.<br>
+      You can earn additional <strong>$0.5</strong> if <strong>your vote decision</strong> was the correct color.<br>
+      <br><br>
+      The game is <strong>repeated three rounds, and each round the color of the urn might change</strong>.
+      <br><br>
+      After the game you can earn <strong>more money in additional tasks</strong> and finishing the final questionnaire gives you an additional payment of <strong>$1</strong>.
+    </div>
+    If you understood the instructions correctly press the "DONE" button to proceed to the game.
+  </div>
+</body>

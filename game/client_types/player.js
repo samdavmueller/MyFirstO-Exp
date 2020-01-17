@@ -24,7 +24,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // Initialize the client.
 
-        var header, frame;
+        var header, frame, infoPanel;
 
 
 
@@ -32,6 +32,24 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // Setup page: header + frame.
         header = W.generateHeader();
         frame = W.generateFrame();
+
+        // Add infoPanel
+  /*      infoPanel = W.generateInfoPanel(undefined, {
+          onStep: 'close'
+        });
+
+        // Generate the toggle button and append it to the header.
+        this.infoButton = infoPanel.createToggleButton('Info');
+        this.infoButton.disabled = true;
+        //W.getHeader().appendChild(this.infoButton);
+
+        // Add a new div to the info panel.
+        this.infoDiv = document.createElement('div');
+        this.infoDiv.innerHTML = '<h3>Strategy</h3>';
+        W.addClass(this.infoDiv, 'inner');
+        infoPanel.infoPanelDiv.appendChild(this.infoDiv);
+
+        header.appendChild(this.infoButton);*/
 
         // Add widgets.
         this.visualRound = node.widgets.append('VisualRound', header, {
@@ -43,7 +61,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         this.doneButton = node.widgets.append('DoneButton', header);
 
         // Additional debug information while developing the game.
-        this.debugInfo = node.widgets.append('DebugInfo', header)
+        //this.debugInfo = node.widgets.append('DebugInfo', header)
 
 
             //BackButton is not working, I don't know why...
@@ -53,9 +71,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         });
         // Last instruction in the init function.
         // Game must be started manually.
-       setTimeout(function() {
-          node.game.start();
-       });
+
 
     });
 
@@ -95,9 +111,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     // the instructions well enough
     stager.extendStep('quiz', {
 
-        exit: function() {
-            this.backButton.destroy();
-        },
+
 
 	    widget: {
 	       name: 'ChoiceManager',
@@ -115,7 +129,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 			              'The color of an urn.',
 			              'The color of a box.',
 			              'The most beautiful color.',
-			              'I don\'t know',
+			              'I don\'t know.',
 			              "The color preferred by most people."
 			               ],
 			            correctChoice: 0,
@@ -129,8 +143,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 			            choices: [
 			                     'Either share the signals with the automated players or hide them.',
                            'Either share the true values of the signals or lie about them.',
-                           'Nothing',
-                           'I don\'t know',
+                           'Nothing.',
+                           'I don\'t know.',
                            'I can decide which players receives which of the signals, while I can provide any signal only to a single automated player.'
 			                      ],
 			            correctChoice: 0,
@@ -144,7 +158,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 			            choices: [
 			                      settings.right_decision,
                             settings.wrong_decision,
-                            'I don\'t know'
+                            'I don\'t know.'
 			                     ],
 			            correctChoice: 0,
 			            shuffleChoices: true,
@@ -166,27 +180,32 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // But I decided I do not need time pressure at all.
         // timer: settings.bidTime,
         init: function() {
+          node.game.backButton.destroy();
          // A info button is created that is available
           // It explains the strategy of the automated players
           // Generate the info panel object.
-          var infoPanel = W.generateInfoPanel();
 
-          // Generate the toggle button and append it to the header.
-          this.infoButton = infoPanel.createToggleButton('History');
-          W.getHeader().appendChild(this.infoButton);
+            /*var infoPanel = W.generateInfoPanel();
 
-          // Add a new div to the info panel.
-          this.infoDiv = document.createElement('div');
-          this.infoDiv.innerHTML = '<h3>Strategy</h3>';
-          this.infoDiv.class ='inner';
-          infoPanel.infoPanelDiv.appendChild(this.infoDiv);
+            // Generate the toggle button and append it to the header.
+            this.infoButton = infoPanel.createToggleButton('History');
+            W.getHeader().appendChild(this.infoButton);
 
-          //this.infoButton.destroy();
+            // Add a new div to the info panel.
+            this.infoDiv = document.createElement('div');
+            this.infoDiv.innerHTML = '<h3>Strategy</h3>';
+            this.infoDiv.class ='inner';
+            infoPanel.infoPanelDiv.appendChild(this.infoDiv);*/
+
+          /*  this.infoButton.disabled=false;
+
+            node.on.step(function(){
+              W.infoPanel.close();
+
+            })*/
+
         },
-        exit: function(){
-         InfoPanel.destroy();
-        //  this.infoButton.destroy();
-        },
+
 
         cb: function() {
           var csig=Math.round(100*node.game.settings.correctsignal);
@@ -449,11 +468,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     fdecision: fdecision
                 });
             }
-        }/*,
-        exit: function() {
-              console.log('It is not the exit function!');
-
-        }*/
+        }
 
     });
 
@@ -508,6 +523,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     // risk widget is used to measure risk preferences.
     // I am not sure whether the data is saved.
     stager.extendStep('risk_task',{
+    /*  init: function(){
+       W.infoPanel.destroy();
+       W.restoreOnleave();
+     },*/
 
 	       widget: {
 	          name: 'RiskGauge',

@@ -22,18 +22,34 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     // ignoring the state of other clients.
     // The logic will never call node.done() explicitely, and instead will
     // wait for a stage update from the client and move to the same step.
+    // Setting the SOLO rule: game steps each time node.done() is called,
+    // ignoring the state of other clients.
     const ngc = require('nodegame-client');
     stager.setDefaultStepRule(ngc.stepRules.SOLO);
 
+    // Disabling step syncing for other clients: the logic does not
+    // push step updates to other clients when it changes step.
+    stager.setDefaultProperty('syncStepping', false);
+
+    // In the init function, we set an event lister to manually follow
+    // the clients to the same step.
     stager.setOnInit(function() {
-        // Keep the logic in sync with the player manually.
-        node.on('in.say.PLAYER_UPDATE', function(msg) {
+      // The logic aits for a stage update from the client and then
+      // it moves to the same step.
+      node.on('in.say.PLAYER_UPDATE', function(msg) {
           if (msg.text === 'stage') {
-            setTimeout(function() {
-              node.game.gotoStep(msg.data.stage);
+              setTimeout(function() {
+                  node.game.gotoStep(msg.data.stage);
+                });
+              }
             });
-          }
-        });
+
+      // Last instruction in the init function.
+      // Game on clients must be started manually
+      // (because syncStepping is disabled).
+      setTimeout(function() {
+        node.remoteCommand('start', node.game.pl.first().id);
+      });
     });
 
     stager.extendStep('instructions', {
@@ -82,10 +98,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       cb: function() {
 
         // all data is retrieved from memory by using the getPreviousStep command
+        var Pstep1=node.game.getPreviousStep(1);
+        var Pstep1_s= Pstep1.stage + '.' + Pstep1.step + '.' + Pstep1.round;
 
-        var playsig=node.game.memory.stage[node.game.getPreviousStep()].fetchArray('sharesignal1')[0][0];
-        var urncolor=node.game.memory.stage[node.game.getPreviousStep()].fetchArray('urncolor')[0][0];
-        var noturncolor=node.game.memory.stage[node.game.getPreviousStep()].fetchArray('noturncolor')[0][0];
+
+        var playsig=node.game.memory.stage[Pstep1_s].fetchArray('sharesignal1')[0][0];
+        var urncolor=node.game.memory.stage[Pstep1_s].fetchArray('urncolor')[0][0];
+        var noturncolor=node.game.memory.stage[Pstep1_s].fetchArray('noturncolor')[0][0];
 
 
         //console.log(playsig);
@@ -206,7 +225,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           });
 // the shar_sig_array is used to caluclate the voting behavior of the bots
 // since both bots always vote the same way, they determine the final decision
-        var shar_sig_array=node.game.memory.stage[node.game.getPreviousStep()].fetchArray('sig_array')[0];
+        var shar_sig_array=node.game.memory.stage[Pstep1_s].fetchArray('sig_array')[0];
 // I add the shared signals of the bots
         if (b1s1==="red"){
           shar_sig_array.push(1);
@@ -275,44 +294,49 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       cb: function(){
         var v_correct,correct, paid;
 
+        var Pstep1=node.game.getPreviousStep(1);
+        var Pstep1_s= Pstep1.stage + '.' + Pstep1.step + '.' + Pstep1.round;
+
+        var Pstep2=node.game.getPreviousStep(2);
+        var Pstep2_s= Pstep2.stage + '.' + Pstep2.step + '.' + Pstep2.round;
         // console.log(node.game.memory.stage[node.game.getPreviousStep(1)].fetch());
         // console.log(node.game.memory.stage[node.game.getPreviousStep(2)].fetch());
         // I get the signals from the signal step and put them in one String
         var signals="";
-        if(node.game.memory.stage[node.game.getPreviousStep(2)].fetchArray('plyrsignal1')[0][0]!==""){
-            var c=node.game.memory.stage[node.game.getPreviousStep(2)].fetchArray('plyrsignal1')[0][0];
+        if(node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal1')[0][0]!==""){
+            var c=node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal1')[0][0];
             signals='<span style="color:'+c+'">'+ c+'</span>';
         }
         if(signals===""){
-            var c=node.game.memory.stage[node.game.getPreviousStep(2)].fetchArray('plyrsignal2')[0][0];
+            var c=node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal2')[0][0];
             signals='<span style="color:'+c+'">'+ c+'</span>';
         }
-        else if(node.game.memory.stage[node.game.getPreviousStep(2)].fetchArray('plyrsignal2')[0][0]!==""){
-          var c=node.game.memory.stage[node.game.getPreviousStep(2)].fetchArray('plyrsignal2')[0][0];
+        else if(node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal2')[0][0]!==""){
+          var c=node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal2')[0][0];
           signals= signals + ", " +'<span style="color:'+c+'">'+ c+'</span>';
         }
         if(signals===""){
-            var c=node.game.memory.stage[node.game.getPreviousStep(2)].fetchArray('plyrsignal3')[0][0];
+            var c=node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal3')[0][0];
             signals='<span style="color:'+c+'">'+ c+'</span>';
         }
-        else if(node.game.memory.stage[node.game.getPreviousStep(2)].fetchArray('plyrsignal3')[0][0]!==""){
-            var c=node.game.memory.stage[node.game.getPreviousStep(2)].fetchArray('plyrsignal3')[0][0];
+        else if(node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal3')[0][0]!==""){
+            var c=node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal3')[0][0];
           signals= signals + ", " +'<span style="color:'+c+'">'+ c+'</span>';
         }
 
         // sharedsignals
-        var sharesignal1=node.game.memory.stage[node.game.getPreviousStep(2)].fetchArray('sharesignal1')[0][0];
+        var sharesignal1=node.game.memory.stage[Pstep2_s].fetchArray('sharesignal1')[0][0];
 
-        var sharesignal2=node.game.memory.stage[node.game.getPreviousStep(1)].fetchArray('b1signals')[0][0];
-        var sharesignal3=node.game.memory.stage[node.game.getPreviousStep(1)].fetchArray('b2signals')[0][0];
+        var sharesignal2=node.game.memory.stage[Pstep1_s].fetchArray('b1signals')[0][0];
+        var sharesignal3=node.game.memory.stage[Pstep1_s].fetchArray('b2signals')[0][0];
         // vote
-        var vote=node.game.memory.stage[node.game.getPreviousStep(1)].fetchArray('vote')[0][0];
+        var vote=node.game.memory.stage[Pstep1_s].fetchArray('vote')[0][0];
             vote='<span style="color:'+vote+'">'+ vote+'</span>';
         // I get the urncolor form the signals step
-        var urncolor=node.game.memory.stage[node.game.getPreviousStep(2)].fetchArray('urncolor')[0][0];
+        var urncolor=node.game.memory.stage[Pstep2_s].fetchArray('urncolor')[0][0];
             urncolor='<span style="color:'+urncolor+'">'+urncolor+'</span>';
         // I get the decision from the previous step
-        var fdecision=node.game.memory.stage[node.game.getPreviousStep(1)].fetchArray('fdecision')[0][0];
+        var fdecision=node.game.memory.stage[Pstep1_s].fetchArray('fdecision')[0][0];
             fdecision='<span style="color:'+fdecision+'">'+fdecision+'</span>';
         // If the decision was correct the players are paid 1.5$.
         if (urncolor===fdecision){
@@ -382,8 +406,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('risk_feedback',{
       cb: function(){
+        var Pstep1=node.game.getPreviousStep(1);
+        var Pstep1_s= Pstep1.stage + '.' + Pstep1.step + '.' + Pstep1.round;
+
         var cell=Math.ceil(Math.random() * 10);
-        var item=node.game.memory.stage[node.game.getPreviousStep(1)].fetchArray('items')[0][cell-1];
+        var item=node.game.memory.stage[Pstep1_s].fetchArray('items')[0][cell-1];
 
         var choice=item.choice;
         var lottery=String(item.value);

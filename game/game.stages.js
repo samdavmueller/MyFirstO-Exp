@@ -49,7 +49,7 @@ module.exports = function(stager, settings) {
       //stager.skip('instructions');
     //  stager.skip('quiz');
       //stager.skip('game');
-      stager.skip('risk');
+      //stager.skip('risk');
       stager.skip('CRT');
       stager.skip('questionnaire');
 };

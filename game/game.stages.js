@@ -13,7 +13,8 @@ module.exports = function(stager, settings) {
 
      stager
         .next('welcome')
-        .next('intro')
+        .next('instructions')
+        .next('quiz')
         .repeat('game', settings.REPEAT)
         .next('risk')
         .next('CRT')
@@ -21,12 +22,12 @@ module.exports = function(stager, settings) {
         .next('end')
         .gameover();
 
-    stager.extendStage('intro', {
+  /*  stager.extendStage('intro', {
             steps: [
                     'instructions',
                     'quiz'
             ]
-        });
+        });*/
 
     stager.extendStage('game', {
             steps: [
@@ -45,8 +46,10 @@ module.exports = function(stager, settings) {
     // Modify the stager to skip one stage.
       //stager.skip('welcome');
       //stager.skip('intro');
+      //stager.skip('instructions');
+    //  stager.skip('quiz');
       //stager.skip('game');
-      //stager.skip('risk');
-      //stager.skip('CRT');
-      //stager.skip('questionnaire');
+      stager.skip('risk');
+      stager.skip('CRT');
+      stager.skip('questionnaire');
 };

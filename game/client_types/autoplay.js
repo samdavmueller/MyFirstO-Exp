@@ -22,7 +22,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     stager = ngc.getStager(game.plot);
 
-    stager.extendAllSteps(function(o) {
+    /*stager.extendAllSteps(function(o) {
         var role;
         if (o.roles) {
             o._roles = {};
@@ -70,5 +70,5 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     game.plot = stager.getState();
-    return game;
+    return game;*/
 };

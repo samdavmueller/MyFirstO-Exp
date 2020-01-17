@@ -15,23 +15,19 @@
 
 module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
+    // Setting the SOLO rule: game steps each time node.done() is called,
+    // ignoring the state of other clients.
+    const ngc = require('nodegame-client');
+    stager.setDefaultStepRule(ngc.stepRules.SOLO);
+
     stager.setOnInit(function() {
 
         // Initialize the client.
 
         var header, frame;
 
-        // Bid is valid if it is a number between 0 and 100.
-        this.isValidBid = function(n) {
-            return node.JSUS.isInt(n, -1, 2);
-        };
 
-        this.randomOffer = function(decison, submitSignals) {
-            var n;
-            n = J.randomInt(-1,2);
-            offer.value = n;
-            submitOffer.click();
-        };
+
 
         // Setup page: header + frame.
         header = W.generateHeader();
@@ -47,14 +43,20 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         this.doneButton = node.widgets.append('DoneButton', header);
 
         // Additional debug information while developing the game.
-        // this.debugInfo = node.widgets.append('DebugInfo', header)
+        this.debugInfo = node.widgets.append('DebugInfo', header)
 
 
             //BackButton is not working, I don't know why...
-        /*    this.backButton = node.widgets.append('BackButton',
-                                                  W.getHeader(), {
-                                                      acrossStages:  false
-                                                  });*/
+        this.backButton = node.widgets.append('BackButton',
+                                              W.getHeader(), {
+                                                  acrossStages:  true
+        });
+        // Last instruction in the init function.
+        // Game must be started manually.
+       setTimeout(function() {
+          node.game.start();
+       });
+
     });
 
     stager.extendStep('welcome', {
@@ -68,6 +70,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('instructions', {
         frame: 'instructions.htm',
+
         cb:function(){
             //Instructions differ between treatments.
             var gsig=Math.round(100*node.game.settings.getsignal);
@@ -82,16 +85,20 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             W.setInnerHTML('wrongsignal', wsig);
             W.setInnerHTML('bias', node.game.settings.bias);
             W.setInnerHTML('bias2', node.game.settings.bias2);
+
         }
     });
+
 
     //a short quiz to test the participants understanding of the game
     // I would really want the back button to work in case somebody has not read
     // the instructions well enough
     stager.extendStep('quiz', {
-      /*  exit: function() {
+
+        exit: function() {
             this.backButton.destroy();
-        },*/
+        },
+
 	    widget: {
 	       name: 'ChoiceManager',
 	       root: 'container',
@@ -152,12 +159,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     // The stage in which all participants receive their signals and the urn color
     // is decided.
     stager.extendStep('signals', {
+        backbutton: false,
         donebutton: false,
         frame: 'game.htm',
         // I did not change the name of the time variable.
         // But I decided I do not need time pressure at all.
         // timer: settings.bidTime,
-    /*    init: function() {
+        init: function() {
          // A info button is created that is available
           // It explains the strategy of the automated players
           // Generate the info panel object.
@@ -170,9 +178,16 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           // Add a new div to the info panel.
           this.infoDiv = document.createElement('div');
           this.infoDiv.innerHTML = '<h3>Strategy</h3>';
+          this.infoDiv.class ='inner';
           infoPanel.infoPanelDiv.appendChild(this.infoDiv);
 
-        },*/
+          //this.infoButton.destroy();
+        },
+        exit: function(){
+         InfoPanel.destroy();
+        //  this.infoButton.destroy();
+        },
+
         cb: function() {
           var csig=Math.round(100*node.game.settings.correctsignal);
           var wsig=Math.round(100*(1-node.game.settings.correctsignal));
@@ -375,7 +390,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     // The next step in the game stage is the voting.
     // All shared signals must be displayed here!
     stager.extendStep('voting', {
+      backbutton: false,
         donebutton: false,
+
         frame: 'vote.htm',
         // timer: settings.bidTime,
 
@@ -443,9 +460,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     // in order to enable learning, the players receive feedback about the voting decision
     // and their payoff
     stager.extendStep('feedback', {
+      backbutton: false,
         donebutton: false,
         frame: 'feedback.htm',
-
 
 
         // timer: settings.bidTime,
@@ -506,6 +523,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.extendStep('risk_feedback', {
+      backbutton: false,
         donebutton: false,
         frame: 'risk_feedback.htm',
         cb: function() {

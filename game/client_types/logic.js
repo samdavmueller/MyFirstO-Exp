@@ -18,9 +18,22 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     var channel =  gameRoom.channel;
 
     // Must implement the stages here.
+    // Setting the SOLO rule: game steps each time node.done() is called,
+    // ignoring the state of other clients.
+    // The logic will never call node.done() explicitely, and instead will
+    // wait for a stage update from the client and move to the same step.
+    const ngc = require('nodegame-client');
+    stager.setDefaultStepRule(ngc.stepRules.SOLO);
 
     stager.setOnInit(function() {
-        // Initialize the client.
+        // Keep the logic in sync with the player manually.
+        node.on('in.say.PLAYER_UPDATE', function(msg) {
+          if (msg.text === 'stage') {
+            setTimeout(function() {
+              node.game.gotoStep(msg.data.stage);
+            });
+          }
+        });
     });
 
     stager.extendStep('instructions', {
@@ -29,13 +42,18 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         }
     });
 
+    stager.extendStep('quiz', {
+        cb: function() {
+            console.log('Quiz');
+        }
+    });
     stager.extendStep('signals', {
 
 
         cb: function() {
           var decision1, decision2, decision3, urncolor, noturncolor,
               plyrsignal1, plyrsignal2, plyrsignal3, sharesignals;
-
+              console.log('SIGNALS');
           // when the player is done all necessary information is send to the Logic
           // I don't think it is actually necessary to create these variables but I do it anyway
            node.on.data('done', function(msg) {
@@ -70,8 +88,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         var noturncolor=node.game.memory.stage[node.game.getPreviousStep()].fetchArray('noturncolor')[0][0];
 
 
-
-
+        //console.log(playsig);
+        //console.log(urncolor);
         //now the bots are programmed
         var b1s1, b1s2, b1s3, b2s1, b2s2, b2s3, fdecision;
 
@@ -227,7 +245,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           shar_sig_array.push(0);
         }
 
-        console.log(shar_sig_array.length);
+        //console.log(shar_sig_array.length);
         // now I calculate how many signals indicate that the urn is blue
         var blue_vot= shar_sig_array.length-shar_sig_array.reduce((a, b) => a+b, 0);
         // and how many indicate that the urn is red
@@ -325,7 +343,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           // Contains all the data about the player.
           var client = channel.registry.getClient(playerId);
 
-          console.log(client);
+          //console.log(client);
 
           // Ternary Assignment.
           client.win = client.win ? (client.win + paid) : paid;
@@ -337,7 +355,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 //              client.win = paid;
 //          }
 
-          console.log(client);
+          //console.log(client);
 
           // The information is sent to the players.
           var d={
@@ -355,7 +373,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           }
 
 
-                    console.log(d);
+                    //console.log(d);
 
           node.say('DATA', playerId, d);
       }
@@ -408,8 +426,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         client.win = client.win ? (client.win + win) : win;
 
 
-        console.log(typeof lottery);
-        console.log(playerId);
+        //console.log(typeof lottery);
+        //console.log(playerId);
         node.say('RISK', playerId, d);
       }
 

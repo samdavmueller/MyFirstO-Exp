@@ -86,8 +86,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       frame: 'welcome.htm',
       cb: function(){
         W.setInnerHTML('time', 30);
-        W.setInnerHTML('low_money', 1.05);
-        W.setInnerHTML('high_money', 8.93);
+        W.setInnerHTML('low_money', 0.55);
+        W.setInnerHTML('high_money', 5.43);
       }
     });
 
@@ -540,7 +540,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             options: {
                 mainText: 'Below you find a series of hypothetical lotteries. Each row contains two lotteries with different probabalities of winning. In each row, select the lottery you would rather take part in. After you made your choices, one of the ten option is chosen randomly and the lottery is played and the payoff is added to your final payoff.',
                 className: 'centered',
-                currency: 'ECU',
+                currency: ' ECU',
+                currencyAfter: true,
                 panel: false,
                 title: false,
                 scale: 20

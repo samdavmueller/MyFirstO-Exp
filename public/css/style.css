@@ -1,13 +1,29 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
-
-
 body {
     font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 20px;
     max-width: 42em;
     width: 90%;
-    margin: 0 auto;
+    margin: auto;
     margin-top: 30px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+}
+
+
+#container {
+  margin: auto;
+  max-width: 42em;
+  font-size: 20px;
+}
+
+
+.form-control {
+    height: 2em;
+    padding: 0.5em 0.5em;
+    font-size: inherit;
 }
 
 
@@ -16,13 +32,7 @@ body {
     font-size: 20px;
     max-width: 42em;
     width: 90%;
-    margin: 0 auto;
+    margin-left: 133px;
+    margin-right: 133px;
     margin-top: 30px;
-}
-
-
-#container {
-  margin: 0 auto;
-  max-width: 42em;
-  font-size: 20px;
 }

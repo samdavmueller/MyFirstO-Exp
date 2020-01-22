@@ -341,7 +341,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // If the decision was correct the players are paid 1.5$.
         if (urncolor===fdecision){
           correct='correct';
-          paid=1.5;
+          paid=30;
         }
         // Else they receive nothing
         else{
@@ -352,7 +352,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // if the own vote was correct the players are paid additional 0.5$.
         if (urncolor===vote){
           v_correct='correct';
-          paid=paid+0.5;
+          paid=paid+10;
         }
         // Else they receive nothing
         else{
@@ -419,18 +419,18 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         var win=0;
         if(choice==0){
           if(dice<=cell){
-            win=1;
+            win=40;
           }
           if(dice>cell){
-            win=0.8;
+            win=32;
           }
         }
         if(choice==1){
           if(dice<=cell){
-            win=1.93;
+            win=77.2;
           }
           if(dice>cell){
-            win=0.05;
+            win=2;
           }
         }
 
@@ -471,7 +471,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           var client = channel.registry.getClient(playerId);
 
           // Ternary Assignment.
-          client.win = client.win ? (client.win + 1) : 1;
+          client.win = client.win ? (client.win + 20) : 20;
 
             gameRoom.computeBonus({
                 say: true,   // default false

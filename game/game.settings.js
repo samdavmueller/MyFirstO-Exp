@@ -17,7 +17,10 @@
 module.exports = {
 
     // Variables shared by all treatments.
+    // Divider ECU / DOLLARS *
+    EXCHANGE_RATE: (1/40),
 
+    EXCHANGE_RATE_INSTRUCTIONS: 0.25,
     // #nodeGame properties:
 
     /**

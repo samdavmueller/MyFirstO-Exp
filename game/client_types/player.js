@@ -34,22 +34,29 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         frame = W.generateFrame();
 
         // Add infoPanel
-  /*      infoPanel = W.generateInfoPanel(undefined, {
+        infoPanel = W.generateInfoPanel(undefined, {
           onStep: 'close'
         });
 
         // Generate the toggle button and append it to the header.
-        this.infoButton = infoPanel.createToggleButton('Info');
+        this.infoButton = infoPanel.createToggleButton('Auto Player Behavior');
         this.infoButton.disabled = true;
         //W.getHeader().appendChild(this.infoButton);
 
         // Add a new div to the info panel.
         this.infoDiv = document.createElement('div');
-        this.infoDiv.innerHTML = '<h3>Strategy</h3>';
+        this.infoDiv.innerHTML = '<h3>Behavior of automated players</h3>'+
+        "<h4>The automated players always share all private signals they receive. Their voting decision is made using the following procedure: </br>"+
+        "1. They count the <strong>number of shared signals that show '<span style='color:red'>red</span>'</strong> and multiply it by <strong>" +node.game.settings.bias+"</strong>.<br>"+
+        "2. Then they count the <strong>number of shared signals that show '<span style='color:blue'>blue</span>'</strong> and multiply if by <strong>" +node.game.settings.bias2+"</strong>.<br>"+
+        "3. Finally, the automated players compare the numbers they received and <strong>vote for the color that has the larger number</strong>. If both number are the <strong>same</strong>, they decide for '<span style='color:red; font-weight:bold'>red</span>'.</h4>";
+
+      //  W.setInnerHTML('bias', node.game.settings.bias);
+      //  W.setInnerHTML('bias2', node.game.settings.bias2);
         W.addClass(this.infoDiv, 'inner');
         infoPanel.infoPanelDiv.appendChild(this.infoDiv);
 
-        header.appendChild(this.infoButton);*/
+        header.appendChild(this.infoButton);
 
         // Add widgets.
         this.visualRound = node.widgets.append('VisualRound', header, {
@@ -101,7 +108,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             W.setInnerHTML('wrongsignal', wsig);
             W.setInnerHTML('bias', node.game.settings.bias);
             W.setInnerHTML('bias2', node.game.settings.bias2);
-
+            W.setInnerHTML('exchange-rate', node.game.settings.EXCHANGE_RATE_INSTRUCTIONS);
         }
     });
 
@@ -180,7 +187,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // But I decided I do not need time pressure at all.
         // timer: settings.bidTime,
         init: function() {
-          node.game.backButton.destroy();
+            node.game.backButton.destroy();
          // A info button is created that is available
           // It explains the strategy of the automated players
           // Generate the info panel object.
@@ -197,12 +204,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             this.infoDiv.class ='inner';
             infoPanel.infoPanelDiv.appendChild(this.infoDiv);*/
 
-          /*  this.infoButton.disabled=false;
+            this.infoButton.disabled=false;
 
             node.on.step(function(){
               W.infoPanel.close();
-
-            })*/
+            })
 
         },
 
@@ -523,10 +529,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     // risk widget is used to measure risk preferences.
     // I am not sure whether the data is saved.
     stager.extendStep('risk_task',{
-    /*  init: function(){
+      init: function(){
        W.infoPanel.destroy();
        W.restoreOnleave();
-     },*/
+      },
 
 	       widget: {
 	          name: 'RiskGauge',
@@ -534,9 +540,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             options: {
                 mainText: 'Below you find a series of hypothetical lotteries. Each row contains two lotteries with different probabalities of winning. In each row, select the lottery you would rather take part in. After you made your choices, one of the ten option is chosen randomly and the lottery is played and the payoff is added to your final payoff.',
                 className: 'centered',
+                currency: 'ECU',
                 panel: false,
                 title: false,
-                scale:0.5
+                scale: 20
+
             }
 	       }
     });

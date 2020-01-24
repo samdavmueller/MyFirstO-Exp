@@ -103,7 +103,7 @@ module.exports = {
      *
      * Default: FALSE
      */
-    // ES6Support: true
+    ES6Support: true
 
     /**
      * ## nextRoom

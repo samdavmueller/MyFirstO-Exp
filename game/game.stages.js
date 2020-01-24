@@ -15,6 +15,8 @@ module.exports = function(stager, settings) {
         .next('welcome')
         .next('instructions')
         .next('quiz')
+        .repeat('gameTUT', 3)
+        .next('START')
         .repeat('game', settings.REPEAT)
         .next('risk')
         .next('CRT')
@@ -29,6 +31,14 @@ module.exports = function(stager, settings) {
             ]
         });*/
 
+
+        stager.extendStage('gameTUT', {
+                steps: [
+                    'signalsTUT',
+                    'votingTUT',
+                    'feedbackTUT'
+                ]
+            });
     stager.extendStage('game', {
             steps: [
                 'signals',

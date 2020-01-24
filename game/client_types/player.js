@@ -177,6 +177,371 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
   });
 
 
+
+  // The stage in which all participants receive their signals and the urn color
+  // is decided.
+  stager.extendStep('signalsTUT', {
+      backbutton: false,
+      donebutton: false,
+      frame: 'gameTUT.htm',
+      // I did not change the name of the time variable.
+      // But I decided I do not need time pressure at all.
+      // timer: settings.bidTime,
+      init: function() {
+          node.game.backButton.destroy();
+       // A info button is created that is available
+        // It explains the strategy of the automated players
+        // Generate the info panel object.
+
+          /*var infoPanel = W.generateInfoPanel();
+
+          // Generate the toggle button and append it to the header.
+          this.infoButton = infoPanel.createToggleButton('History');
+          W.getHeader().appendChild(this.infoButton);
+
+          // Add a new div to the info panel.
+          this.infoDiv = document.createElement('div');
+          this.infoDiv.innerHTML = '<h3>Strategy</h3>';
+          this.infoDiv.class ='inner';
+          infoPanel.infoPanelDiv.appendChild(this.infoDiv);*/
+
+          this.infoButton.disabled=false;
+
+          node.on.step(function(){
+            W.infoPanel.close();
+          })
+
+      },
+
+
+      cb: function() {
+        var csig=Math.round(100*node.game.settings.correctsignal);
+        var wsig=Math.round(100*(1-node.game.settings.correctsignal));
+        W.setInnerHTML('correctsignal', csig);
+        W.setInnerHTML('wrongsignal', wsig);
+
+          // variables I need
+          var button, decision1, decision2, decision3,
+              div, urncolor, noturncolor,
+              plyrsignal1, plyrsignal2, plyrsignal3;
+          //this array gets the information whether a signal is shared (1) or not (0)
+          var shar_sig_array=[];
+
+          // decisions get a default of -99 to make it easy to check whether
+          // a decision was made for all signals
+          decision1= -99;
+          decision2= -99;
+          decision3= -99;
+
+
+          // the urncolor is decided randomly
+          // the noturncolor has to be decided as well
+          if ( Math.random()>=0.5){
+              urncolor= 'red';
+              noturncolor= 'blue';
+          }
+          else{
+              urncolor='blue';
+              noturncolor= 'red';
+          }
+
+          // now it is decided whether signal 1 is conatining information
+          if (Math.random()< node.game.settings.getsignal) {
+              // and now whether the information is correct
+              if (Math.random()< node.game.settings.correctsignal){
+                  plyrsignal1=urncolor;
+                  div = W.getElementById('ps1').style.color = plyrsignal1;
+              }
+              else{
+                  plyrsignal1=noturncolor;
+                  div = W.getElementById('ps1').style.color = plyrsignal1;
+              }
+          }
+          // if the signal is empty, it is not displayed at all
+          else {
+              plyrsignal1= '';
+              div = W.getElementById('signal1').style.display = 'none';
+          }
+
+          // the same procedure for signal 2
+          if (Math.random()< node.game.settings.getsignal) {
+              if (Math.random()< node.game.settings.correctsignal){
+                  plyrsignal2=urncolor;
+                  div = W.getElementById('ps2').style.color = plyrsignal2;
+              }
+              else{
+                  plyrsignal2=noturncolor;
+                  div = W.getElementById('ps2').style.color = plyrsignal2;
+              }
+          }
+          else {
+              plyrsignal2= '';
+              div = W.getElementById('signal2').style.display = 'none';
+
+          }
+
+          // the same procedure for signal 3
+          if (Math.random()< node.game.settings.getsignal) {
+              if (Math.random()< node.game.settings.correctsignal){
+                  plyrsignal3=urncolor;
+                  div = W.getElementById('ps3').style.color = plyrsignal3;
+
+              }
+              else{
+                  plyrsignal3=noturncolor;
+                  div = W.getElementById('ps3').style.color = plyrsignal3;
+              }
+          }
+          else {
+              plyrsignal3= '';
+              div = W.getElementById('signal3').style.display = 'none';
+              div = W.getElementById('signal3').style.color = plyrsignal3;
+          }
+
+          // signals are sent to the html file
+          W.setInnerHTML('ps1', plyrsignal1);
+          W.setInnerHTML('ps2', plyrsignal2);
+          W.setInnerHTML('ps3', plyrsignal3);
+
+          // button is identified that submit the signals to the next stage
+          button = W.getElementById('submitSignals');
+          // Listen on click event.
+          button.onclick = function() {
+              // first it is decided that empty signals are never shared.
+              if (plyrsignal1===''){
+                  decision1 = 0;
+              }
+              if (plyrsignal2===''){
+                  decision2 = 0;
+              }
+              if (plyrsignal3===''){
+                  decision3 = 0;
+              }
+              // now it is checked for each signal whether it should be shared or hided
+              // the decision is saved in the different decision variables
+              if (W.getElementById('hide1').checked){
+                  decision1 = 0;
+              }
+              if (W.getElementById('share1').checked){
+                  decision1 = 1;
+              }
+              if (W.getElementById('hide2').checked){
+                  decision2 = 0;
+              }
+              if (W.getElementById('share2').checked){
+                  decision2 = 1;
+              }
+              if (W.getElementById('hide3').checked){
+                  decision3 = 0;
+              }
+              if (W.getElementById('share3').checked){
+                  decision3 = 1;
+              }
+
+              // Now, it is checked whether there has bee a decuision made for all signals.
+              // A error message is written.
+              // Unfortunately the error message is written on the side of the display and not below
+              var dsum=decision1+decision2+decision3;
+              if(dsum<0){
+
+                  div = W.getElementById('warning').style.display = '';
+                  return;
+              }
+
+              // Making sure, that empty signals are not shared.
+              if (plyrsignal1===''){
+                  decision1 = 0;
+              }
+              if (plyrsignal2===''){
+                  decision2 = 0;
+              }
+              if (plyrsignal3===''){
+                  decision3 = 0;
+              }
+
+              // A String variable that is used to display the signals in the next stage.
+              var sharesignals='';
+
+              // If the signal is shared, it is added to the string and
+              // a (1) is written in the array that tells us whether a signal was shared.
+              if (decision1 == 1) {
+                  sharesignals= sharesignals + ', <span style="color:' + plyrsignal1+'">'+plyrsignal1+'</span>';
+                  if(plyrsignal1==="red"){
+                      shar_sig_array.push(1);
+                  }
+                  if(plyrsignal1==="blue"){
+                      shar_sig_array.push(0);
+                  }
+              }
+              if (decision2 == 1) {
+                  sharesignals= sharesignals + ', <span style="color:' + plyrsignal2+'">'+ plyrsignal2+'</span>';
+                  if(plyrsignal2==="red"){
+                      shar_sig_array.push(1);
+                  }
+                  if(plyrsignal2==="blue"){
+                      shar_sig_array.push(0);
+                  }
+              }
+              if (decision3 == 1) {
+                  sharesignals= sharesignals + ', <span style="color:' + plyrsignal3+'">' + plyrsignal3+'</span>';
+                  if(plyrsignal3==="red"){
+                      shar_sig_array.push(1);
+                  }
+                  if(plyrsignal3==="blue"){
+                      shar_sig_array.push(0);
+                  }
+              }
+
+              // the sharesignals string starts with a comma that is removed
+              sharesignals = sharesignals.slice(1);
+              button.disabled = true;
+
+              // Mark the end of the round, and
+              // store the decision in the server.
+              node.done({ decision1: decision1,
+                          decision2: decision2,
+                          decision3: decision3,
+                          urncolor: urncolor,
+                          noturncolor: noturncolor,
+                          plyrsignal1:plyrsignal1,
+                          plyrsignal2:plyrsignal2,
+                          plyrsignal3:plyrsignal3,
+                          sharesignal1: sharesignals,
+                          sig_array: shar_sig_array});
+          };
+      }
+
+  });
+
+  // The next step in the game stage is the voting.
+  // All shared signals must be displayed here!
+  stager.extendStep('votingTUT', {
+    backbutton: false,
+      donebutton: false,
+
+      frame: 'voteTUT.htm',
+      // timer: settings.bidTime,
+
+      cb: function() {
+          var vote, Red_button, Blue_button, fdecision, signal2, signal3;
+          // the signals that the player shared are coming from the logic
+          node.on.data('DATA' , function(msg){
+              var signal1=msg.data.playsig;
+              W.setInnerHTML('signals1', signal1);
+
+          // the signals that the first automated player received and
+          // shared are created in logic and also send to the player
+
+              signal2=msg.data.b1sig;
+              W.setInnerHTML('signals2', signal2);
+
+          // the signals that the second automated player received and
+          // shared are created in logic and also send to the player
+
+              signal3=msg.data.b2sig;
+              W.setInnerHTML('signals3', signal3);
+          });
+          // since the player is never the pivotal voter, the decision was already
+          // computed in the logic and send to the player
+          node.on.data('FDECISION' , function(msg){
+              fdecision=msg.data;
+          });
+          // need to get the decision
+          fdecision=this.fdecision;
+          signal2=this.signal2;
+          signal3=this.signal3;
+          // buttons for voting are initiated
+          Red_button=W.getElementById('Red_button');
+          Blue_button=W.getElementById('Blue_button');
+
+          // on click functions are generated and voting decision is stored
+          Red_button.onclick=function() {
+              vote='red';
+              Red_button.disabled = true;
+              node.done({
+                  b1signals: signal2,
+                  b2signals: signal3,
+                  vote: vote,
+                  fdecision: fdecision
+              });
+          }
+          Blue_button.onclick=function() {
+              vote='blue';
+              Blue_button.disabled = true;
+              node.done({
+                  b1signals: signal2,
+                  b2signals: signal3,
+                  vote: vote,
+                  fdecision: fdecision
+              });
+          }
+      }
+
+  });
+
+  // in order to enable learning, the players receive feedback about the voting decision
+  // and their payoff
+  stager.extendStep('feedbackTUT', {
+    backbutton: false,
+      donebutton: false,
+      frame: 'feedbackTUT.htm',
+
+
+      // timer: settings.bidTime,
+      cb: function() {
+          var urncolor, fdecision, correct, paid, c_button;
+          // all variables are sent by logic
+          node.on.data('DATA', function(msg){
+              //signals=msg.data.signals
+              W.setInnerHTML('signals', msg.data.signals);
+
+
+              W.setInnerHTML('signals1', msg.data.sharesignal1);
+              W.setInnerHTML('signals2', msg.data.sharesignal2);
+              W.setInnerHTML('signals3', msg.data.sharesignal3);
+              W.setInnerHTML('vdecision', msg.data.vote);
+              W.setInnerHTML('v_correct',  msg.data.v_correct);
+              W.setInnerHTML('urncolor',  msg.data.urncolor);
+              W.setInnerHTML('committee_decision',  msg.data.fdecision);
+
+              correct=msg.data.correct;
+              W.setInnerHTML('wrong_right',  msg.data.correct);
+
+              paid=msg.data.paid;
+              W.setInnerHTML('payoff',  msg.data.paid);
+          });
+
+          paid=this.paid;
+          correct=this.correct;
+          // button to continue to next round
+          c_button=W.getElementById('Continue_button');
+
+          c_button.onclick=function(){
+              node.done({
+                  payoff: paid,
+                  correct: correct
+              });
+          }
+
+
+      }
+  });
+
+
+
+
+
+      stager.extendStep('START', {
+        frame: 'START.htm',
+        backbutton: false,
+        donebutton: true
+      });
+
+
+
+
+
+
     // The stage in which all participants receive their signals and the urn color
     // is decided.
     stager.extendStep('signals', {

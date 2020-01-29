@@ -95,7 +95,8 @@ module.exports = {
      * Default: undefined, random treatment
      */
     CHOSEN_TREATMENT: function(treatments, roomCounter) {
-        return treatments[roomCounter % treatments.length];
+        var x=roomCounter % 5;
+        return treatments[Math.ceil(x/2)];
     },
 
     /**

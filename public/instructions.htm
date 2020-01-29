@@ -4,38 +4,117 @@
 <link rel="stylesheet" href="css/style.css" />
 <body>
   <div id="container">
-    <h1>Instructions for the Signal Sharing Game</h1>
+    <h1>Instructions for the 'Guess the Urn'-Game</h1>
     <h3>Please, read them carefully!</h3>
     <div id="instructions">
       <br>
-      This game is played by one human player and two automated player.
+      This game is played by one human player and two automated players.
       <br><br>
-      In each round, you and the automated players have to <strong>decide as a group whether an urn is <span style="color:blue">blue</span> or <span style="color:red">red</span></strong>.
+      In each round, you and the automated players have to <strong>decide as a
+      group whether an urn is <span style="color:blue">blue</span> or
+      <span style="color:red">red</span></strong>.
+      <strong> You are paid when your group decision matches the true color of
+      the urn. </strong>
       Both colors are equally likely.
       <br><br>
-      In the beginning, each player receives between <strong> 0 and 3 private signals</strong>. This means, that no other player has the same signal or knows how many or which signals you received.<br>
-      There is a <span id="getsignal" style="font-weight:bold"></span>% chance that a signal contains a color, but with a chance of <span id="getnosignal" style="font-weight:bold"></span>% the signal is empty and therefore not shown.<br><br>
-      If a signal shows a color, there is a <span id="correctsignal" style="font-weight:bold"></span>% chance that the color shown is the same as that of the urn and a <span id="wrongsignal" style="font-weight:bold"></span>% chance that the color is different.<br><br>
-      In the first part of the game you have to decide whether you want to <strong>share any single signal with the automated players or hide it from them</strong>.<br><br>
+      In the beginning, each player receives between
+      <strong> 0 and 3 signals</strong>. No other player has the same signals or
+      knows how many or which signals you received.<br>
+      The exact proability to receive 0, 1, 2 or 3 signals can be seen in the
+      table below. <br><br>
+      <table style="width:60%; margin-left:20%; margin-right:20%">
+        <tr>
+          <th> Number of signals </th>
+          <th> Probability </th>
+        </tr>
+        <tr>
+          <td> 0 </td>
+          <td> 3% </td>
+        </tr>
+        <tr>
+          <td> 1 </td>
+          <td> 19% </td>
+        </tr>
+        <tr>
+          <td> 2 </td>
+          <td> 44% </td>
+        </tr>
+        <tr>
+          <td> 3 </td>
+          <td> 34% </td>
+        </tr>
+      </table>
+<br><br>
+      All signals that you receive contain a color, either
+      <span style="color:red">red</span> or <span style="color:blue">blue</span>.
+      On average, six out of ten signals contain the same color as the urn they
+      are describing, while four signals show a different color.
+      For example, if the urn is <span style="color:blue">blue</span>, there is
+      a <span id="correctsignal" style="font-weight:bold"></span>% chance that the
+      signal you receive is <span style="color:blue">blue</span>
+      and a <span id="wrongsignal" style="font-weight:bold"></span>% chance that
+      it is <span style="color:red">red</span>.<br><br>
+      In the first part of the game you have to decide whether you want to
+      <strong>share an signal with the automated players or hide it from
+      them</strong>.<br><br>
       <strong>The automated players always share all of their signals.</strong>
 <br><br>
-      After your decision about sharing or hiding signals, you <strong>see all the signals each player decided to share</strong> and you have to <strong>make a voting decision</strong> that indicates your belief about the true color of the urn.<br><br>
-      The automated players receive all signals that were shared too. <strong>Then they make their voting decion in the following way:</strong><br>
-        1. They count the <strong>number of shared signals that show '<span style="color:red">red</span>'</strong> and multiply it by <span id="bias" style="font-weight:bold; color: red"></span>.<br>
-        2. Then they count the <strong>number of shared signals that show '<span style="color:blue">blue</span>'</strong> and multiply if by <span id="bias2" style="font-weight:bold; color: blue"></span>.<br>
-        3. Finally, the automated players compare the numbers they received and <strong>vote for the color that has the larger number</strong>. If both number are the <strong>same</strong>, they decide for '<span style="color:red; font-weight:bold">red</span>'.
+      After your decision about sharing or hiding signals, you <strong>see all
+        the signals each player decided to share</strong> and you have to
+        <strong>make a voting decision</strong> that indicates your belief about
+        the true color of the urn.<br><br>
+      The automated players receive all signals that were shared too.
+      <strong>Then they make their voting decion in the following way:</strong><br>
+        1. They count the <strong>number of shared signals that show
+          '<span style="color:red">red</span>'</strong> and multiply it by
+          <span id="bias" style="font-weight:bold; color: red"></span>.<br>
+        2. Then they count the <strong>number of shared signals that show
+          '<span style="color:blue">blue</span>'</strong> and multiply it by
+          <span id="bias2" style="font-weight:bold; color: blue"></span>.<br>
+        3. Finally, the automated players compare the numbers they received and
+        <strong>vote for the color that has the larger number</strong>.
+        If both number are the <strong>same</strong>, a coin toss decides the
+        color they choose.<br><br>
 
-<br><h4><i>During the game you can use the yellow button above to re-read the automated players' behavior.</i></h4><br>
+        <strong>For example</strong>, if the shared signals are <span style="color:red">red</span>,
+        <span style="color:blue">blue</span>, <span style="color:red">red</span>,
+        <span style="color:red">red</span>, <span style="color:blue">blue</span>,
+        <span style="color:red">red</span> and <span style="color:blue">blue</span>,
+        the number of signals would be <span style="color:red">4 red</span> and
+        <span style="color:blue">3 blue</span> signals.<br>
+        The automated players calculate: <br>
+        <span style="color:red">4 red</span> &times
+        <span id="bias3" style="color: red"></span> =
+        <span id="red_count" style="font-weight:bold; color: red"></span><br>
+        <span style="color:blue">3 blue</span> &times
+        <span id="bias4" style="color: blue"></span> =
+        <span id="blue_count" style="font-weight:bold; color: blue"></span><br>
+        Accordingly the automated players vote for <span style="color:red">red</span>.
 
-      In the end all the votes for '<span style="color:blue">blue</span>' and '<span style="color:red">red</span>' are counted and the <strong>color with more votes is the group decision</strong>.<br>
-      If the decision has the <strong>same color as the true color</strong> of the urn, you earn <strong>30 ECU</strong> (Experimental Currency).<br>
-      You can earn additional <strong>10 ECU</strong> if <strong>your vote decision</strong> was the correct color. 10 ECU are are equal to $<span id="exchange-rate"></span>.
+
+<br><h4><i>During the game you can use the yellow button above to re-read the
+  automated players' behavior.</i></h4><br>
+
+      In the end all the votes for '<span style="color:blue">blue</span>' and
+      '<span style="color:red">red</span>' are counted and the <strong>color
+      with more votes is the group decision</strong>.<br>
+      If the decision has the <strong>same color as the true color</strong> of
+      the urn, you earn <strong>30 ECU</strong> (Experimental Currency).<br>
+      You can earn additional <strong>10 ECU</strong> if <strong>your vote
+      decision</strong> was the correct color. 10 ECU are equal to
+      $<span id="exchange-rate"></span>.
       <br>
       <br>
-      The game is <strong>repeated three rounds, and each round the color of the urn might change</strong>.
+      First, you play <strong> three unpaid training rounds</strong>. <br>
+      Then, the game is <strong>played three rounds and earnings are added to
+      your final payoff</strong>.</br>
+      <strong>Be aware that the color of the urn might change each round</strong>.
       <br><br>
-      After the game you can earn <strong>more money in additional tasks</strong> and finishing the final questionnaire gives you an additional payment of <strong>20 ECU ($0.50)</strong>.
+      After the game you can earn <strong>more money in additional tasks</strong>
+      and finishing the final questionnaire gives you an additional payment of
+      <strong>20 ECU ($0.34)</strong>.
     </div>
-    If you understood the instructions correctly press the 'Done' button to proceed to the game.
+    If you understood the instructions correctly press the 'Done' button to
+    proceed to the game.
   </div>
 </body>

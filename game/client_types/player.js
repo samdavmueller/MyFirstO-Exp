@@ -49,7 +49,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         "<h4>The automated players always share all private signals they receive. Their voting decision is made using the following procedure: </br>"+
         "1. They count the <strong>number of shared signals that show '<span style='color:red'>red</span>'</strong> and multiply it by <strong>" +node.game.settings.bias+"</strong>.<br>"+
         "2. Then they count the <strong>number of shared signals that show '<span style='color:blue'>blue</span>'</strong> and multiply if by <strong>" +node.game.settings.bias2+"</strong>.<br>"+
-        "3. Finally, the automated players compare the numbers they received and <strong>vote for the color that has the larger number</strong>. If both number are the <strong>same</strong>, they decide for '<span style='color:red; font-weight:bold'>red</span>'.</h4>";
+        "3. Finally, the automated players compare the numbers they received and <strong>vote for the color that has the larger number</strong>. If both number are the <strong>same</strong>, a coin toss decides the color they choose.</h4>";
 
       //  W.setInnerHTML('bias', node.game.settings.bias);
       //  W.setInnerHTML('bias2', node.game.settings.bias2);
@@ -85,9 +85,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('welcome', {
       frame: 'welcome.htm',
       cb: function(){
-        W.setInnerHTML('time', 30);
-        W.setInnerHTML('low_money', 0.55);
-        W.setInnerHTML('high_money', 5.43);
+        W.setInnerHTML('time', 20);
+        W.setInnerHTML('low_money', 0.37);
+        W.setInnerHTML('high_money', 3.62);
       }
     });
 
@@ -96,18 +96,19 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         cb:function(){
             //Instructions differ between treatments.
-            var gsig=Math.round(100*node.game.settings.getsignal);
-            console.log(gsig);
-            var nsig=Math.round(100*(1-node.game.settings.getsignal));
-            console.log(wsig);
+            var rsig=4*node.game.settings.bias;
+            var bsig=3*node.game.settings.bias2;
+
             var csig=Math.round(100*node.game.settings.correctsignal);
             var wsig=Math.round(100*(1-node.game.settings.correctsignal));
-            W.setInnerHTML('getsignal', gsig);
-            W.setInnerHTML('getnosignal', nsig);
+            W.setInnerHTML('red_count', rsig);
+            W.setInnerHTML('blue_count', bsig);
             W.setInnerHTML('correctsignal', csig);
             W.setInnerHTML('wrongsignal', wsig);
             W.setInnerHTML('bias', node.game.settings.bias);
             W.setInnerHTML('bias2', node.game.settings.bias2);
+            W.setInnerHTML('bias3', node.game.settings.bias);
+            W.setInnerHTML('bias4', node.game.settings.bias2);
             W.setInnerHTML('exchange-rate', node.game.settings.EXCHANGE_RATE_INSTRUCTIONS);
         }
     });
@@ -551,13 +552,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // I did not change the name of the time variable.
         // But I decided I do not need time pressure at all.
         // timer: settings.bidTime,
-        init: function() {
+      /*  init: function() {
             node.game.backButton.destroy();
          // A info button is created that is available
           // It explains the strategy of the automated players
           // Generate the info panel object.
 
-            /*var infoPanel = W.generateInfoPanel();
+            var infoPanel = W.generateInfoPanel();
 
             // Generate the toggle button and append it to the header.
             this.infoButton = infoPanel.createToggleButton('History');
@@ -567,7 +568,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             this.infoDiv = document.createElement('div');
             this.infoDiv.innerHTML = '<h3>Strategy</h3>';
             this.infoDiv.class ='inner';
-            infoPanel.infoPanelDiv.appendChild(this.infoDiv);*/
+            infoPanel.infoPanelDiv.appendChild(this.infoDiv);
 
             this.infoButton.disabled=false;
 
@@ -575,7 +576,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               W.infoPanel.close();
             })
 
-        },
+        },*/
 
 
         cb: function() {
@@ -903,7 +904,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 	          name: 'RiskGauge',
             root: 'container',
             options: {
-                mainText: 'Below you find a series of hypothetical lotteries. Each row contains two lotteries with different probabalities of winning. In each row, select the lottery you would rather take part in. After you made your choices, one of the ten option is chosen randomly and the lottery is played and the payoff is added to your final payoff.',
+                mainText: 'Below you find a series of hypothetical lotteries. Each row contains two lotteries with different probabalities of winning. In each row, select the lottery you would rather take part in. After you made your choices, one of the ten rows is chosen randomly and the lottery you chose is played. The resulting payoff is added to your final payoff.',
                 className: 'centered',
                 currency: ' ECU',
                 currencyAfter: true,
@@ -929,6 +930,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               rand=msg.data.dice;
               lottery=msg.data.lottery;
               W.setInnerHTML('cell', cell);
+              W.setInnerHTML('cell2', cell);
+              W.setInnerHTML('cell3', cell);
               W.setInnerHTML('lottery', lottery);
               W.setInnerHTML('rand', rand);
               W.setInnerHTML('win', win);

@@ -289,11 +289,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           fdecision='red';
         }
         if(red_vot==blue_vot){
-          if(Math.random()<0.5){
-            fdecision='red';
+          if(Math.random()<0.75){
+            fdecision='voter';
           }
           else{
-            fdecision='blue';
+            fdecision='notvoter';
           }
         }
         console.log(fdecision);
@@ -351,13 +351,27 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         var sharesignal3=node.game.memory.stage[Pstep1_s].fetchArray('b2signals')[0][0];
         // vote
         var vote=node.game.memory.stage[Pstep1_s].fetchArray('vote')[0][0];
-            vote='<span style="color:'+vote+'">'+ vote+'</span>';
+
         // I get the urncolor form the signals step
         var urncolor=node.game.memory.stage[Pstep2_s].fetchArray('urncolor')[0][0];
-            urncolor='<span style="color:'+urncolor+'">'+urncolor+'</span>';
+
         // I get the decision from the previous step
         var fdecision=node.game.memory.stage[Pstep1_s].fetchArray('fdecision')[0][0];
-            fdecision='<span style="color:'+fdecision+'">'+fdecision+'</span>';
+
+        if(fdecision==='voter'){
+          fdecision=vote;
+        }
+        if(fdecision==='notvoter'){
+          if(vote==='red'){
+              fdecision='blue';
+          }
+          if(vote==='blue'){
+              fdecision='red';
+          }
+        }
+
+
+
         // If the decision was correct the players are paid 1.5$.
         if (urncolor===fdecision){
           correct='correct';
@@ -379,6 +393,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           v_correct='false';
           paid=paid+0;
         }
+
+
+        fdecision='<span style="color:'+fdecision+'">'+fdecision+'</span>';
+        urncolor='<span style="color:'+urncolor+'">'+urncolor+'</span>';
+        vote='<span style="color:'+vote+'">'+ vote+'</span>';
+
           // Temporary (we just need the id).
           var playerId = node.game.pl.first();
           playerId = playerId.id;
@@ -650,11 +670,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           fdecision='red';
         }
         if (red_vot==blue_vot){
-          if(Math.random()<0.5){
-            fdecision='red';
+          if(Math.random()<0.75){
+            fdecision='voter';
           }
           else{
-            fdecision='blue';
+            fdecision='notvoter';
           }
         }
           console.log(fdecision);
@@ -712,13 +732,26 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         var sharesignal3=node.game.memory.stage[Pstep1_s].fetchArray('b2signals')[0][0];
         // vote
         var vote=node.game.memory.stage[Pstep1_s].fetchArray('vote')[0][0];
-            vote='<span style="color:'+vote+'">'+ vote+'</span>';
+
         // I get the urncolor form the signals step
         var urncolor=node.game.memory.stage[Pstep2_s].fetchArray('urncolor')[0][0];
-            urncolor='<span style="color:'+urncolor+'">'+urncolor+'</span>';
+
         // I get the decision from the previous step
         var fdecision=node.game.memory.stage[Pstep1_s].fetchArray('fdecision')[0][0];
-            fdecision='<span style="color:'+fdecision+'">'+fdecision+'</span>';
+
+        if(fdecision==='voter'){
+          fdecision=vote;
+        }
+        if(fdecision==='notvoter'){
+          if(vote==='red'){
+              fdecision='blue';
+          }
+          if(vote==='blue'){
+              fdecision='red';
+          }
+        }
+
+
         // If the decision was correct the players are paid 1.5$.
         if (urncolor===fdecision){
           correct='correct';
@@ -740,6 +773,16 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           v_correct='false';
           paid=paid+0;
         }
+
+
+
+
+
+        // variables are changed for being displayed correctly
+        urncolor='<span style="color:'+urncolor+'">'+urncolor+'</span>';
+        vote='<span style="color:'+vote+'">'+ vote+'</span>';
+        fdecision='<span style="color:'+fdecision+'">'+fdecision+'</span>';
+
           // Temporary (we just need the id).
           var playerId = node.game.pl.first();
           playerId = playerId.id;

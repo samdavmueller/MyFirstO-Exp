@@ -46,10 +46,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // Add a new div to the info panel.
         this.infoDiv = document.createElement('div');
         this.infoDiv.innerHTML = '<h3>Behavior of automated players</h3>'+
-        "<h4>The automated players always share all private signals they receive. Their voting decision is made using the following procedure: </br>"+
+        "<h4>The automated players always share all private signals they receive. Their voting decision is made as follows: </br>"+
         "1. They count the <strong>number of shared signals that show '<span style='color:red'>red</span>'</strong> and multiply it by <strong>" +node.game.settings.bias+"</strong>.<br>"+
         "2. Then they count the <strong>number of shared signals that show '<span style='color:blue'>blue</span>'</strong> and multiply if by <strong>" +node.game.settings.bias2+"</strong>.<br>"+
-        "3. Finally, the automated players compare the numbers they received and <strong>vote for the color that has the larger number</strong>. If both number are the <strong>same</strong>, a coin toss decides the color they choose.</h4>";
+        "3. Finally, the automated players compare the numbers they calculated and <strong>vote for the color that has the larger number</strong>. If both number are the <strong>same</strong>, a coin toss decides the color they choose.</h4>";
 
       //  W.setInnerHTML('bias', node.game.settings.bias);
       //  W.setInnerHTML('bias2', node.game.settings.bias2);

@@ -1,0 +1,114 @@
+<!doctype html>
+<title>START</title>
+<link rel="stylesheet" href="/lib/bootstrap/bootstrap.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+<body>
+  <div id="container">
+    <div id="belief">
+     <h3> This is a summary of all decisions that the automated players made in the last rounds. </h3></br>
+     <table style="width:60%; margin-left:20%; margin-right:20%">
+       <tr>
+         <th> Signals </th>
+         <th> Decision </th>
+       </tr>
+       <tr>
+         <td>  '<span style="color:red">red</span>',
+               '<span style="color:red">red</span>',
+               '<span style="color:red">red</span>',
+               '<span style="color:red">red</span>',
+               '<span style="color:blue">blue</span>',
+               '<span style="color:blue">blue</span>'</td>
+         <td> <span id="first_decision"></span> </td>
+       </tr>
+       <tr>
+         <td>  '<span style="color:red">red</span>',
+               '<span style="color:red">red</span>',
+               '<span style="color:blue">blue</span>',
+               '<span style="color:blue">blue</span>',
+               '<span style="color:blue">blue</span>'</td>
+         <td> <span id="second_decision"></span> </td>
+       </tr>
+       <tr>
+         <td>  '<span style="color:red">red</span>',
+               '<span style="color:blue">blue</span>'</td>
+         <td> <span id="third_decision"></span> </td>
+       </tr>
+       <tr>
+         <td>  '<span style="color:red">red</span>',
+               '<span style="color:red">red</span>',
+               '<span style="color:red">red</span>',
+               '<span style="color:blue">blue</span>'</td>
+         <td> <span id="fourth_decision"></span> </td>
+       </tr>
+       <tr>
+         <td>  '<span style="color:red">red</span>',
+               '<span style="color:red">red</span>',
+               '<span style="color:blue">blue</span>',
+               '<span style="color:blue">blue</span>',
+               '<span style="color:blue">blue</span>',
+               '<span style="color:blue">blue</span>'</td>
+         <td> <span id="fifth_decision"></span> </td>
+       </tr>
+       <tr>
+          <td>  <span id="TUT_signals1"></span></td>
+          <td> <span id="TUT_decision1"></span> </td>
+      </tr>
+      <tr>
+         <td>  <span id="TUT_signals2"></span></td>
+         <td> <span id="TUT_decision2"></span> </td>
+     </tr>
+     <tr>
+        <td>  <span id="TUT_signals3"></span></td>
+        <td> <span id="TUT_decision3"></span> </td>
+    </tr>
+      <tr>
+         <td>  <span id="GAME_signals1"></span></td>
+         <td> <span id="GAME_decision1"></span> </td>
+      </tr>
+      <tr>
+         <td>  <span id="GAME_signals2"></span></td>
+         <td> <span id="GAME_decision2"></span> </td>
+      </tr>
+      <tr>
+         <td>  <span id="GAME_signals3"></span></td>
+         <td> <span id="GAME_decision3"></span> </td>
+      </tr>
+     </table>
+     <br><br>
+
+     <br/>
+
+     Please remember that the auomated players make their voting decision as follows:
+     <br>
+       1. They count the <strong>number of shared signals that show
+         '<span style="color:red">red</span>'</strong> and multiply it by
+         <span id="bias" style="font-weight:bold; color: red">a number between 0 and 30</span>.<br>
+       2. Then they count the <strong>number of shared signals that show
+         '<span style="color:blue">blue</span>'</strong> and multiply it by
+         <span id="bias2" style="font-weight:bold; color: blue"></span>.<br>
+       3. Finally, the automated players compare the numbers they calculated and
+       <strong>vote for the color that has the larger number</strong>.
+       If both number are the <strong>same</strong>, a coin toss decides the
+       color they choose.<br><br>
+
+  <strong>What do You belief is the number that the automated players multiply the count of red signals with?</strong> <br> <br>
+  When you can guess the correct number, 30 ECU are added to your final payoff.<br>
+  Please type in your guess below in the box below.<br>
+  <input type="number" id="guess"/>
+  <div id="warning" style="display: none; font-size:20px; font-weight:bold; color:red">
+    You have to type a number between 0 and 30!
+  </div>
+<br><br>
+
+   <h4>Click 'Send' to send your guess and continue to the next stage.</h4>
+
+   <br/>
+   <br/>
+   <center>
+ <input type="button" value="Send" name="Send" id="Continue_button" class="btn-success" style="font-size:20px; font-weight: bold; height:75px; width:150px"/>
+   </center>
+     <br/>
+     <br/>
+   </div>
+  </div>
+</body>

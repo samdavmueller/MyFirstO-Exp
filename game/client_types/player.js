@@ -47,9 +47,54 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         this.infoDiv = document.createElement('div');
         this.infoDiv.innerHTML = '<h3>Behavior of automated players</h3>'+
         "<h4>The automated players always share all private signals they receive. Their voting decision is made as follows: </br>"+
-        "1. They count the <strong>number of shared signals that show '<span style='color:red'>red</span>'</strong> and multiply it by <strong>" +node.game.settings.bias+"</strong>.<br>"+
+        "1. They count the <strong>number of shared signals that show '<span style='color:red'>red</span>'</strong> and multiply it by <strong>a number between 0 and 30</strong>.<br>"+
         "2. Then they count the <strong>number of shared signals that show '<span style='color:blue'>blue</span>'</strong> and multiply if by <strong>" +node.game.settings.bias2+"</strong>.<br>"+
-        "3. Finally, the automated players compare the numbers they calculated and <strong>vote for the color that has the larger number</strong>. If both number are the <strong>same</strong>, a coin toss decides the color they choose.</h4>";
+        "3. Finally, the automated players compare the numbers they calculated and <strong>vote for the color that has the larger number</strong>. If both number are the <strong>same</strong>, a coin toss decides the color they choose.</h4>"+
+        "The automated players are identical and made the following choices after seeing the signals given below: <br><br>"+
+        '<table style="width:60%; margin-left:20%; margin-right:20%">'+
+          '<tr>'+
+            '<th> Signals </th>'+
+            '<th> Decision </th>'+
+          '</tr>'+
+          '<tr>'+
+            '<td>  <span style="color:red">red</span>,'+
+                  '<span style="color:red">red</span>,'+
+                  '<span style="color:red">red</span>,'+
+                  '<span style="color:red">red</span>,'+
+                  '<span style="color:blue">blue</span>,'+
+                  '<span style="color:blue">blue</span></td>'+
+            '<td> '+ node.game.settings.first_decision +'</td>'+
+          '</tr>'+
+          '<tr>'+
+            '<td> <span style="color:red">red</span>,'+
+                  '<span style="color:red">red</span>,'+
+                  '<span style="color:blue">blue</span>,'+
+                  '<span style="color:blue">blue</span>,'+
+                  '<span style="color:blue">blue</span> </td>'+
+            '<td>'+node.game.settings.second_decision +'</td>'+
+          '</tr>'+
+          '<tr>'+
+            '<td>  <span style="color:red">red</span>,'+
+                  '<span style="color:blue">blue</span></td>'+
+            '<td>'+ node.game.settings.third_decision +'</td>'+
+          '</tr>'+
+          '<tr>'+
+            '<td>  <span style="color:red">red</span>,'+
+                  '<span style="color:red">red</span>,'+
+                  '<span style="color:red">red</span>,'+
+                  '<span style="color:blue">blue</span></td>'+
+            '<td>'+ node.game.settings.fourth_decision+  '</td>'+
+          '</tr>'+
+          '<tr>' +
+            '<td>  <span style="color:red">red</span>,'+
+                  '<span style="color:red">red</span>,'+
+                  '<span style="color:blue">blue</span>,'+
+                  '<span style="color:blue">blue</span>,'+
+                  '<span style="color:blue">blue</span>,'+
+                  '<span style="color:blue">blue</span></td>'+
+            '<td>' +node.game.settings.fifth_decision+ '</td>'+
+          '</tr>'+
+        '</table>';
 
       //  W.setInnerHTML('bias', node.game.settings.bias);
       //  W.setInnerHTML('bias2', node.game.settings.bias2);
@@ -72,10 +117,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
             //BackButton is not working, I don't know why...
-        this.backButton = node.widgets.append('BackButton',
+      /*  this.backButton = node.widgets.append('BackButton',
                                               W.getHeader(), {
                                                   acrossStages:  true
-        });
+        });*/
         // Last instruction in the init function.
         // Game must be started manually.
 
@@ -105,11 +150,16 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             W.setInnerHTML('blue_count', bsig);
             W.setInnerHTML('correctsignal', csig);
             W.setInnerHTML('wrongsignal', wsig);
-            W.setInnerHTML('bias', node.game.settings.bias);
+            //W.setInnerHTML('bias', node.game.settings.bias);
             W.setInnerHTML('bias2', node.game.settings.bias2);
-            W.setInnerHTML('bias3', node.game.settings.bias);
-            W.setInnerHTML('bias4', node.game.settings.bias2);
+            //W.setInnerHTML('bias3', node.game.settings.bias);
+            //W.setInnerHTML('bias4', node.game.settings.bias2);
             W.setInnerHTML('exchange-rate', node.game.settings.EXCHANGE_RATE_INSTRUCTIONS);
+            W.setInnerHTML('first_decision', node.game.settings.first_decision);
+            W.setInnerHTML('second_decision', node.game.settings.second_decision);
+            W.setInnerHTML('third_decision', node.game.settings.third_decision);
+            W.setInnerHTML('fourth_decision', node.game.settings.fourth_decision);
+            W.setInnerHTML('fifth_decision', node.game.settings.fifth_decision);
         }
     });
 
@@ -118,6 +168,31 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     // I would really want the back button to work in case somebody has not read
     // the instructions well enough
     stager.extendStep('quiz', {
+      init: function() {
+      //    node.game.backButton.destroy();
+       // A info button is created that is available
+        // It explains the strategy of the automated players
+        // Generate the info panel object.
+
+          /*var infoPanel = W.generateInfoPanel();
+
+          // Generate the toggle button and append it to the header.
+          this.infoButton = infoPanel.createToggleButton('History');
+          W.getHeader().appendChild(this.infoButton);
+
+          // Add a new div to the info panel.
+          this.infoDiv = document.createElement('div');
+          this.infoDiv.innerHTML = '<h3>Strategy</h3>';
+          this.infoDiv.class ='inner';
+          infoPanel.infoPanelDiv.appendChild(this.infoDiv);*/
+
+          this.infoButton.disabled=false;
+
+          node.on.step(function(){
+            W.infoPanel.close();
+          })
+
+      },
 
 
 
@@ -158,20 +233,24 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 			            correctChoice: 0,
 			            shuffleChoices: true,
 			            orientation: 'V' //horizontal
-		             },
-		             {
-			            name: 'ChoiceTable',
-			            id: 'automated_players',
-			            mainText: 'The shared signals are <span style="color:blue">BLUE</span>, <span style="color:red">RED</span>, <span style="color:blue">BLUE</span>, <span style="color:blue">BLUE</span>, <span style="color:red">RED</span>. How do the automated players vote?',
-			            choices: [
-			                      settings.right_decision,
-                            settings.wrong_decision,
-                            'I don\'t know.'
-			                     ],
-			            correctChoice: 0,
-			            shuffleChoices: true,
-			            orientation: 'H' //horizontal
-		             }
+                },
+                {
+                 name: 'ChoiceTable',
+                 id: 'automated_players',
+                 mainText: 'With which number does the automated player multiply the count of blue signals?',
+                 choices: [
+                          '0',
+                          '1',
+                          '5',
+                          '10',
+                          '15',
+                          '21',
+                          '30'
+                           ],
+                 correctChoice: 3,
+                 shuffleChoices: true,
+                 orientation: 'V' //horizontal
+                }
 		        ]
 	    }
 	   }
@@ -189,7 +268,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       // But I decided I do not need time pressure at all.
       // timer: settings.bidTime,
       init: function() {
-          node.game.backButton.destroy();
+      //    node.game.backButton.destroy();
        // A info button is created that is available
         // It explains the strategy of the automated players
         // Generate the info panel object.
@@ -281,28 +360,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
           }
 
-          // the same procedure for signal 3
-          if (Math.random()< node.game.settings.getsignal) {
-              if (Math.random()< node.game.settings.correctsignal){
-                  plyrsignal3=urncolor;
-                  div = W.getElementById('ps3').style.color = plyrsignal3;
-
-              }
-              else{
-                  plyrsignal3=noturncolor;
-                  div = W.getElementById('ps3').style.color = plyrsignal3;
-              }
-          }
-          else {
-              plyrsignal3= '';
-              div = W.getElementById('signal3').style.display = 'none';
-              div = W.getElementById('signal3').style.color = plyrsignal3;
-          }
 
           // signals are sent to the html file
           W.setInnerHTML('ps1', plyrsignal1);
           W.setInnerHTML('ps2', plyrsignal2);
-          W.setInnerHTML('ps3', plyrsignal3);
 
           // button is identified that submit the signals to the next stage
           button = W.getElementById('submitSignals');
@@ -315,9 +376,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               if (plyrsignal2===''){
                   decision2 = 0;
               }
-              if (plyrsignal3===''){
-                  decision3 = 0;
-              }
+
               // now it is checked for each signal whether it should be shared or hided
               // the decision is saved in the different decision variables
               if (W.getElementById('hide1').checked){
@@ -332,17 +391,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               if (W.getElementById('share2').checked){
                   decision2 = 1;
               }
-              if (W.getElementById('hide3').checked){
-                  decision3 = 0;
-              }
-              if (W.getElementById('share3').checked){
-                  decision3 = 1;
-              }
+
 
               // Now, it is checked whether there has bee a decuision made for all signals.
               // A error message is written.
               // Unfortunately the error message is written on the side of the display and not below
-              var dsum=decision1+decision2+decision3;
+              var dsum=decision1+decision2;
               if(dsum<0){
 
                   div = W.getElementById('warning').style.display = '';
@@ -356,9 +410,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               if (plyrsignal2===''){
                   decision2 = 0;
               }
-              if (plyrsignal3===''){
-                  decision3 = 0;
-              }
+
 
               // A String variable that is used to display the signals in the next stage.
               var sharesignals='';
@@ -383,15 +435,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                       shar_sig_array.push(0);
                   }
               }
-              if (decision3 == 1) {
-                  sharesignals= sharesignals + ', <span style="color:' + plyrsignal3+'">' + plyrsignal3+'</span>';
-                  if(plyrsignal3==="red"){
-                      shar_sig_array.push(1);
-                  }
-                  if(plyrsignal3==="blue"){
-                      shar_sig_array.push(0);
-                  }
-              }
 
               // the sharesignals string starts with a comma that is removed
               sharesignals = sharesignals.slice(1);
@@ -401,12 +444,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               // store the decision in the server.
               node.done({ decision1: decision1,
                           decision2: decision2,
-                          decision3: decision3,
                           urncolor: urncolor,
                           noturncolor: noturncolor,
                           plyrsignal1:plyrsignal1,
                           plyrsignal2:plyrsignal2,
-                          plyrsignal3:plyrsignal3,
                           sharesignal1: sharesignals,
                           sig_array: shar_sig_array});
           };
@@ -503,6 +544,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               W.setInnerHTML('vdecision', msg.data.vote);
               W.setInnerHTML('v_correct',  msg.data.v_correct);
               W.setInnerHTML('urncolor',  msg.data.urncolor);
+              fdecision=msg.data.fdecision;
               W.setInnerHTML('committee_decision',  msg.data.fdecision);
 
               correct=msg.data.correct;
@@ -512,6 +554,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               W.setInnerHTML('payoff',  msg.data.paid);
           });
 
+          fdecision=this.fdecision;
           paid=this.paid;
           correct=this.correct;
           // button to continue to next round
@@ -519,6 +562,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
           c_button.onclick=function(){
               node.done({
+                  fdecision: fdecision,
                   payoff: paid,
                   correct: correct
               });
@@ -588,7 +632,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             // variables I need
             var button, decision1, decision2, decision3,
                 div, urncolor, noturncolor,
-                plyrsignal1, plyrsignal2, plyrsignal3;
+                plyrsignal1, plyrsignal2;
             //this array gets the information whether a signal is shared (1) or not (0)
             var shar_sig_array=[];
 
@@ -596,7 +640,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             // a decision was made for all signals
             decision1= -99;
             decision2= -99;
-            decision3= -99;
 
 
             // the urncolor is decided randomly
@@ -645,28 +688,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             }
 
-            // the same procedure for signal 3
-            if (Math.random()< node.game.settings.getsignal) {
-                if (Math.random()< node.game.settings.correctsignal){
-                    plyrsignal3=urncolor;
-                    div = W.getElementById('ps3').style.color = plyrsignal3;
 
-                }
-                else{
-                    plyrsignal3=noturncolor;
-                    div = W.getElementById('ps3').style.color = plyrsignal3;
-                }
-            }
-            else {
-                plyrsignal3= '';
-                div = W.getElementById('signal3').style.display = 'none';
-                div = W.getElementById('signal3').style.color = plyrsignal3;
-            }
 
             // signals are sent to the html file
             W.setInnerHTML('ps1', plyrsignal1);
             W.setInnerHTML('ps2', plyrsignal2);
-            W.setInnerHTML('ps3', plyrsignal3);
 
             // button is identified that submit the signals to the next stage
             button = W.getElementById('submitSignals');
@@ -679,9 +705,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 if (plyrsignal2===''){
                     decision2 = 0;
                 }
-                if (plyrsignal3===''){
-                    decision3 = 0;
-                }
+
                 // now it is checked for each signal whether it should be shared or hided
                 // the decision is saved in the different decision variables
                 if (W.getElementById('hide1').checked){
@@ -696,17 +720,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 if (W.getElementById('share2').checked){
                     decision2 = 1;
                 }
-                if (W.getElementById('hide3').checked){
-                    decision3 = 0;
-                }
-                if (W.getElementById('share3').checked){
-                    decision3 = 1;
-                }
 
                 // Now, it is checked whether there has bee a decuision made for all signals.
                 // A error message is written.
                 // Unfortunately the error message is written on the side of the display and not below
-                var dsum=decision1+decision2+decision3;
+                var dsum=decision1+decision2;
                 if(dsum<0){
 
                     div = W.getElementById('warning').style.display = '';
@@ -719,9 +737,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 }
                 if (plyrsignal2===''){
                     decision2 = 0;
-                }
-                if (plyrsignal3===''){
-                    decision3 = 0;
                 }
 
                 // A String variable that is used to display the signals in the next stage.
@@ -747,15 +762,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         shar_sig_array.push(0);
                     }
                 }
-                if (decision3 == 1) {
-                    sharesignals= sharesignals + ', <span style="color:' + plyrsignal3+'">' + plyrsignal3+'</span>';
-                    if(plyrsignal3==="red"){
-                        shar_sig_array.push(1);
-                    }
-                    if(plyrsignal3==="blue"){
-                        shar_sig_array.push(0);
-                    }
-                }
+
 
                 // the sharesignals string starts with a comma that is removed
                 sharesignals = sharesignals.slice(1);
@@ -765,12 +772,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 // store the decision in the server.
                 node.done({ decision1: decision1,
                             decision2: decision2,
-                            decision3: decision3,
                             urncolor: urncolor,
                             noturncolor: noturncolor,
                             plyrsignal1:plyrsignal1,
                             plyrsignal2:plyrsignal2,
-                            plyrsignal3:plyrsignal3,
                             sharesignal1: sharesignals,
                             sig_array: shar_sig_array});
             };
@@ -867,6 +872,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 W.setInnerHTML('vdecision', msg.data.vote);
                 W.setInnerHTML('v_correct',  msg.data.v_correct);
                 W.setInnerHTML('urncolor',  msg.data.urncolor);
+
+                fdecision= msg.data.fdecision;
                 W.setInnerHTML('committee_decision',  msg.data.fdecision);
 
                 correct=msg.data.correct;
@@ -876,6 +883,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 W.setInnerHTML('payoff',  msg.data.paid);
             });
 
+            fdecision=this.fdecision;
             paid=this.paid;
             correct=this.correct;
             // button to continue to next round
@@ -883,11 +891,175 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             c_button.onclick=function(){
                 node.done({
+                    fdecision: fdecision,
                     payoff: paid,
                     correct: correct
                 });
             }
 
+
+        }
+    });
+
+    stager.extendStep('belief', {
+      backbutton: false,
+        donebutton: false,
+        frame: 'belief_elicitation.htm',
+
+        cb: function() {
+          var c_button, TUT1_signals, TUT1_decision,
+          TUT2_signals, TUT2_decision,TUT3_signals, TUT3_decision,
+          GAME1_signals, GAME1_decision, GAME2_signals,
+          GAME2_decision, GAME3_signals, GAME3_decision,
+          GAME1_paid, GAME2_paid, GAME3_paid,
+          div, guess;
+
+          node.on.data('DATA', function(msg){
+            GAME1_signals=  msg.data.GAME1_signals;
+            W.setInnerHTML('GAME_signals1',  GAME1_signals);
+            GAME1_decision= msg.data.GAME1_decision;
+            W.setInnerHTML('GAME_decision1',  GAME1_decision);
+            GAME1_paid= msg.data.GAME1_paid;
+
+              GAME2_signals=  msg.data.GAME2_signals;
+              W.setInnerHTML('GAME_signals2',  GAME2_signals);
+              GAME2_decision= msg.data.GAME2_decision;
+              W.setInnerHTML('GAME_decision2',  GAME2_decision);
+              GAME2_paid= msg.data.GAME2_paid;
+
+            GAME3_signals=  msg.data.GAME3_signals;
+            W.setInnerHTML('GAME_signals3',  GAME3_signals);
+            GAME3_decision= msg.data.GAME3_decision;
+            W.setInnerHTML('GAME_decision3',  GAME3_decision);
+            GAME3_paid= msg.data.GAME3_paid;
+
+               TUT1_signals=  msg.data.TUT1_signals;
+               W.setInnerHTML('TUT_signals1',  TUT1_signals);
+               TUT1_decision= msg.data.TUT1_decision;
+               W.setInnerHTML('TUT_decision1',  TUT1_decision);
+
+
+          TUT2_signals=  msg.data.TUT2_signals;
+          W.setInnerHTML('TUT_signals2',  TUT2_signals);
+          TUT2_decision= msg.data.TUT2_decision;
+          W.setInnerHTML('TUT_decision2',  TUT2_decision);
+
+
+               TUT3_signals=  msg.data.TUT3_signals;
+               W.setInnerHTML('TUT_signals3',  TUT3_signals);
+               TUT3_decision= msg.data.TUT3_decision;
+               W.setInnerHTML('TUT_decision3',  TUT3_decision);
+           });
+
+          //TUT1_signals=this.TUT1_signals;
+          //TUT1_decision=this.TUT1_decision;
+
+           W.setInnerHTML('first_decision', node.game.settings.first_decision);
+           W.setInnerHTML('second_decision', node.game.settings.second_decision);
+           W.setInnerHTML('third_decision', node.game.settings.third_decision);
+           W.setInnerHTML('fourth_decision', node.game.settings.fourth_decision);
+           W.setInnerHTML('fifth_decision', node.game.settings.fifth_decision);
+           W.setInnerHTML('bias2', node.game.settings.bias2);
+           //W.setInnerHTML('TUT_signals1',  TUT1_signals);
+           //W.setInnerHTML('TUT_decision1',  TUT1_decision);
+
+          // button to continue to next round
+          GAME1_paid=this.GAME1_paid;
+          GAME2_paid=this.GAME2_paid;
+          GAME3_paid=this.GAME3_paid;
+
+          c_button=W.getElementById('Continue_button');
+
+          c_button.onclick=function(){
+              guess=Math.round(W.getElementById('guess').value);
+              if(guess>=0 & guess<=30 &guess!=""){
+                node.done({
+                  guess: guess,
+                  GAME1_paid: GAME1_paid,
+                  GAME2_paid: GAME2_paid,
+                  GAME3_paid: GAME3_paid
+                });
+              }
+              else{
+                div = W.getElementById('warning').style.display = '';
+                return;
+              }
+          }
+        }
+    });
+
+    stager.extendStep('bomb', {
+      frame: 'bomb.htm',
+      backbutton: false,
+      donebutton: false,
+      cb:function() {
+        var div, g, c_button, open;
+        var slider = W.getElementById("myRange");
+        var output = W.getElementById("demo");
+        var prize = W.getElementById("prize");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function() {
+          open= this.value
+          output.innerHTML = this.value;
+          prize.innerHTML = Math.round(this.value*2);
+          var i = 1;
+          for(; i<101; i++){
+            if(this.value>=i){
+              div = W.getElementById(String(i)).style.background = '#1be139';
+            }
+            else{
+              div = W.getElementById(String(i)).style.background = '#000000';
+            }
+          }
+        }
+
+        open=this.open
+        c_button=W.getElementById('Continue_button');
+
+        c_button.onclick=function(){
+              node.done({
+                open: open,
+                prize: Math.round(open*2),
+                bomb: Math.round(Math.random()*100)
+              });
+        }
+      }
+    });
+
+
+
+    stager.extendStep('belief_feedback', {
+      backbutton: false,
+        donebutton: true,
+        frame: 'belief_feedback.htm',
+
+        cb: function() {
+          var GAME1_paid, GAME2_paid, GAME3_paid;
+          var truth, guess, win;
+          var box, bomb, win2
+
+          node.on.data('DATA', function(msg){
+
+            GAME1_paid= msg.data.GAME1_paid;
+            W.setInnerHTML('GAME_payment1', GAME1_paid);
+            GAME2_paid= msg.data.GAME2_paid;
+            W.setInnerHTML('GAME_payment2', GAME2_paid);
+            GAME3_paid= msg.data.GAME3_paid;
+            W.setInnerHTML('GAME_payment3', GAME3_paid);
+            guess=msg.data.guess;
+            W.setInnerHTML('Guess', guess);
+            win=msg.data.win;
+            W.setInnerHTML('Win', win);
+            truth=msg.data.truth;
+            W.setInnerHTML('Value', truth);
+            box=msg.data.box;
+            W.setInnerHTML('Box', box);
+            bomb=msg.data.bomb;
+            W.setInnerHTML('Bomb', bomb);
+            win2=msg.data.win2;
+            W.setInnerHTML('Win2', win2);
+          });
 
         }
     });

@@ -1,0 +1,402 @@
+<!doctype html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+.square {
+  height: 50px;
+  width: 50px;
+  background: black;
+}
+</style>
+</head>
+<title>START</title>
+<link rel="stylesheet" href="/lib/bootstrap/bootstrap.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+
+<body>
+  <div id="container" style=" text-align: center">
+    <h2><strong>The Bomb Game</strong></h2>
+    <br>
+    <h4> In this part of the experiment you will play the bomb game.</h4>
+    <h4> Below you see 100 black boxes. <strong>In one of those boxes there is a bomb.</strong> </h4>
+    <h4> You have to decide how many boxes you want to open.<strong> In each box there are 2 ECU</strong>. </h4>
+    <h4> You get the ECU of all the boxes you opened. However, when you <strong>open the box with the bomb you get nothing</strong>. </h4>
+    <h4><strong> How many boxes do you want to open?</strong></h4><br>
+
+    <table style="width:60%; margin-left:20%; margin-right:20%">
+	<tr>
+    	<td>
+        <div class="square" id="1" style="background: #0">
+        </td>
+        <td>
+        <div class="square" id="2">
+        </td>
+        <td>
+        <div class="square" id="3">
+        </td>
+        <td>
+        <div class="square" id="4">
+        </td>
+        <td>
+        <div class="square" id="5">
+        </td>
+        <td>
+        <div class="square" id="6">
+        </td>
+        <td>
+        <div class="square" id="7">
+        </td>
+        <td>
+        <div class="square" id="8">
+        </td>
+        <td>
+        <div class="square" id="9">
+        </td>
+        <td>
+        <div class="square" id="10">
+        </td>
+    </tr>
+    <tr>
+      	<td>
+          <div class="square" id="11">
+          </td>
+          <td>
+          <div class="square" id="12">
+          </td>
+          <td>
+          <div class="square" id="13">
+          </td>
+          <td>
+          <div class="square" id="14">
+          </td>
+          <td>
+          <div class="square" id="15">
+          </td>
+          <td>
+          <div class="square" id="16">
+          </td>
+          <td>
+          <div class="square" id="17">
+          </td>
+          <td>
+          <div class="square" id="18">
+          </td>
+          <td>
+          <div class="square" id="19">
+          </td>
+          <td>
+          <div class="square" id="20">
+          </td>
+      </tr>
+      <tr>
+        	<td>
+            <div class="square" id="21">
+            </td>
+            <td>
+            <div class="square" id="22">
+            </td>
+            <td>
+            <div class="square" id="23">
+            </td>
+            <td>
+            <div class="square" id="24">
+            </td>
+            <td>
+            <div class="square" id="25">
+            </td>
+            <td>
+            <div class="square" id="26">
+            </td>
+            <td>
+            <div class="square" id="27">
+            </td>
+            <td>
+            <div class="square" id="28">
+            </td>
+            <td>
+            <div class="square" id="29">
+            </td>
+            <td>
+            <div class="square" id="30">
+            </td>
+        </tr>
+        <tr>
+          	<td>
+              <div class="square" id="31" style="background: #0">
+              </td>
+              <td>
+              <div class="square" id="32">
+              </td>
+              <td>
+              <div class="square" id="33">
+              </td>
+              <td>
+              <div class="square" id="34">
+              </td>
+              <td>
+              <div class="square" id="35">
+              </td>
+              <td>
+              <div class="square" id="36">
+              </td>
+              <td>
+              <div class="square" id="37">
+              </td>
+              <td>
+              <div class="square" id="38">
+              </td>
+              <td>
+              <div class="square" id="39">
+              </td>
+              <td>
+              <div class="square" id="40">
+              </td>
+          </tr>
+          <tr>
+            	<td>
+                <div class="square" id="41" style="background: #0">
+                </td>
+                <td>
+                <div class="square" id="42">
+                </td>
+                <td>
+                <div class="square" id="43">
+                </td>
+                <td>
+                <div class="square" id="44">
+                </td>
+                <td>
+                <div class="square" id="45">
+                </td>
+                <td>
+                <div class="square" id="46">
+                </td>
+                <td>
+                <div class="square" id="47">
+                </td>
+                <td>
+                <div class="square" id="48">
+                </td>
+                <td>
+                <div class="square" id="49">
+                </td>
+                <td>
+                <div class="square" id="50">
+                </td>
+            </tr>
+            <tr>
+              	<td>
+                  <div class="square" id="51" style="background: #0">
+                  </td>
+                  <td>
+                  <div class="square" id="52">
+                  </td>
+                  <td>
+                  <div class="square" id="53">
+                  </td>
+                  <td>
+                  <div class="square" id="54">
+                  </td>
+                  <td>
+                  <div class="square" id="55">
+                  </td>
+                  <td>
+                  <div class="square" id="56">
+                  </td>
+                  <td>
+                  <div class="square" id="57">
+                  </td>
+                  <td>
+                  <div class="square" id="58">
+                  </td>
+                  <td>
+                  <div class="square" id="59">
+                  </td>
+                  <td>
+                  <div class="square" id="60">
+                  </td>
+              </tr>
+              <tr>
+                	<td>
+                    <div class="square" id="61" style="background: #0">
+                    </td>
+                    <td>
+                    <div class="square" id="62">
+                    </td>
+                    <td>
+                    <div class="square" id="63">
+                    </td>
+                    <td>
+                    <div class="square" id="64">
+                    </td>
+                    <td>
+                    <div class="square" id="65">
+                    </td>
+                    <td>
+                    <div class="square" id="66">
+                    </td>
+                    <td>
+                    <div class="square" id="67">
+                    </td>
+                    <td>
+                    <div class="square" id="68">
+                    </td>
+                    <td>
+                    <div class="square" id="69">
+                    </td>
+                    <td>
+                    <div class="square" id="70">
+                    </td>
+                </tr>
+                <tr>
+                  	<td>
+                      <div class="square" id="71" style="background: #0">
+                      </td>
+                      <td>
+                      <div class="square" id="72">
+                      </td>
+                      <td>
+                      <div class="square" id="73">
+                      </td>
+                      <td>
+                      <div class="square" id="74">
+                      </td>
+                      <td>
+                      <div class="square" id="75">
+                      </td>
+                      <td>
+                      <div class="square" id="76">
+                      </td>
+                      <td>
+                      <div class="square" id="77">
+                      </td>
+                      <td>
+                      <div class="square" id="78">
+                      </td>
+                      <td>
+                      <div class="square" id="79">
+                      </td>
+                      <td>
+                      <div class="square" id="80">
+                      </td>
+                  </tr>
+                  <tr>
+                    	<td>
+                        <div class="square" id="81" style="background: #0">
+                        </td>
+                        <td>
+                        <div class="square" id="82">
+                        </td>
+                        <td>
+                        <div class="square" id="83">
+                        </td>
+                        <td>
+                        <div class="square" id="84">
+                        </td>
+                        <td>
+                        <div class="square" id="85">
+                        </td>
+                        <td>
+                        <div class="square" id="86">
+                        </td>
+                        <td>
+                        <div class="square" id="87">
+                        </td>
+                        <td>
+                        <div class="square" id="88">
+                        </td>
+                        <td>
+                        <div class="square" id="89">
+                        </td>
+                        <td>
+                        <div class="square" id="90">
+                        </td>
+                    </tr>
+                    <tr>
+                      	<td>
+                          <div class="square" id="91" style="background: #0">
+                          </td>
+                          <td>
+                          <div class="square" id="92">
+                          </td>
+                          <td>
+                          <div class="square" id="93">
+                          </td>
+                          <td>
+                          <div class="square" id="94">
+                          </td>
+                          <td>
+                          <div class="square" id="95">
+                          </td>
+                          <td>
+                          <div class="square" id="96">
+                          </td>
+                          <td>
+                          <div class="square" id="97">
+                          </td>
+                          <td>
+                          <div class="square" id="98">
+                          </td>
+                          <td>
+                          <div class="square" id="99">
+                          </td>
+                          <td>
+                          <div class="square" id="100">
+                          </td>
+                      </tr>
+</table>
+  </br>
+    <p>
+Use the slider to change the number of boxes you want to open.
+</p>
+<div class="slidecontainer">
+  <input type="range" min="0" max="100" value="0" class="slider" id="myRange">
+   <p>Number of boxes to open: <span id="demo"></span></p>
+   <p>ECU you can win: <span id="prize"></span> ECU</p>
+</div>
+
+
+<p>
+  Click 'OPEN' to open the boxes and find out whether you opened the box with the bomb.
+</p>
+<center>
+<input type="button" value="OPEN" name="OPEN" id="Continue_button" class="btn-success" style="font-size:20px; font-weight: bold; height:75px; width:150px"/>
+</center>
+
+<!-- End Consent Form -->
+  </div>
+</body>

@@ -55,35 +55,43 @@ module.exports = {
         control: {
             description: "The bots are not biased at all",
             //bidTime: 30000,
-            getsignal: 0.7,
+            getsignal: 0.9,
             correctsignal: 0.6,
-            bias: 1,
-            bias2: 1,
-            right_decision: '<span style="color: blue">BLUE</span>',
-            wrong_decision: '<span style="color: red">RED</span>'
+            bias: 10,
+            bias2: 10,
+            first_decision: '<span style="color: red">red</span>',
+            second_decision: '<span style="color: blue">blue</span>',
+            third_decision: '<span style="color: blue">blue</span>',
+            fourth_decision: '<span style="color: red">red</span>',
+            fifth_decision: '<span style="color: blue">blue</span>'
         },
 
-        weak: {
-            description: "The bots are barely biased and hiding is usually not rational.",
+        under: {
+            description: "The bots are heavily biased and it is rational to hide blue signals.",
             //bidTime: 30000,
-            getsignal: 0.7,
+            getsignal: 0.9,
             correctsignal: 0.6,
-            bias: 1.3,
-            bias2: 1,
-            right_decision: '<span style="color: blue">BLUE</span>',
-            wrong_decision: '<span style="color: red">RED</span>'
+            bias: 4,
+            bias2: 10,
+            first_decision: '<span style="color: blue">blue</span>',
+            second_decision: '<span style="color: blue">blue</span>',
+            third_decision: '<span style="color: blue">blue</span>',
+            fourth_decision: '<span style="color: red">red</span>',
+            fifth_decision: '<span style="color: blue">blue</span>'
         },
 
-        strong: {
-            description: "The bots are very biased and hiding is usually rational.",
+        over: {
+            description: "The bots are heavily biased and it is rational to hide red signals.",
             //bidTime: 30000,
-            getsignal: 0.7,
+            getsignal: 0.9,
             correctsignal: 0.6,
-            bias: 1.7,
-            bias2: 1,
-            right_decision: '<span style="color: red">RED</span>',
-            wrong_decision: '<span style="color: blue">BLUE</span>'
+            bias: 18,
+            bias2: 10,
+            first_decision: '<span style="color: red">red</span>',
+            second_decision: '<span style="color: red">red</span>',
+            third_decision: '<span style="color: red">red</span>',
+            fourth_decision: '<span style="color: red">red</span>',
+            fifth_decision: '<span style="color: blue">blue</span>'
         }
-
-    }
+      }
 };

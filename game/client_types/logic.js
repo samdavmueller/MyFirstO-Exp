@@ -70,8 +70,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
         cb: function() {
-          var decision1, decision2, decision3, urncolor, noturncolor,
-              plyrsignal1, plyrsignal2, plyrsignal3, sharesignals;
+          var decision1, decision2, urncolor, noturncolor,
+              plyrsignal1, plyrsignal2, sharesignals;
               console.log('SIGNALSTUT');
           // when the player is done all necessary information is send to the Logic
           // I don't think it is actually necessary to create these variables but I do it anyway
@@ -79,12 +79,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 decision1 = msg.data.decision1;
                 decision2 = msg.data.decision2;
-                decision3 = msg.data.decision3;
                 urncolor = msg.data.urncolor;
                 noturncolor = msg.data.noturncolor;
                 plyrsignal1 = msg.data.plyrsignal1;
                 plyrsignal2 = msg.data.plyrsignal2;
-                plyrsignal3 = msg.data.plyrsignal3;
                 sharesignals = msg.data.sharesignal1;
 
 
@@ -113,7 +111,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         //console.log(playsig);
         //console.log(urncolor);
         //now the bots are programmed
-        var b1s1, b1s2, b1s3, b2s1, b2s2, b2s3, fdecision;
+        var b1s1, b1s2, b2s1, b2s2, fdecision;
 
         // signals for bot1 are created the same way as they have been created for the participant.
         // I also create a string to display the signals that are shared by bot 1
@@ -147,20 +145,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         }
 
-        if (Math.random()< node.game.settings.getsignal) {
-          if (Math.random()< node.game.settings.correctsignal){
-            b1s3=urncolor;
-            b1sig= b1sig + ', <span style="color:'  + b1s3+'">' + b1s3+'</span>';
-
-          }
-          else{
-            b1s3=noturncolor;
-            b1sig= b1sig + ', <span style="color:'  + b1s3+'">' + b1s3+'</span>';
-          }
-        }
-        else {
-          b1s3= '';
-          }
         b1sig = b1sig.slice(1);
 
 
@@ -199,22 +183,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         }
 
-        if (Math.random()< node.game.settings.getsignal) {
-          if (Math.random()< node.game.settings.correctsignal){
-            b2s3=urncolor;
-
-            b2sig= b2sig + ', <span style="color:'  + b2s3+'">' + b2s3+'</span>';
-
-          }
-          else{
-            b2s3=noturncolor;
-
-            b2sig= b2sig + ', <span style="color:'  + b2s3+'">' + b2s3+'</span>';
-          }
-        }
-        else {
-          b2s3= '';
-          }
         b2sig = b2sig.slice(1);
 
         var d={
@@ -242,12 +210,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         if (b1s2==="blue"){
           shar_sig_array.push(0);
         }
-        if (b1s3==="red"){
-          shar_sig_array.push(1);
-        }
-        if (b1s3==="blue"){
-          shar_sig_array.push(0);
-        }
+
         if (b2s1==="red"){
           shar_sig_array.push(1);
         }
@@ -260,12 +223,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         if (b2s2==="blue"){
           shar_sig_array.push(0);
         }
-        if (b2s3==="red"){
-          shar_sig_array.push(1);
-        }
-        if (b2s3==="blue"){
-          shar_sig_array.push(0);
-        }
 
 
         var x=shar_sig_array.length;
@@ -274,14 +231,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         var blue_vot= (x-y)*node.game.settings.bias2;
         // and how many indicate that the urn is red
         var red_vot= y*node.game.settings.bias;
-        console.log(shar_sig_array);
+        //console.log(shar_sig_array);
     //    console.log(x);
     //    console.log(y);
 
-        console.log(blue_vot);
+      //  console.log(blue_vot);
 
-        console.log(red_vot);
-        console.log(fdecision);
+      //  console.log(red_vot);
+      //  console.log(fdecision);
         if (red_vot<blue_vot){
           fdecision='blue';
         }
@@ -296,7 +253,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             fdecision='notvoter';
           }
         }
-        console.log(fdecision);
+      //  console.log(fdecision);
         // because I was unable to save the decision from the logic I send it to
         // the player to save it using 'done'
         var player = node.game.pl.each(function(player){
@@ -335,14 +292,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           var c=node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal2')[0][0];
           signals= signals + ", " +'<span style="color:'+c+'">'+ c+'</span>';
         }
-        if(signals===""){
-            var c=node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal3')[0][0];
-            signals='<span style="color:'+c+'">'+ c+'</span>';
-        }
-        else if(node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal3')[0][0]!==""){
-            var c=node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal3')[0][0];
-          signals= signals + ", " +'<span style="color:'+c+'">'+ c+'</span>';
-        }
+
 
         // sharedsignals
         var sharesignal1=node.game.memory.stage[Pstep2_s].fetchArray('sharesignal1')[0][0];
@@ -452,8 +402,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
         cb: function() {
-          var decision1, decision2, decision3, urncolor, noturncolor,
-              plyrsignal1, plyrsignal2, plyrsignal3, sharesignals;
+          var decision1, decision2, urncolor, noturncolor,
+              plyrsignal1, plyrsignal2, sharesignals;
               console.log('SIGNALS');
           // when the player is done all necessary information is send to the Logic
           // I don't think it is actually necessary to create these variables but I do it anyway
@@ -461,12 +411,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 decision1 = msg.data.decision1;
                 decision2 = msg.data.decision2;
-                decision3 = msg.data.decision3;
                 urncolor = msg.data.urncolor;
                 noturncolor = msg.data.noturncolor;
                 plyrsignal1 = msg.data.plyrsignal1;
                 plyrsignal2 = msg.data.plyrsignal2;
-                plyrsignal3 = msg.data.plyrsignal3;
                 sharesignals = msg.data.sharesignal1;
 
 
@@ -495,7 +443,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         //console.log(playsig);
         //console.log(urncolor);
         //now the bots are programmed
-        var b1s1, b1s2, b1s3, b2s1, b2s2, b2s3, fdecision;
+        var b1s1, b1s2, b2s1, b2s2, fdecision;
 
         // signals for bot1 are created the same way as they have been created for the participant.
         // I also create a string to display the signals that are shared by bot 1
@@ -529,20 +477,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         }
 
-        if (Math.random()< node.game.settings.getsignal) {
-          if (Math.random()< node.game.settings.correctsignal){
-            b1s3=urncolor;
-            b1sig= b1sig + ', <span style="color:'  + b1s3+'">' + b1s3+'</span>';
 
-          }
-          else{
-            b1s3=noturncolor;
-            b1sig= b1sig + ', <span style="color:'  + b1s3+'">' + b1s3+'</span>';
-          }
-        }
-        else {
-          b1s3= '';
-          }
         b1sig = b1sig.slice(1);
 
 
@@ -581,22 +516,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         }
 
-        if (Math.random()< node.game.settings.getsignal) {
-          if (Math.random()< node.game.settings.correctsignal){
-            b2s3=urncolor;
 
-            b2sig= b2sig + ', <span style="color:'  + b2s3+'">' + b2s3+'</span>';
-
-          }
-          else{
-            b2s3=noturncolor;
-
-            b2sig= b2sig + ', <span style="color:'  + b2s3+'">' + b2s3+'</span>';
-          }
-        }
-        else {
-          b2s3= '';
-          }
         b2sig = b2sig.slice(1);
 
         var d={
@@ -624,12 +544,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         if (b1s2==="blue"){
           shar_sig_array.push(0);
         }
-        if (b1s3==="red"){
-          shar_sig_array.push(1);
-        }
-        if (b1s3==="blue"){
-          shar_sig_array.push(0);
-        }
+
         if (b2s1==="red"){
           shar_sig_array.push(1);
         }
@@ -642,12 +557,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         if (b2s2==="blue"){
           shar_sig_array.push(0);
         }
-        if (b2s3==="red"){
-          shar_sig_array.push(1);
-        }
-        if (b2s3==="blue"){
-          shar_sig_array.push(0);
-        }
+
 
         var x=shar_sig_array.length;
         var y=shar_sig_array.reduce((a, b) => a+b, 0);
@@ -655,13 +565,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         var blue_vot= (x-y)*node.game.settings.bias2;
         // and how many indicate that the urn is red
         var red_vot= y*node.game.settings.bias;
-        console.log(shar_sig_array);
+      //  console.log(shar_sig_array);
     //    console.log(x);
     //    console.log(y);
 
-        console.log(blue_vot);
+    //    console.log(blue_vot);
 
-        console.log(red_vot);
+      //  console.log(red_vot);
         // the decision is made. It depends on the treatment.
         if (red_vot<blue_vot){
           fdecision='blue';
@@ -677,7 +587,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             fdecision='notvoter';
           }
         }
-          console.log(fdecision);
+      //    console.log(fdecision);
         // because I was unable to save the decision from the logic I send it to
         // the player to save it using 'done'
         var player = node.game.pl.each(function(player){
@@ -716,14 +626,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           var c=node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal2')[0][0];
           signals= signals + ", " +'<span style="color:'+c+'">'+ c+'</span>';
         }
-        if(signals===""){
-            var c=node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal3')[0][0];
-            signals='<span style="color:'+c+'">'+ c+'</span>';
-        }
-        else if(node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal3')[0][0]!==""){
-            var c=node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal3')[0][0];
-          signals= signals + ", " +'<span style="color:'+c+'">'+ c+'</span>';
-        }
+
 
         // sharedsignals
         var sharesignal1=node.game.memory.stage[Pstep2_s].fetchArray('sharesignal1')[0][0];
@@ -827,6 +730,191 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       }
 
     });
+
+    stager.extendStep('belief', {
+
+    cb: function(){
+
+      //This is the anchor, the feedback of the last round.
+      // From this step, we can retrace all previous steps we need
+      var Pstep1=node.game.getPreviousStep(1);
+      console.log(Pstep1);
+
+      //TUT 1
+     var TUT1_feedback= (Pstep1.stage-2) + '.' + (Pstep1.step) + '.' + (Pstep1.round-2);
+     var TUT1_voting= (Pstep1.stage-2) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-2);
+     var TUT1_signaling= (Pstep1.stage-2) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-2);
+
+     var TUT1_decision=node.game.memory.stage[TUT1_feedback].fetchArray('fdecision')[0][0];
+     var TUT1_signals= node.game.memory.stage[TUT1_signaling].fetchArray('sharesignal1')[0][0]+", "+
+                       node.game.memory.stage[TUT1_voting].fetchArray('b1signals')[0][0]+", "+
+                       node.game.memory.stage[TUT1_voting].fetchArray('b2signals')[0][0];
+
+     //TUT 2
+     var TUT2_feedback= (Pstep1.stage-2) + '.' + (Pstep1.step) + '.' + (Pstep1.round-1);
+     var TUT2_voting= (Pstep1.stage-2) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-1);
+     var TUT2_signaling= (Pstep1.stage-2) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-1);
+
+     var TUT2_decision=node.game.memory.stage[TUT2_feedback].fetchArray('fdecision')[0][0];
+     var TUT2_signals= node.game.memory.stage[TUT2_signaling].fetchArray('sharesignal1')[0][0]+", "+
+                       node.game.memory.stage[TUT2_voting].fetchArray('b1signals')[0][0]+", "+
+                       node.game.memory.stage[TUT2_voting].fetchArray('b2signals')[0][0];
+
+     //TUT 3
+     var TUT3_feedback= (Pstep1.stage-2) + '.' + (Pstep1.step) + '.' + (Pstep1.round);
+     var TUT3_voting= (Pstep1.stage-2) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round);
+     var TUT3_signaling= (Pstep1.stage-2) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round);
+
+     var TUT3_decision=node.game.memory.stage[TUT3_feedback].fetchArray('fdecision')[0][0];
+     var TUT3_signals= node.game.memory.stage[TUT3_signaling].fetchArray('sharesignal1')[0][0]+", "+
+                       node.game.memory.stage[TUT3_voting].fetchArray('b1signals')[0][0]+", "+
+                       node.game.memory.stage[TUT3_voting].fetchArray('b2signals')[0][0];
+
+      //GAME 1
+      var GAME1_feedback= (Pstep1.stage) + '.' + (Pstep1.step) + '.' + (Pstep1.round-2);
+      var GAME1_voting= (Pstep1.stage) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-2);
+      var GAME1_signaling= (Pstep1.stage) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-2);
+      console.log(node.game.memory.stage[GAME1_feedback].fetch());
+      var GAME1_decision=node.game.memory.stage[GAME1_feedback].fetchArray('fdecision')[0][0];
+      var GAME1_signals= node.game.memory.stage[GAME1_signaling].fetchArray('sharesignal1')[0][0]+", "+
+                        node.game.memory.stage[GAME1_voting].fetchArray('b1signals')[0][0]+", "+
+                        node.game.memory.stage[GAME1_voting].fetchArray('b2signals')[0][0];
+      var GAME1_paid=node.game.memory.stage[GAME1_feedback].fetchArray('payoff')[0][0];
+
+      //GAME 2
+      var GAME2_feedback= (Pstep1.stage) + '.' + (Pstep1.step) + '.' + (Pstep1.round-1);
+      var GAME2_voting= (Pstep1.stage) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-1);
+      var GAME2_signaling= (Pstep1.stage) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-1);
+
+      var GAME2_decision=node.game.memory.stage[GAME2_feedback].fetchArray('fdecision')[0][0];
+      var GAME2_signals= node.game.memory.stage[GAME2_signaling].fetchArray('sharesignal1')[0][0]+", "+
+                        node.game.memory.stage[GAME2_voting].fetchArray('b1signals')[0][0]+", "+
+                        node.game.memory.stage[GAME2_voting].fetchArray('b2signals')[0][0];
+      var GAME2_paid=node.game.memory.stage[GAME2_feedback].fetchArray('payoff')[0][0];
+
+
+      //GAME 3
+      var GAME3_feedback= (Pstep1.stage) + '.' + (Pstep1.step) + '.' + (Pstep1.round);
+      var GAME3_voting= (Pstep1.stage) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round);
+      var GAME3_signaling= (Pstep1.stage) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round);
+
+      var GAME3_decision=node.game.memory.stage[GAME3_feedback].fetchArray('fdecision')[0][0];
+      var GAME3_signals= node.game.memory.stage[GAME3_signaling].fetchArray('sharesignal1')[0][0]+", "+
+                        node.game.memory.stage[GAME3_voting].fetchArray('b1signals')[0][0]+", "+
+                        node.game.memory.stage[GAME3_voting].fetchArray('b2signals')[0][0];
+      var GAME3_paid=node.game.memory.stage[GAME3_feedback].fetchArray('payoff')[0][0];
+      //console.log(GAME3_decision);
+      //console.log(GAME3_signals);
+
+
+
+      //var Pstep2=node.game.getPreviousStep(2);
+      //var Pstep2_s= Pstep2.stage + '.' + Pstep2.step + '.' + Pstep2.round;
+      // console.log(node.game.memory.stage[Pstep1_s].fetch());
+       //console.log(node.game.memory.stage[node.game.getPreviousStep(2)].fetch());
+      // I get the signals from the signal step and put them in one String
+
+
+
+
+        // Temporary (we just need the id).
+        var playerId = node.game.pl.first();
+        playerId = playerId.id;
+        //console.log(playerId);
+        var d={ "TUT1_signals": TUT1_signals,
+                "TUT1_decision": TUT1_decision,
+                "TUT2_signals": TUT2_signals,
+                "TUT2_decision": TUT2_decision,
+                "TUT3_signals": TUT3_signals,
+                "TUT3_decision": TUT3_decision,
+                "GAME1_decision": GAME1_decision,
+                "GAME1_signals": GAME1_signals,
+                "GAME2_decision": GAME2_decision,
+                "GAME2_signals": GAME2_signals,
+                "GAME3_decision": GAME3_decision,
+                "GAME3_signals": GAME3_signals,
+                "GAME1_paid": GAME1_paid,
+                "GAME2_paid": GAME2_paid,
+                "GAME3_paid": GAME3_paid
+
+        }
+
+
+                //  console.log(d);
+
+        node.say('DATA', playerId, d);
+    }
+
+  });
+
+  stager.extendStep('belief_feedback',{
+    cb: function(){
+      var box, bomb, prize, paid2;
+      var GAME1_paid, GAME2_paid, GAME3_paid, guess, truth, paid;
+
+      var Pstep1=node.game.getPreviousStep(1);
+      var Pstep1_s= Pstep1.stage + '.' + (Pstep1.step) + '.' + Pstep1.round;
+
+      box=node.game.memory.stage[Pstep1_s].fetchArray('open')[0][0];
+      bomb=node.game.memory.stage[Pstep1_s].fetchArray('bomb')[0][0];
+      prize=node.game.memory.stage[Pstep1_s].fetchArray('prize')[0][0];
+
+      if(box<bomb){
+        paid2=prize;
+      }
+      else{
+        paid2=0;
+      }
+
+      var Pstep2=node.game.getPreviousStep(2);
+      var Pstep2_s= Pstep2.stage + '.' + (Pstep2.step) + '.' + Pstep2.round;
+
+      GAME1_paid=node.game.memory.stage[Pstep2_s].fetchArray('GAME1_paid')[0][0];
+      GAME2_paid=node.game.memory.stage[Pstep2_s].fetchArray('GAME2_paid')[0][0];
+      GAME3_paid=node.game.memory.stage[Pstep2_s].fetchArray('GAME3_paid')[0][0];
+
+      guess=node.game.memory.stage[Pstep2_s].fetchArray('guess')[0][0];
+
+      truth= node.game.settings.bias;
+
+      if(guess==truth){
+        paid=40;
+      }
+      else{
+        paid=0;
+      }
+      // Temporary (we just need the id).
+      var playerId = node.game.pl.first();
+      playerId = playerId.id;
+
+      var client = channel.registry.getClient(playerId);
+
+      //console.log(client);
+
+      // Ternary Assignment.
+      client.win = client.win ? (client.win + paid) : paid;
+
+      client.win = client.win ? (client.win + paid2) : paid2;
+
+      //console.log(playerId);
+      var d={ "guess": guess,
+              "GAME1_paid": GAME1_paid,
+              "GAME2_paid": GAME2_paid,
+              "GAME3_paid": GAME3_paid,
+              "win": paid,
+              "truth": truth,
+              "box":box,
+              "bomb":bomb,
+              "win2": paid2
+      }
+
+
+                console.log(d);
+
+      node.say('DATA', playerId, d);
+
+    }
+  })
 
     stager.extendStep('risk_feedback',{
       cb: function(){

@@ -18,6 +18,9 @@ module.exports = function(stager, settings) {
         .repeat('gameTUT', 3)
         .next('START')
         .repeat('game', settings.REPEAT)
+        .next('belief')
+        .next('bomb')
+        .next('belief_feedback')
         .next('risk')
         .next('CRT')
         .next('questionnaire')
@@ -52,8 +55,11 @@ module.exports = function(stager, settings) {
 
       //stager.skip('instructions');
       //stager.skip('quiz');
+      //stager.skip('gameTUT');
       //stager.skip('game');
-      //stager.skip('risk');
+      //stager.skip('belief');
+      //stager.skip('belief_feedback')
+      stager.skip('risk');
       //stager.skip('CRT');
       //stager.skip('questionnaire');
 };

@@ -18,9 +18,9 @@
       Both colors are equally likely.
       <br><br>
       In the beginning, each player receives between
-      <strong> 0 and 3 signals</strong>. No other player has the same signals or
+      <strong> 0 and 2 signals</strong>. No other player has the same signals or
       knows how many or which signals you received.<br>
-      The exact probability of receiving 0, 1, 2 or 3 signals is shown in the
+      The exact probability of receiving 0, 1, or 2 signals is shown in the
       table below. <br><br>
       <table style="width:60%; margin-left:20%; margin-right:20%">
         <tr>
@@ -29,19 +29,15 @@
         </tr>
         <tr>
           <td> 0 </td>
-          <td> 3% </td>
+          <td> 1% </td>
         </tr>
         <tr>
           <td> 1 </td>
-          <td> 19% </td>
+          <td> 18% </td>
         </tr>
         <tr>
           <td> 2 </td>
-          <td> 44% </td>
-        </tr>
-        <tr>
-          <td> 3 </td>
-          <td> 34% </td>
+          <td> 81% </td>
         </tr>
       </table>
 <br><br>
@@ -67,7 +63,7 @@
       <strong>They will then make their voting decision as follows:</strong><br>
         1. They count the <strong>number of shared signals that show
           '<span style="color:red">red</span>'</strong> and multiply it by
-          <span id="bias" style="font-weight:bold; color: red"></span>.<br>
+          <span id="bias" style="font-weight:bold; color: red">a number between 0 and 30</span>.<br>
         2. Then they count the <strong>number of shared signals that show
           '<span style="color:blue">blue</span>'</strong> and multiply it by
           <span id="bias2" style="font-weight:bold; color: blue"></span>.<br>
@@ -75,22 +71,52 @@
         <strong>vote for the color that has the larger number</strong>.
         If both number are the <strong>same</strong>, a coin toss decides the
         color they choose.<br><br>
-
-        <strong>For example</strong>, if the shared signals are <span style="color:red">red</span>,
-        <span style="color:blue">blue</span>, <span style="color:red">red</span>,
-        <span style="color:red">red</span>, <span style="color:blue">blue</span>,
-        <span style="color:red">red</span> and <span style="color:blue">blue</span>,
-        the number of signals would be <span style="color:red">4 red</span> and
-        <span style="color:blue">3 blue</span> signals.<br>
-        The automated players calculate: <br>
-        <span style="color:red">4 red</span> &times
-        <span id="bias3" style="color: red"></span> =
-        <span id="red_count" style="font-weight:bold; color: red"></span><br>
-        <span style="color:blue">3 blue</span> &times
-        <span id="bias4" style="color: blue"></span> =
-        <span id="blue_count" style="font-weight:bold; color: blue"></span><br>
-        Accordingly, the automated players vote for <span style="color:red">red</span>.
-
+The automated players are identical and made the following choices after seeing the signals given below: <br><br>
+<table style="width:60%; margin-left:20%; margin-right:20%">
+  <tr>
+    <th> Signals </th>
+    <th> Decision </th>
+  </tr>
+  <tr>
+    <td>  '<span style="color:red">red</span>',
+          '<span style="color:red">red</span>',
+          '<span style="color:red">red</span>',
+          '<span style="color:red">red</span>',
+          '<span style="color:blue">blue</span>',
+          '<span style="color:blue">blue</span>'</td>
+    <td> <span id="first_decision"></span> </td>
+  </tr>
+  <tr>
+    <td>  '<span style="color:red">red</span>',
+          '<span style="color:red">red</span>',
+          '<span style="color:blue">blue</span>',
+          '<span style="color:blue">blue</span>',
+          '<span style="color:blue">blue</span>'</td>
+    <td> <span id="second_decision"></span> </td>
+  </tr>
+  <tr>
+    <td>  '<span style="color:red">red</span>',
+          '<span style="color:blue">blue</span>'</td>
+    <td> <span id="third_decision"></span> </td>
+  </tr>
+  <tr>
+    <td>  '<span style="color:red">red</span>',
+          '<span style="color:red">red</span>',
+          '<span style="color:red">red</span>',
+          '<span style="color:blue">blue</span>'</td>
+    <td> <span id="fourth_decision"></span> </td>
+  </tr>
+  <tr>
+    <td>  '<span style="color:red">red</span>',
+          '<span style="color:red">red</span>',
+          '<span style="color:blue">blue</span>',
+          '<span style="color:blue">blue</span>',
+          '<span style="color:blue">blue</span>',
+          '<span style="color:blue">blue</span>'</td>
+    <td> <span id="fifth_decision"></span> </td>
+  </tr>
+</table>
+<br><br>
 
 <br><h4><i>During the game you can use the yellow button above to re-read the
   information about the automated players' behavior.</i></h4><br>

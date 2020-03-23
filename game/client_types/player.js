@@ -47,9 +47,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         this.infoDiv = document.createElement('div');
         this.infoDiv.innerHTML = '<h3>Behavior of automated players</h3>'+
         "<h4>The automated players always share all private signals they receive. Their voting decision is made as follows: </br>"+
-        "1. They count the <strong>number of shared signals that show '<span style='color:red'>red</span>'</strong> and multiply it by <strong>a number between 0 and 30</strong>.<br>"+
-        "2. Then they count the <strong>number of shared signals that show '<span style='color:blue'>blue</span>'</strong> and multiply if by <strong>" +node.game.settings.bias2+"</strong>.<br>"+
-        "3. Finally, the automated players compare the numbers they calculated and <strong>vote for the color that has the larger number</strong>. If both number are the <strong>same</strong>, a coin toss decides the color they choose.</h4>"+
+        "1. Then they count the <strong>number of shared signals that show '<span style='color:blue'>blue</span>'</strong> and multiply if by <strong>" +node.game.settings.bias2+"</strong>.<br>"+
+        "2. They count the <strong>number of shared signals that show '<span style='color:red'>red</span>'</strong> and multiply it by <strong>a number between 0 and 30</strong>.<br>"+
+        "3. Finally, the automated players compare the numbers they calculated and <strong>vote for the color that has the larger number</strong>. If both numbers are the <strong>same</strong>, a coin toss decides the color they choose.</h4>"+
         "The automated players are identical and made the following choices after seeing the signals given below: <br><br>"+
         '<table style="width:60%; margin-left:20%; margin-right:20%">'+
           '<tr>'+
@@ -57,19 +57,19 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             '<th> Decision </th>'+
           '</tr>'+
           '<tr>'+
-            '<td>  <span style="color:red">red</span>,'+
+            '<td>  <span style="color:blue">blue</span>,'+
                   '<span style="color:red">red</span>,'+
                   '<span style="color:red">red</span>,'+
                   '<span style="color:red">red</span>,'+
                   '<span style="color:blue">blue</span>,'+
-                  '<span style="color:blue">blue</span></td>'+
+                  '<span style="color:red">red</span></td>'+
             '<td> '+ node.game.settings.first_decision +'</td>'+
           '</tr>'+
           '<tr>'+
-            '<td> <span style="color:red">red</span>,'+
+            '<td>  <span style="color:blue">blue</span>,'+
+                  '<span style="color:blue">blue</span>,'+
                   '<span style="color:red">red</span>,'+
-                  '<span style="color:blue">blue</span>,'+
-                  '<span style="color:blue">blue</span>,'+
+                  '<span style="color:red">red</span>,'+
                   '<span style="color:blue">blue</span> </td>'+
             '<td>'+node.game.settings.second_decision +'</td>'+
           '</tr>'+
@@ -81,14 +81,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           '<tr>'+
             '<td>  <span style="color:red">red</span>,'+
                   '<span style="color:red">red</span>,'+
-                  '<span style="color:red">red</span>,'+
-                  '<span style="color:blue">blue</span></td>'+
+                  '<span style="color:blue">blue</span>,'+
+                  '<span style="color:red">red</span></td>'+
             '<td>'+ node.game.settings.fourth_decision+  '</td>'+
           '</tr>'+
           '<tr>' +
-            '<td>  <span style="color:red">red</span>,'+
+            '<td>  <span style="color:blue">blue</span>,'+
                   '<span style="color:red">red</span>,'+
-                  '<span style="color:blue">blue</span>,'+
+                  '<span style="color:red">red</span>,'+
                   '<span style="color:blue">blue</span>,'+
                   '<span style="color:blue">blue</span>,'+
                   '<span style="color:blue">blue</span></td>'+
@@ -131,8 +131,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       frame: 'welcome.htm',
       cb: function(){
         W.setInnerHTML('time', 20);
-        W.setInnerHTML('low_money', 0.37);
-        W.setInnerHTML('high_money', 3.62);
+        W.setInnerHTML('low_money', 0.50);
+        W.setInnerHTML('high_money', 4.98);
       }
     });
 
@@ -912,6 +912,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           GAME1_signals, GAME1_decision, GAME2_signals,
           GAME2_decision, GAME3_signals, GAME3_decision,
           GAME1_paid, GAME2_paid, GAME3_paid,
+          GAME4_signals, GAME4_decision, GAME5_signals,
+          GAME5_decision, GAME6_signals, GAME6_decision,
+          GAME4_paid, GAME5_paid, GAME6_paid,
           div, guess;
 
           node.on.data('DATA', function(msg){
@@ -932,6 +935,24 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             GAME3_decision= msg.data.GAME3_decision;
             W.setInnerHTML('GAME_decision3',  GAME3_decision);
             GAME3_paid= msg.data.GAME3_paid;
+
+              GAME4_signals=  msg.data.GAME4_signals;
+              W.setInnerHTML('GAME_signals4',  GAME4_signals);
+              GAME4_decision= msg.data.GAME4_decision;
+              W.setInnerHTML('GAME_decision4',  GAME4_decision);
+              GAME4_paid= msg.data.GAME4_paid;
+
+            GAME5_signals=  msg.data.GAME5_signals;
+            W.setInnerHTML('GAME_signals5',  GAME5_signals);
+            GAME5_decision= msg.data.GAME5_decision;
+            W.setInnerHTML('GAME_decision5',  GAME5_decision);
+            GAME5_paid= msg.data.GAME5_paid;
+
+          GAME6_signals=  msg.data.GAME6_signals;
+          W.setInnerHTML('GAME_signals6',  GAME6_signals);
+          GAME6_decision= msg.data.GAME6_decision;
+          W.setInnerHTML('GAME_decision6',  GAME6_decision);
+          GAME6_paid= msg.data.GAME6_paid;
 
                TUT1_signals=  msg.data.TUT1_signals;
                W.setInnerHTML('TUT_signals1',  TUT1_signals);
@@ -967,6 +988,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           GAME1_paid=this.GAME1_paid;
           GAME2_paid=this.GAME2_paid;
           GAME3_paid=this.GAME3_paid;
+          GAME4_paid=this.GAME4_paid;
+          GAME5_paid=this.GAME5_paid;
+          GAME6_paid=this.GAME6_paid;
 
           c_button=W.getElementById('Continue_button');
 
@@ -977,7 +1001,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                   guess: guess,
                   GAME1_paid: GAME1_paid,
                   GAME2_paid: GAME2_paid,
-                  GAME3_paid: GAME3_paid
+                  GAME3_paid: GAME3_paid,
+                  GAME4_paid: GAME4_paid,
+                  GAME5_paid: GAME5_paid,
+                  GAME6_paid: GAME6_paid
                 });
               }
               else{
@@ -992,6 +1019,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       frame: 'bomb.htm',
       backbutton: false,
       donebutton: false,
+      // There should only be one risk task included (either holt laury or bomb)
+      init: function(){
+       W.infoPanel.destroy();
+       W.restoreOnleave();
+      },
+
       cb:function() {
         var div, g, c_button, open;
         var slider = W.getElementById("myRange");
@@ -1002,7 +1035,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         slider.oninput = function() {
           open= this.value
           output.innerHTML = this.value;
-          prize.innerHTML = Math.round(this.value*2);
+          prize.innerHTML = Math.round(this.value*1);
           var i = 1;
           for(; i<101; i++){
             if(this.value>=i){
@@ -1020,7 +1053,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         c_button.onclick=function(){
               node.done({
                 open: open,
-                prize: Math.round(open*2),
+                prize: Math.round(open*1),
                 bomb: Math.round(Math.random()*100)
               });
         }
@@ -1035,9 +1068,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         frame: 'belief_feedback.htm',
 
         cb: function() {
-          var GAME1_paid, GAME2_paid, GAME3_paid;
+          var GAME1_paid, GAME2_paid, GAME3_paid,
+              GAME4_paid, GAME5_paid, GAME6_paid;
           var truth, guess, win;
-          var box, bomb, win2
+          var box, bomb, win2, win3, random_game;
 
           node.on.data('DATA', function(msg){
 
@@ -1047,6 +1081,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             W.setInnerHTML('GAME_payment2', GAME2_paid);
             GAME3_paid= msg.data.GAME3_paid;
             W.setInnerHTML('GAME_payment3', GAME3_paid);
+            GAME4_paid= msg.data.GAME4_paid;
+            W.setInnerHTML('GAME_payment4', GAME4_paid);
+            GAME5_paid= msg.data.GAME5_paid;
+            W.setInnerHTML('GAME_payment5', GAME5_paid);
+            GAME6_paid= msg.data.GAME6_paid;
+            W.setInnerHTML('GAME_payment6', GAME6_paid);
             guess=msg.data.guess;
             W.setInnerHTML('Guess', guess);
             win=msg.data.win;
@@ -1059,6 +1099,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             W.setInnerHTML('Bomb', bomb);
             win2=msg.data.win2;
             W.setInnerHTML('Win2', win2);
+            win3=msg.data.win3;
+            W.setInnerHTML('Win3', win3);
+            random_game=msg.data.random_game;
+            W.setInnerHTML('Random_Game', random_game);
           });
 
         }

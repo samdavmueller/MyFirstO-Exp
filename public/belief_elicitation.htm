@@ -12,41 +12,41 @@
          <th> Decision </th>
        </tr>
        <tr>
-         <td>  '<span style="color:red">red</span>',
-               '<span style="color:red">red</span>',
-               '<span style="color:red">red</span>',
-               '<span style="color:red">red</span>',
-               '<span style="color:blue">blue</span>',
-               '<span style="color:blue">blue</span>'</td>
+         <td>  <span style="color:blue">blue</span>,
+               <span style="color:red">red</span>,
+               <span style="color:red">red</span>,
+               <span style="color:red">red</span>,
+               <span style="color:blue">blue</span>,
+               <span style="color:red">red</span></td>
          <td> <span id="first_decision"></span> </td>
        </tr>
        <tr>
-         <td>  '<span style="color:red">red</span>',
-               '<span style="color:red">red</span>',
-               '<span style="color:blue">blue</span>',
-               '<span style="color:blue">blue</span>',
-               '<span style="color:blue">blue</span>'</td>
+         <td>  <span style="color:blue">blue</span>,
+               <span style="color:blue">blue</span>,
+               <span style="color:red">red</span>,
+               <span style="color:red">red</span>,
+               <span style="color:blue">blue</span></td>
          <td> <span id="second_decision"></span> </td>
        </tr>
        <tr>
-         <td>  '<span style="color:red">red</span>',
-               '<span style="color:blue">blue</span>'</td>
+         <td>  <span style="color:red">red</span>,
+               <span style="color:blue">blue</span></td>
          <td> <span id="third_decision"></span> </td>
        </tr>
        <tr>
-         <td>  '<span style="color:red">red</span>',
-               '<span style="color:red">red</span>',
-               '<span style="color:red">red</span>',
-               '<span style="color:blue">blue</span>'</td>
+         <td>  <span style="color:red">red</span>,
+               <span style="color:red">red</span>,
+               <span style="color:blue">blue</span>,
+               <span style="color:red">red</span></td>
          <td> <span id="fourth_decision"></span> </td>
        </tr>
        <tr>
-         <td>  '<span style="color:red">red</span>',
-               '<span style="color:red">red</span>',
-               '<span style="color:blue">blue</span>',
-               '<span style="color:blue">blue</span>',
-               '<span style="color:blue">blue</span>',
-               '<span style="color:blue">blue</span>'</td>
+         <td>  <span style="color:blue">blue</span>,
+               <span style="color:red">red</span>,
+               <span style="color:red">red</span>,
+               <span style="color:blue">blue</span>,
+               <span style="color:blue">blue</span>,
+               <span style="color:blue">blue</span></td>
          <td> <span id="fifth_decision"></span> </td>
        </tr>
        <tr>
@@ -73,6 +73,18 @@
          <td>  <span id="GAME_signals3"></span></td>
          <td> <span id="GAME_decision3"></span> </td>
       </tr>
+      <tr>
+         <td>  <span id="GAME_signals4"></span></td>
+         <td> <span id="GAME_decision4"></span> </td>
+      </tr>
+      <tr>
+         <td>  <span id="GAME_signals5"></span></td>
+         <td> <span id="GAME_decision5"></span> </td>
+      </tr>
+      <tr>
+         <td>  <span id="GAME_signals6"></span></td>
+         <td> <span id="GAME_decision6"></span> </td>
+      </tr>
      </table>
      <br><br>
 
@@ -80,19 +92,22 @@
 
      Please remember that the auomated players make their voting decision as follows:
      <br>
-       1. They count the <strong>number of shared signals that show
+       1. Then they count the <strong>number of shared signals that show
+          '<span style="color:blue">blue</span>'</strong> and multiply it by
+          <span id="bias2" style="font-weight:bold; color: blue"></span>.<br>
+       2. They count the <strong>number of shared signals that show
          '<span style="color:red">red</span>'</strong> and multiply it by
          <span id="bias" style="font-weight:bold; color: red">a number between 0 and 30</span>.<br>
-       2. Then they count the <strong>number of shared signals that show
-         '<span style="color:blue">blue</span>'</strong> and multiply it by
-         <span id="bias2" style="font-weight:bold; color: blue"></span>.<br>
        3. Finally, the automated players compare the numbers they calculated and
        <strong>vote for the color that has the larger number</strong>.
-       If both number are the <strong>same</strong>, a coin toss decides the
+       If both numbers are the <strong>same</strong>, a coin toss decides the
        color they choose.<br><br>
 
   <strong>What do You belief is the number that the automated players multiply the count of red signals with?</strong> <br> <br>
-  When you can guess the correct number, 30 ECU are added to your final payoff.<br>
+  When you can guess the correct number, 40 ECU are added to your final payoff.<br>
+  When your guess is off by one 30 ECU are added to your final payoff. <br>
+  When your guess is off by two 10 ECU are added to your final payoff. <br>
+  Else, nothing is added to your final payoff. <br>
   Please type in your guess below in the box below.<br>
   <input type="number" id="guess"/>
   <div id="warning" style="display: none; font-size:20px; font-weight:bold; color:red">

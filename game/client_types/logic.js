@@ -692,12 +692,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
           // Permanent.
           // Contains all the data about the player.
-          var client = channel.registry.getClient(playerId);
+          //var client = channel.registry.getClient(playerId);
 
           //console.log(client);
 
           // Ternary Assignment.
-          client.win = client.win ? (client.win + paid) : paid;
+          //client.win = client.win ? (client.win + paid) : paid;
           // Same as:
 //          if (client.win) {
 //              client.win = client.win + paid;
@@ -735,78 +735,132 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     cb: function(){
 
+      function cut_comma(s){
+        if (s.charAt(0)===","){
+          s=s.substring(2, (s.length+2));
+        }
+        if (s.charAt(s.length)===","){
+          s=s.substring(0, s.length);
+        }
+        return s;
+      }
+
       //This is the anchor, the feedback of the last round.
       // From this step, we can retrace all previous steps we need
       var Pstep1=node.game.getPreviousStep(1);
       console.log(Pstep1);
 
       //TUT 1
-     var TUT1_feedback= (Pstep1.stage-2) + '.' + (Pstep1.step) + '.' + (Pstep1.round-2);
-     var TUT1_voting= (Pstep1.stage-2) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-2);
-     var TUT1_signaling= (Pstep1.stage-2) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-2);
+     var TUT1_feedback= (Pstep1.stage-2) + '.' + (Pstep1.step) + '.' + (Pstep1.round-5);
+     var TUT1_voting= (Pstep1.stage-2) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-5);
+     var TUT1_signaling= (Pstep1.stage-2) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-5);
 
      var TUT1_decision=node.game.memory.stage[TUT1_feedback].fetchArray('fdecision')[0][0];
      var TUT1_signals= node.game.memory.stage[TUT1_signaling].fetchArray('sharesignal1')[0][0]+", "+
                        node.game.memory.stage[TUT1_voting].fetchArray('b1signals')[0][0]+", "+
                        node.game.memory.stage[TUT1_voting].fetchArray('b2signals')[0][0];
 
+    TUT1_signals=cut_comma(TUT1_signals);
+
+
      //TUT 2
-     var TUT2_feedback= (Pstep1.stage-2) + '.' + (Pstep1.step) + '.' + (Pstep1.round-1);
-     var TUT2_voting= (Pstep1.stage-2) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-1);
-     var TUT2_signaling= (Pstep1.stage-2) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-1);
+     var TUT2_feedback= (Pstep1.stage-2) + '.' + (Pstep1.step) + '.' + (Pstep1.round-4);
+     var TUT2_voting= (Pstep1.stage-2) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-4);
+     var TUT2_signaling= (Pstep1.stage-2) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-4);
 
      var TUT2_decision=node.game.memory.stage[TUT2_feedback].fetchArray('fdecision')[0][0];
      var TUT2_signals= node.game.memory.stage[TUT2_signaling].fetchArray('sharesignal1')[0][0]+", "+
                        node.game.memory.stage[TUT2_voting].fetchArray('b1signals')[0][0]+", "+
                        node.game.memory.stage[TUT2_voting].fetchArray('b2signals')[0][0];
 
+     TUT2_signals=cut_comma(TUT2_signals);
      //TUT 3
-     var TUT3_feedback= (Pstep1.stage-2) + '.' + (Pstep1.step) + '.' + (Pstep1.round);
-     var TUT3_voting= (Pstep1.stage-2) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round);
-     var TUT3_signaling= (Pstep1.stage-2) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round);
+     var TUT3_feedback= (Pstep1.stage-2) + '.' + (Pstep1.step) + '.' + (Pstep1.round-3);
+     var TUT3_voting= (Pstep1.stage-2) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-3);
+     var TUT3_signaling= (Pstep1.stage-2) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-3);
 
      var TUT3_decision=node.game.memory.stage[TUT3_feedback].fetchArray('fdecision')[0][0];
      var TUT3_signals= node.game.memory.stage[TUT3_signaling].fetchArray('sharesignal1')[0][0]+", "+
                        node.game.memory.stage[TUT3_voting].fetchArray('b1signals')[0][0]+", "+
                        node.game.memory.stage[TUT3_voting].fetchArray('b2signals')[0][0];
 
+     TUT3_signals=cut_comma(TUT3_signals);
+
       //GAME 1
-      var GAME1_feedback= (Pstep1.stage) + '.' + (Pstep1.step) + '.' + (Pstep1.round-2);
-      var GAME1_voting= (Pstep1.stage) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-2);
-      var GAME1_signaling= (Pstep1.stage) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-2);
+      var GAME1_feedback= (Pstep1.stage) + '.' + (Pstep1.step) + '.' + (Pstep1.round-5);
+      var GAME1_voting= (Pstep1.stage) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-5);
+      var GAME1_signaling= (Pstep1.stage) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-5);
       console.log(node.game.memory.stage[GAME1_feedback].fetch());
       var GAME1_decision=node.game.memory.stage[GAME1_feedback].fetchArray('fdecision')[0][0];
       var GAME1_signals= node.game.memory.stage[GAME1_signaling].fetchArray('sharesignal1')[0][0]+", "+
                         node.game.memory.stage[GAME1_voting].fetchArray('b1signals')[0][0]+", "+
                         node.game.memory.stage[GAME1_voting].fetchArray('b2signals')[0][0];
       var GAME1_paid=node.game.memory.stage[GAME1_feedback].fetchArray('payoff')[0][0];
+      GAME1_signals=cut_comma(GAME1_signals);
 
       //GAME 2
-      var GAME2_feedback= (Pstep1.stage) + '.' + (Pstep1.step) + '.' + (Pstep1.round-1);
-      var GAME2_voting= (Pstep1.stage) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-1);
-      var GAME2_signaling= (Pstep1.stage) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-1);
+      var GAME2_feedback= (Pstep1.stage) + '.' + (Pstep1.step) + '.' + (Pstep1.round-4);
+      var GAME2_voting= (Pstep1.stage) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-4);
+      var GAME2_signaling= (Pstep1.stage) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-4);
 
       var GAME2_decision=node.game.memory.stage[GAME2_feedback].fetchArray('fdecision')[0][0];
       var GAME2_signals= node.game.memory.stage[GAME2_signaling].fetchArray('sharesignal1')[0][0]+", "+
                         node.game.memory.stage[GAME2_voting].fetchArray('b1signals')[0][0]+", "+
                         node.game.memory.stage[GAME2_voting].fetchArray('b2signals')[0][0];
       var GAME2_paid=node.game.memory.stage[GAME2_feedback].fetchArray('payoff')[0][0];
+      GAME2_signals=cut_comma(GAME2_signals);
 
 
       //GAME 3
-      var GAME3_feedback= (Pstep1.stage) + '.' + (Pstep1.step) + '.' + (Pstep1.round);
-      var GAME3_voting= (Pstep1.stage) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round);
-      var GAME3_signaling= (Pstep1.stage) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round);
+      var GAME3_feedback= (Pstep1.stage) + '.' + (Pstep1.step) + '.' + (Pstep1.round-3);
+      var GAME3_voting= (Pstep1.stage) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-3);
+      var GAME3_signaling= (Pstep1.stage) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-3);
 
       var GAME3_decision=node.game.memory.stage[GAME3_feedback].fetchArray('fdecision')[0][0];
       var GAME3_signals= node.game.memory.stage[GAME3_signaling].fetchArray('sharesignal1')[0][0]+", "+
                         node.game.memory.stage[GAME3_voting].fetchArray('b1signals')[0][0]+", "+
                         node.game.memory.stage[GAME3_voting].fetchArray('b2signals')[0][0];
       var GAME3_paid=node.game.memory.stage[GAME3_feedback].fetchArray('payoff')[0][0];
+      GAME3_signals=cut_comma(GAME3_signals);
       //console.log(GAME3_decision);
       //console.log(GAME3_signals);
 
+      //GAME 4
+      var GAME4_feedback= (Pstep1.stage) + '.' + (Pstep1.step) + '.' + (Pstep1.round-2);
+      var GAME4_voting= (Pstep1.stage) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-2);
+      var GAME4_signaling= (Pstep1.stage) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-2);
+      console.log(node.game.memory.stage[GAME4_feedback].fetch());
+      var GAME4_decision=node.game.memory.stage[GAME4_feedback].fetchArray('fdecision')[0][0];
+      var GAME4_signals= node.game.memory.stage[GAME4_signaling].fetchArray('sharesignal1')[0][0]+", "+
+                        node.game.memory.stage[GAME4_voting].fetchArray('b1signals')[0][0]+", "+
+                        node.game.memory.stage[GAME4_voting].fetchArray('b2signals')[0][0];
+      var GAME4_paid=node.game.memory.stage[GAME4_feedback].fetchArray('payoff')[0][0];
+      GAME4_signals=cut_comma(GAME4_signals);
 
+      //GAME 5
+      var GAME5_feedback= (Pstep1.stage) + '.' + (Pstep1.step) + '.' + (Pstep1.round-1);
+      var GAME5_voting= (Pstep1.stage) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-1);
+      var GAME5_signaling= (Pstep1.stage) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-1);
+
+      var GAME5_decision=node.game.memory.stage[GAME5_feedback].fetchArray('fdecision')[0][0];
+      var GAME5_signals= node.game.memory.stage[GAME5_signaling].fetchArray('sharesignal1')[0][0]+", "+
+                        node.game.memory.stage[GAME5_voting].fetchArray('b1signals')[0][0]+", "+
+                        node.game.memory.stage[GAME5_voting].fetchArray('b2signals')[0][0];
+      var GAME5_paid=node.game.memory.stage[GAME5_feedback].fetchArray('payoff')[0][0];
+      GAME5_signals=cut_comma(GAME5_signals);
+
+
+      //GAME 6
+      var GAME6_feedback= (Pstep1.stage) + '.' + (Pstep1.step) + '.' + (Pstep1.round);
+      var GAME6_voting= (Pstep1.stage) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round);
+      var GAME6_signaling= (Pstep1.stage) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round);
+
+      var GAME6_decision=node.game.memory.stage[GAME6_feedback].fetchArray('fdecision')[0][0];
+      var GAME6_signals= node.game.memory.stage[GAME6_signaling].fetchArray('sharesignal1')[0][0]+", "+
+                        node.game.memory.stage[GAME6_voting].fetchArray('b1signals')[0][0]+", "+
+                        node.game.memory.stage[GAME6_voting].fetchArray('b2signals')[0][0];
+      var GAME6_paid=node.game.memory.stage[GAME6_feedback].fetchArray('payoff')[0][0];
+      GAME6_signals=cut_comma(GAME6_signals);
 
       //var Pstep2=node.game.getPreviousStep(2);
       //var Pstep2_s= Pstep2.stage + '.' + Pstep2.step + '.' + Pstep2.round;
@@ -833,9 +887,18 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 "GAME2_signals": GAME2_signals,
                 "GAME3_decision": GAME3_decision,
                 "GAME3_signals": GAME3_signals,
+                "GAME4_decision": GAME4_decision,
+                "GAME4_signals": GAME4_signals,
+                "GAME5_decision": GAME5_decision,
+                "GAME5_signals": GAME5_signals,
+                "GAME6_decision": GAME6_decision,
+                "GAME6_signals": GAME6_signals,
                 "GAME1_paid": GAME1_paid,
                 "GAME2_paid": GAME2_paid,
-                "GAME3_paid": GAME3_paid
+                "GAME3_paid": GAME3_paid,
+                "GAME4_paid": GAME4_paid,
+                "GAME5_paid": GAME5_paid,
+                "GAME6_paid": GAME6_paid
 
         }
 
@@ -849,8 +912,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
   stager.extendStep('belief_feedback',{
     cb: function(){
-      var box, bomb, prize, paid2;
-      var GAME1_paid, GAME2_paid, GAME3_paid, guess, truth, paid;
+      var box, bomb, prize, paid2, paid3;
+      var GAME1_paid, GAME2_paid, GAME3_paid,
+          GAME4_paid, GAME5_paid, GAME6_paid,
+          guess, truth, paid;
 
       var Pstep1=node.game.getPreviousStep(1);
       var Pstep1_s= Pstep1.stage + '.' + (Pstep1.step) + '.' + Pstep1.round;
@@ -872,6 +937,30 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       GAME1_paid=node.game.memory.stage[Pstep2_s].fetchArray('GAME1_paid')[0][0];
       GAME2_paid=node.game.memory.stage[Pstep2_s].fetchArray('GAME2_paid')[0][0];
       GAME3_paid=node.game.memory.stage[Pstep2_s].fetchArray('GAME3_paid')[0][0];
+      GAME4_paid=node.game.memory.stage[Pstep2_s].fetchArray('GAME4_paid')[0][0];
+      GAME5_paid=node.game.memory.stage[Pstep2_s].fetchArray('GAME5_paid')[0][0];
+      GAME6_paid=node.game.memory.stage[Pstep2_s].fetchArray('GAME6_paid')[0][0];
+
+      //only one randomly drawn game is paid:
+      var random_game=Math.round(Math.random()*5+1);
+      if(random_game===1){
+        paid3=GAME1_paid;
+      }
+      if(random_game===2){
+        paid3=GAME2_paid;
+      }
+      if(random_game===3){
+        paid3=GAME3_paid;
+      }
+      if(random_game===4){
+        paid3=GAME4_paid;
+      }
+      if(random_game===5){
+        paid3=GAME5_paid;
+      }
+      if(random_game===6){
+        paid3=GAME6_paid;
+      }
 
       guess=node.game.memory.stage[Pstep2_s].fetchArray('guess')[0][0];
 
@@ -880,7 +969,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       if(guess==truth){
         paid=40;
       }
-      else{
+      if(Math.abs(guess-truth)===1){
+        paid=30;
+      }
+      if(Math.abs(guess-truth)===2){
+        paid=10;
+      }
+      if(Math.abs(guess-truth)>2){
         paid=0;
       }
       // Temporary (we just need the id).
@@ -896,12 +991,19 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
       client.win = client.win ? (client.win + paid2) : paid2;
 
+      client.win = client.win ? (client.win + paid3) : paid3;
+
       //console.log(playerId);
       var d={ "guess": guess,
               "GAME1_paid": GAME1_paid,
               "GAME2_paid": GAME2_paid,
               "GAME3_paid": GAME3_paid,
+              "GAME4_paid": GAME4_paid,
+              "GAME5_paid": GAME5_paid,
+              "GAME6_paid": GAME6_paid,
               "win": paid,
+              "random_game": random_game,
+              "win3": paid3,
               "truth": truth,
               "box":box,
               "bomb":bomb,

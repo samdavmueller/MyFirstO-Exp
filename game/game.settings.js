@@ -61,7 +61,7 @@ module.exports = {
             bias2: 10,
             first_decision: '<span style="color: red">red</span>',
             second_decision: '<span style="color: blue">blue</span>',
-            third_decision: '<span style="color: blue">blue</span>',
+            third_decision: '<span style="color: red">red</span>',
             fourth_decision: '<span style="color: red">red</span>',
             fifth_decision: '<span style="color: blue">blue</span>'
         },
@@ -71,12 +71,12 @@ module.exports = {
             //bidTime: 30000,
             getsignal: 0.9,
             correctsignal: 0.6,
-            bias: 4,
+            bias: 3,
             bias2: 10,
             first_decision: '<span style="color: blue">blue</span>',
             second_decision: '<span style="color: blue">blue</span>',
-            third_decision: '<span style="color: blue">blue</span>',
-            fourth_decision: '<span style="color: red">red</span>',
+            third_decision: '<span style="color: red">red</span>',
+            fourth_decision: '<span style="color: blue">blue</span>',
             fifth_decision: '<span style="color: blue">blue</span>'
         },
 

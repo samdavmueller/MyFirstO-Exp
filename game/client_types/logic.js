@@ -912,7 +912,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
   stager.extendStep('belief_feedback',{
     cb: function(){
-      var box, bomb, prize, paid2, paid3;
+      var box, bomb, prize, paid2, paid3, paid4;
       var GAME1_paid, GAME2_paid, GAME3_paid,
           GAME4_paid, GAME5_paid, GAME6_paid,
           guess, truth, paid;
@@ -943,6 +943,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
       //only one randomly drawn game is paid:
       var random_game=Math.round(Math.random()*5+1);
+
+      var random_game2=Math.round(Math.random()*5+1);
+
+      while(random_game2===random_game){
+        random_game2=Math.round(Math.random()*5+1);
+      }
+
       if(random_game===1){
         paid3=GAME1_paid;
       }
@@ -960,6 +967,25 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       }
       if(random_game===6){
         paid3=GAME6_paid;
+      }
+
+      if(random_game2===1){
+        paid4=GAME1_paid;
+      }
+      if(random_game2===2){
+        paid4=GAME2_paid;
+      }
+      if(random_game2===3){
+        paid4=GAME3_paid;
+      }
+      if(random_game2===4){
+        paid4=GAME4_paid;
+      }
+      if(random_game2===5){
+        paid4=GAME5_paid;
+      }
+      if(random_game2===6){
+        paid4=GAME6_paid;
       }
 
       guess=node.game.memory.stage[Pstep2_s].fetchArray('guess')[0][0];
@@ -993,6 +1019,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
       client.win = client.win ? (client.win + paid3) : paid3;
 
+      client.win = client.win ? (client.win + paid4) : paid4;
       //console.log(playerId);
       var d={ "guess": guess,
               "GAME1_paid": GAME1_paid,
@@ -1003,7 +1030,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               "GAME6_paid": GAME6_paid,
               "win": paid,
               "random_game": random_game,
+              "random_game2": random_game2,
               "win3": paid3,
+              "win4": paid4,
               "truth": truth,
               "box":box,
               "bomb":bomb,

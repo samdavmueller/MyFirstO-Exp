@@ -24,6 +24,7 @@ module.exports = function(stager, settings) {
         .next('risk')
         .next('CRT')
         .next('questionnaire')
+        .next('preEnd')
         .next('end')
         .gameover();
 
@@ -53,13 +54,14 @@ module.exports = function(stager, settings) {
     // Modify the stager to skip one stage.
       //stager.skip('welcome');
 
-      //stager.skip('instructions');
-      //stager.skip('quiz');
-      //stager.skip('gameTUT');
-      //stager.skip('game');
-      //stager.skip('belief');
-      //stager.skip('belief_feedback')
+      stager.skip('instructions');
+      stager.skip('quiz');
+      stager.skip('gameTUT');
+      stager.skip('game');
+      stager.skip('belief');
+      stager.skip('belief_feedback');
+      stager.skip('bomb');
       stager.skip('risk');
-      //stager.skip('CRT');
-      //stager.skip('questionnaire');
+      stager.skip('CRT');
+      stager.skip('questionnaire');
 };

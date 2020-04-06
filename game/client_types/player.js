@@ -39,8 +39,19 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         });
 
         // Generate the toggle button and append it to the header.
-        this.infoButton = infoPanel.createToggleButton('Auto Player Behavior');
+        this.infoButton = infoPanel.createToggleButton('Show Player Behavior');
         this.infoButton.disabled = true;
+        this.infoButton.onclick=function(){
+          infoPanel.toggle();
+          if(infoPanel.isVisible===true){
+              parent.scrollTo(0,0);
+              this.innerHTML='Hide Player Behavior';
+          }
+          if(infoPanel.isVisible===false){
+            this.innerHTML='Show Player Behavior';
+          }
+
+        }
         //W.getHeader().appendChild(this.infoButton);
 
         // Add a new div to the info panel.
@@ -48,7 +59,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         this.infoDiv.innerHTML = '<h3>Behavior of automated players</h3>'+
         "<h4>The automated players always share all private signals they receive. Their voting decision is made as follows: </br>"+
         "1. They count the <strong>number of shared signals that show '<span style='color:blue'>blue</span>'</strong> and multiply if by <strong>" +node.game.settings.bias2+"</strong>.<br>"+
-        "2. Then they count the <strong>number of shared signals that show '<span style='color:red'>red</span>'</strong> and multiply it by <strong>a number between 0 and 30</strong>.<br>"+
+        '2. Then they count the <strong>number of shared signals that show "<span style="color:red">red</span>"</strong> and multiply it by <span id="bias" style="font-weight:bold; color: red">x</span>, which is a number between 0 and 30.<br>'+
         "3. Finally, the automated players compare the numbers they calculated and <strong>vote for the color that has the larger number</strong>. If both numbers are the <strong>same</strong>, a coin toss decides the color they choose.</h4>"+
         "The automated players are identical and made the following choices after seeing the signals given below: <br><br>"+
         '<table style="width:60%; margin-left:20%; margin-right:20%">'+
@@ -184,6 +195,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           this.infoDiv.innerHTML = '<h3>Strategy</h3>';
           this.infoDiv.class ='inner';
           infoPanel.infoPanelDiv.appendChild(this.infoDiv);*/
+          parent.scrollTo(0,0);
 
           this.infoButton.disabled=false;
 
@@ -289,7 +301,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           node.on.step(function(){
             W.infoPanel.close();
           })
-
+          parent.scrollTo(0,0);
       },
 
 
@@ -462,6 +474,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
       frame: 'voteTUT.htm',
       // timer: settings.bidTime,
+      init:function() {
+        parent.scrollTo(0,0);
+      },
 
       cb: function() {
           var vote, Red_button, Blue_button, fdecision, signal2, signal3;
@@ -526,7 +541,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     backbutton: false,
       donebutton: false,
       frame: 'feedbackTUT.htm',
-
+      init:function() {
+        parent.scrollTo(0,0);
+      },
 
       // timer: settings.bidTime,
       cb: function() {
@@ -578,7 +595,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       stager.extendStep('START', {
         frame: 'START.htm',
         backbutton: false,
-        donebutton: true
+        donebutton: true,
+        init:function() {
+          parent.scrollTo(0,0);
+        }
       });
 
 
@@ -592,6 +612,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         backbutton: false,
         donebutton: false,
         frame: 'game.htm',
+        init:function() {
+          parent.scrollTo(0,0);
+        },
         // I did not change the name of the time variable.
         // But I decided I do not need time pressure at all.
         // timer: settings.bidTime,
@@ -790,7 +813,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         frame: 'vote.htm',
         // timer: settings.bidTime,
-
+        init:function() {
+          parent.scrollTo(0,0);
+        },
         cb: function() {
             var vote, Red_button, Blue_button, fdecision, signal2, signal3;
             // the signals that the player shared are coming from the logic
@@ -854,7 +879,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       backbutton: false,
         donebutton: false,
         frame: 'feedback.htm',
-
+        init:function() {
+          parent.scrollTo(0,0);
+        },
 
         // timer: settings.bidTime,
         cb: function() {
@@ -904,6 +931,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       backbutton: false,
         donebutton: false,
         frame: 'belief_elicitation.htm',
+        init:function() {
+          parent.scrollTo(0,0);
+        },
 
         cb: function() {
           var c_button, TUT1_signals, TUT1_decision,
@@ -1022,6 +1052,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       init: function(){
        W.infoPanel.destroy();
        W.restoreOnleave();
+       parent.scrollTo(0,0);
       },
 
       cb:function() {
@@ -1050,11 +1081,17 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         c_button=W.getElementById('Continue_button');
 
         c_button.onclick=function(){
-              node.done({
-                open: open,
-                prize: Math.round(open*1),
-                bomb: Math.round(Math.random()*100)
-              });
+          if(isNaN(open)==false & open>0){
+            node.done({
+              open: open,
+              prize: Math.round(open*1),
+              bomb: Math.ceil(Math.random()*100)
+            });
+          }
+          else{
+            div = W.getElementById('warning').style.display = '';
+            return;
+          }
         }
       }
     });
@@ -1065,6 +1102,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       backbutton: false,
         donebutton: true,
         frame: 'belief_feedback.htm',
+        init:function() {
+          parent.scrollTo(0,0);
+        },
 
         cb: function() {
           var GAME1_paid, GAME2_paid, GAME3_paid,
@@ -1289,8 +1329,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         id: 'education',
                         mainText: 'What is your highest level of eduction?',
                         choices: [
-                            'high school graduate', 'some college', "Bachelor's degree",
-                            "Master's degree","Doctoral or professional degree", 'Do not want to say'
+                            'less than high school degree', 'high school degree', 'college degree',
+                            'graduate school degree', 'Do not want to say'
                         ],
                         title: false,
                         requiredChoice: true
@@ -1313,6 +1353,23 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
   	}
     });
 
+
+    stager.extendStep('preEnd', {
+      donebutton: true,
+      frame: 'end.htm',
+      cb: function(){
+        var root = W.getElementById('container');
+        var feedback = node.widgets.append('Feedback', root, {
+          mainText: 'Please leave some short feedback what you liked or did not like about the experiment:<br>',
+          minWords: 10,
+          minChars: 50,
+          showSubmit: false
+        });
+      }
+  });
+
+
+
     // I am not sure what I really need in this last page.
     // the players should see how much they earned
     stager.extendStep('end', {
@@ -1325,14 +1382,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 title: false, // Disable title for seamless Widget Step.
                 panel: false, // No border around.
                 showEmailForm: true,
-                showFeedbackForm: true,
+                showFeedbackForm: false,
                 email: {
                     texts: {
                         label: 'Enter your email (optional):',
                         errString: 'Please enter a valid email and retry'
                     }
-                },
-                feedback: { minLength: 50 }
+                }
             }
         }
     });

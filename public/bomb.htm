@@ -53,8 +53,8 @@
     <br>
     <p> In this part of the experiment you will play the bomb game.</p>
     <p> Below you see 100 black boxes. <strong>In one of these boxes there is a bomb.</strong> </p>
-    <p> You have to decide how many boxes you want to open.<strong> In each box there are 1 ECU</strong>. </p>
-    <p> You will get the ECU of all the boxes you opened.</p>
+    <p> You have to decide how many boxes you want to open.<strong> Each box there contains 1 ECU</strong>. </p>
+    <p> You will get the sum of all ECU that were in the boxes you opened.</p>
     <p> However, if you <strong>open the box with the bomb, you get nothing</strong>. </p>
     <p><strong> How many boxes do you want to open?</strong></p><br>
 
@@ -395,9 +395,10 @@ Use the slider to change the number of boxes you want to open.
   Click 'OPEN' to open the boxes and find out whether you opened the box with the bomb.
 </p>
 <center>
+  <div id="warning" style="display: none; font-size:20px; font-weight:bold; color:red">
+    You have to open at least one box!
+  </div>
 <input type="button" value="OPEN" name="OPEN" id="Continue_button" class="btn-success" style="font-size:20px; font-weight: bold; height:75px; width:150px"/>
 </center>
 
-<!-- End Consent Form -->
-  </div>
 </body>

@@ -52,7 +52,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           }
 
         }
-        //W.getHeader().appendChild(this.infoButton);
 
         // Add a new div to the info panel.
         this.infoDiv = document.createElement('div');
@@ -106,8 +105,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           '</tr>'+
         '</table>';
 
-      //  W.setInnerHTML('bias', node.game.settings.bias);
-      //  W.setInnerHTML('bias2', node.game.settings.bias2);
         W.addClass(this.infoDiv, 'inner');
         infoPanel.infoPanelDiv.appendChild(this.infoDiv);
 
@@ -126,13 +123,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         //this.debugInfo = node.widgets.append('DebugInfo', header)
 
 
-            //BackButton is not working, I don't know why...
-      /*  this.backButton = node.widgets.append('BackButton',
-                                              W.getHeader(), {
-                                                  acrossStages:  true
-        });*/
-        // Last instruction in the init function.
-        // Game must be started manually.
 
 
     });
@@ -140,6 +130,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('welcome', {
       frame: 'welcome.htm',
       cb: function(){
+        //some variables for the welcome stage
         W.setInnerHTML('time', 20);
         W.setInnerHTML('low_money', 0.50);
         W.setInnerHTML('high_money', 5.98);
@@ -160,10 +151,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             W.setInnerHTML('blue_count', bsig);
             W.setInnerHTML('correctsignal', csig);
             W.setInnerHTML('wrongsignal', wsig);
-            //W.setInnerHTML('bias', node.game.settings.bias);
             W.setInnerHTML('bias2', node.game.settings.bias2);
-            //W.setInnerHTML('bias3', node.game.settings.bias);
-            //W.setInnerHTML('bias4', node.game.settings.bias2);
             W.setInnerHTML('exchange-rate', node.game.settings.EXCHANGE_RATE_INSTRUCTIONS);
             W.setInnerHTML('first_decision', node.game.settings.first_decision);
             W.setInnerHTML('second_decision', node.game.settings.second_decision);
@@ -179,22 +167,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     // the instructions well enough
     stager.extendStep('quiz', {
       init: function() {
-      //    node.game.backButton.destroy();
-       // A info button is created that is available
-        // It explains the strategy of the automated players
-        // Generate the info panel object.
 
-          /*var infoPanel = W.generateInfoPanel();
-
-          // Generate the toggle button and append it to the header.
-          this.infoButton = infoPanel.createToggleButton('History');
-          W.getHeader().appendChild(this.infoButton);
-
-          // Add a new div to the info panel.
-          this.infoDiv = document.createElement('div');
-          this.infoDiv.innerHTML = '<h3>Strategy</h3>';
-          this.infoDiv.class ='inner';
-          infoPanel.infoPanelDiv.appendChild(this.infoDiv);*/
           parent.scrollTo(0,0);
 
           this.infoButton.disabled=false;
@@ -273,29 +246,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
   // The stage in which all participants receive their signals and the urn color
   // is decided.
   stager.extendStep('signalsTUT', {
-      backbutton: false,
       donebutton: false,
       frame: 'gameTUT.htm',
-      // I did not change the name of the time variable.
-      // But I decided I do not need time pressure at all.
-      // timer: settings.bidTime,
+
       init: function() {
-      //    node.game.backButton.destroy();
-       // A info button is created that is available
-        // It explains the strategy of the automated players
-        // Generate the info panel object.
-
-          /*var infoPanel = W.generateInfoPanel();
-
-          // Generate the toggle button and append it to the header.
-          this.infoButton = infoPanel.createToggleButton('History');
-          W.getHeader().appendChild(this.infoButton);
-
-          // Add a new div to the info panel.
-          this.infoDiv = document.createElement('div');
-          this.infoDiv.innerHTML = '<h3>Strategy</h3>';
-          this.infoDiv.class ='inner';
-          infoPanel.infoPanelDiv.appendChild(this.infoDiv);*/
 
           this.infoButton.disabled=false;
           this.infoButton.innerHTML='Show Player Behavior';
@@ -314,9 +268,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         W.setInnerHTML('wrongsignal', wsig);
 
           // variables I need
-          var button, decision1, decision2, decision3,
+          var button, decision1, decision2,
               div, urncolor, noturncolor,
-              plyrsignal1, plyrsignal2, plyrsignal3;
+              plyrsignal1, plyrsignal2;
           //this array gets the information whether a signal is shared (1) or not (0)
           var shar_sig_array=[];
 
@@ -324,7 +278,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           // a decision was made for all signals
           decision1= -99;
           decision2= -99;
-          decision3= -99;
+
 
 
           // the urncolor is decided randomly
@@ -407,8 +361,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
               // Now, it is checked whether there has bee a decuision made for all signals.
-              // A error message is written.
-              // Unfortunately the error message is written on the side of the display and not below
+              // An error message is written.
               var dsum=decision1+decision2;
               if(dsum<0){
 
@@ -471,7 +424,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
   // The next step in the game stage is the voting.
   // All shared signals must be displayed here!
   stager.extendStep('votingTUT', {
-    backbutton: false,
       donebutton: false,
 
       frame: 'voteTUT.htm',
@@ -483,10 +435,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       },
 
       cb: function() {
-          var vote, Red_button, Blue_button, fdecision, signal2, signal3;
+          var vote, Red_button, Blue_button, fdecision, signal1, signal2, signal3;
           // the signals that the player shared are coming from the logic
           node.on.data('DATA' , function(msg){
-              var signal1=msg.data.playsig;
+              signal1=msg.data.playsig;
               W.setInnerHTML('signals1', signal1);
 
           // the signals that the first automated player received and
@@ -542,7 +494,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
   // in order to enable learning, the players receive feedback about the voting decision
   // and their payoff
   stager.extendStep('feedbackTUT', {
-    backbutton: false,
       donebutton: false,
       frame: 'feedbackTUT.htm',
       init:function() {
@@ -551,7 +502,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
       },
 
-      // timer: settings.bidTime,
+
       cb: function() {
           var urncolor, fdecision, correct, paid, c_button;
           // all variables are sent by logic
@@ -600,7 +551,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
       stager.extendStep('START', {
         frame: 'START.htm',
-        backbutton: false,
         donebutton: true,
         init:function() {
           parent.scrollTo(0,0);
@@ -617,7 +567,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     // The stage in which all participants receive their signals and the urn color
     // is decided.
     stager.extendStep('signals', {
-        backbutton: false,
         donebutton: false,
         frame: 'game.htm',
         init:function() {
@@ -625,34 +574,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           this.infoButton.innerHTML='Show Player Behavior';
 
         },
-        // I did not change the name of the time variable.
-        // But I decided I do not need time pressure at all.
-        // timer: settings.bidTime,
-      /*  init: function() {
-            node.game.backButton.destroy();
-         // A info button is created that is available
-          // It explains the strategy of the automated players
-          // Generate the info panel object.
-
-            var infoPanel = W.generateInfoPanel();
-
-            // Generate the toggle button and append it to the header.
-            this.infoButton = infoPanel.createToggleButton('History');
-            W.getHeader().appendChild(this.infoButton);
-
-            // Add a new div to the info panel.
-            this.infoDiv = document.createElement('div');
-            this.infoDiv.innerHTML = '<h3>Strategy</h3>';
-            this.infoDiv.class ='inner';
-            infoPanel.infoPanelDiv.appendChild(this.infoDiv);
-
-            this.infoButton.disabled=false;
-
-            node.on.step(function(){
-              W.infoPanel.close();
-            })
-
-        },*/
 
 
         cb: function() {
@@ -662,7 +583,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           W.setInnerHTML('wrongsignal', wsig);
 
             // variables I need
-            var button, decision1, decision2, decision3,
+            var button, decision1, decision2,
                 div, urncolor, noturncolor,
                 plyrsignal1, plyrsignal2;
             //this array gets the information whether a signal is shared (1) or not (0)
@@ -818,7 +739,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     // The next step in the game stage is the voting.
     // All shared signals must be displayed here!
     stager.extendStep('voting', {
-      backbutton: false,
         donebutton: false,
 
         frame: 'vote.htm',
@@ -888,7 +808,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     // in order to enable learning, the players receive feedback about the voting decision
     // and their payoff
     stager.extendStep('feedback', {
-      backbutton: false,
         donebutton: false,
         frame: 'feedback.htm',
         init:function() {
@@ -942,7 +861,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.extendStep('belief', {
-      backbutton: false,
+
         donebutton: false,
         frame: 'belief_elicitation.htm',
         init:function() {
@@ -1017,8 +936,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                W.setInnerHTML('TUT_decision3',  TUT3_decision);
            });
 
-          //TUT1_signals=this.TUT1_signals;
-          //TUT1_decision=this.TUT1_decision;
+
 
            W.setInnerHTML('first_decision', node.game.settings.first_decision);
            W.setInnerHTML('second_decision', node.game.settings.second_decision);
@@ -1026,8 +944,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
            W.setInnerHTML('fourth_decision', node.game.settings.fourth_decision);
            W.setInnerHTML('fifth_decision', node.game.settings.fifth_decision);
            W.setInnerHTML('bias2', node.game.settings.bias2);
-           //W.setInnerHTML('TUT_signals1',  TUT1_signals);
-           //W.setInnerHTML('TUT_decision1',  TUT1_decision);
 
           // button to continue to next round
           GAME1_paid=this.GAME1_paid;
@@ -1062,7 +978,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('bomb', {
       frame: 'bomb.htm',
-      backbutton: false,
       donebutton: false,
       // There should only be one risk task included (either holt laury or bomb)
       init: function(){
@@ -1115,7 +1030,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
     stager.extendStep('belief_feedback', {
-      backbutton: false,
         donebutton: true,
         frame: 'belief_feedback.htm',
         init:function() {
@@ -1165,74 +1079,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         }
     });
 
-    // risk widget is used to measure risk preferences.
-    // I am not sure whether the data is saved.
-    stager.extendStep('risk_task',{
-      init: function(){
-       W.infoPanel.destroy();
-       W.restoreOnleave();
-      },
 
-	       widget: {
-	          name: 'RiskGauge',
-            root: 'container',
-            options: {
-                mainText: 'Below you find a series of hypothetical lotteries. Each row contains two lotteries with different probabalities of winning. In each row, select the lottery you would rather take part in. After you made your choices, one of the ten rows is chosen randomly and the lottery you chose is played. The resulting payoff is added to your final payoff.',
-                className: 'centered',
-                currency: ' ECU',
-                currencyAfter: true,
-                panel: false,
-                title: false,
-                scale: 20
-
-            }
-	       }
-    });
-
-    stager.extendStep('risk_feedback', {
-      backbutton: false,
-        donebutton: false,
-        frame: 'risk_feedback.htm',
-        cb: function() {
-          var win, cell,lottery, rand, r_button, c_button, div;
-
-          node.on.data('RISK', function(msg){
-            //  concole.log(msg.data);
-              win=msg.data.win;
-              cell=msg.data.cell;
-              rand=msg.data.dice;
-              lottery=msg.data.lottery;
-              W.setInnerHTML('cell', cell);
-              W.setInnerHTML('cell2', cell);
-              W.setInnerHTML('cell3', cell);
-              W.setInnerHTML('lottery', lottery);
-              W.setInnerHTML('rand', rand);
-              W.setInnerHTML('win', win);
-
-          });
-          win=this.win;
-          cell=this.cell;
-          rand=this.rand;
-          console.log('win');
-          r_button=W.getElementById('Run');
-
-          r_button.onclick=function(){
-            div = W.getElementById('result').style.display = '';
-          }
-
-          c_button=W.getElementById('Continue_button');
-
-          c_button.onclick=function(){
-              node.done({
-                  win: win,
-                  cell: cell,
-                  rand: rand
-              });
-          }
-        }
-
-
-    });
 
     // I use the cognitive reflection test by Frederick.
     // The questions have to be answered by providing an input as an integer.
@@ -1290,25 +1137,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 ],
                 formsOptions: { requiredChoice: true }
             }
-//             // var root = W.getElementById('root');
-//
-//
-//             var BatBall = node.widgets.append('CustomInput', root, );
-//             var machines = node.widgets.append('CustomInput', root, );
-//             var lillys = node.widgets.append('CustomInput', root, );
-//             var race = node.widgets.append('CustomInput', root, );
-//             var sheep = node.widgets.append('CustomInput', root, );
-//
-//             // As far as I understand it, this function should save the answers that the participants gave.
-//             donebutton.onclick=function(){
-//                 node.done({
-//                     CRT1: BatBall.getValues(),
-//                     CRT2: machines.getValues(),
-//                     CRT3: lillys.getValues(),
-//                     CRT4: race.getValues(),
-//                     CRT5: sheep.getValues()
-//                 })
-//             }
 
         }
 
@@ -1329,10 +1157,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     {name: 'CustomInput',
                      id: 'age',
                      mainText: 'What is your age?',
-                     /*choices: [
-                         '18-20', '21-30', '31-40', '41-50',
-                         '51-60', '61-70', '71+', 'Do not want to say'
-                     ],*/
                      type: 'int',
                      min: 18,
                      max: 120,
@@ -1401,13 +1225,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 title: false, // Disable title for seamless Widget Step.
                 panel: false, // No border around.
                 showEmailForm: false,
-                showFeedbackForm: false,
-                /*email: {
-                    texts: {
-                        label: 'Enter your email (optional):',
-                        errString: 'Please enter a valid email and retry'
-                    }
-                }*/
+                showFeedbackForm: false
             }
         }
     });

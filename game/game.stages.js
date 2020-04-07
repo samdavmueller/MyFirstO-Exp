@@ -21,7 +21,6 @@ module.exports = function(stager, settings) {
         .next('belief')
         .next('bomb')
         .next('belief_feedback')
-        .next('risk')
         .next('CRT')
         .next('questionnaire')
         .next('preEnd')
@@ -44,12 +43,6 @@ module.exports = function(stager, settings) {
                 'feedback'
             ]
         });
-    stager.extendStage('risk', {
-            steps: [
-                    'risk_task',
-                    'risk_feedback'
-            ]
-        });
 
     // Modify the stager to skip one stage.
       //stager.skip('welcome');
@@ -63,7 +56,6 @@ module.exports = function(stager, settings) {
       stager.skip('bomb');
       stager.skip('CRT');
       stager.skip('questionnaire');*/
-      stager.skip('risk');
-
+    
 
 };

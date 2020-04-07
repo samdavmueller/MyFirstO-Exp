@@ -18,12 +18,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     var channel =  gameRoom.channel;
 
     // Must implement the stages here.
-    // Setting the SOLO rule: game steps each time node.done() is called,
-    // ignoring the state of other clients.
-    // The logic will never call node.done() explicitely, and instead will
-    // wait for a stage update from the client and move to the same step.
-    // Setting the SOLO rule: game steps each time node.done() is called,
-    // ignoring the state of other clients.
+
     const ngc = require('nodegame-client');
     stager.setDefaultStepRule(ngc.stepRules.SOLO);
 
@@ -52,7 +47,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       });
     });
 
-    stager.extendStep('instructions', {
+    /*stager.extendStep('instructions', {
         cb: function() {
             console.log('Instructions.');
         }
@@ -62,7 +57,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         cb: function() {
             console.log('Quiz');
         }
-    });
+    });*/
 
 
 
@@ -72,7 +67,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         cb: function() {
           var decision1, decision2, urncolor, noturncolor,
               plyrsignal1, plyrsignal2, sharesignals;
-              console.log('SIGNALSTUT');
+              //console.log('SIGNALSTUT');
           // when the player is done all necessary information is send to the Logic
           // I don't think it is actually necessary to create these variables but I do it anyway
            node.on.data('done', function(msg) {
@@ -254,8 +249,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           }
         }
       //  console.log(fdecision);
-        // because I was unable to save the decision from the logic I send it to
-        // the player to save it using 'done'
+
         var player = node.game.pl.each(function(player){
           node.say('FDECISION', player.id , fdecision);
       });
@@ -276,8 +270,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         var Pstep2=node.game.getPreviousStep(2);
         var Pstep2_s= Pstep2.stage + '.' + Pstep2.step + '.' + Pstep2.round;
-        // console.log(node.game.memory.stage[node.game.getPreviousStep(1)].fetch());
-        // console.log(node.game.memory.stage[node.game.getPreviousStep(2)].fetch());
+
         // I get the signals from the signal step and put them in one String
         var signals="";
         if(node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal1')[0][0]!==""){
@@ -354,15 +347,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           playerId = playerId.id;
 
 
-          // Same as:
-//          if (client.win) {
-//              client.win = client.win + paid;
-//          }
-//          else {
-//              client.win = paid;
-//          }
-
-          //console.log(client);
 
           // The information is sent to the players.
           var d={
@@ -380,7 +364,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           }
 
 
-                    //console.log(d);
 
           node.say('DATA', playerId, d);
       }
@@ -404,7 +387,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         cb: function() {
           var decision1, decision2, urncolor, noturncolor,
               plyrsignal1, plyrsignal2, sharesignals;
-              console.log('SIGNALS');
+              //console.log('SIGNALS');
           // when the player is done all necessary information is send to the Logic
           // I don't think it is actually necessary to create these variables but I do it anyway
            node.on.data('done', function(msg) {
@@ -565,13 +548,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         var blue_vot= (x-y)*node.game.settings.bias2;
         // and how many indicate that the urn is red
         var red_vot= y*node.game.settings.bias;
-      //  console.log(shar_sig_array);
-    //    console.log(x);
-    //    console.log(y);
 
-    //    console.log(blue_vot);
-
-      //  console.log(red_vot);
         // the decision is made. It depends on the treatment.
         if (red_vot<blue_vot){
           fdecision='blue';
@@ -588,8 +565,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           }
         }
       //    console.log(fdecision);
-        // because I was unable to save the decision from the logic I send it to
-        // the player to save it using 'done'
+
+
         var player = node.game.pl.each(function(player){
           node.say('FDECISION', player.id , fdecision);
       });
@@ -610,8 +587,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         var Pstep2=node.game.getPreviousStep(2);
         var Pstep2_s= Pstep2.stage + '.' + Pstep2.step + '.' + Pstep2.round;
-        // console.log(node.game.memory.stage[node.game.getPreviousStep(1)].fetch());
-        // console.log(node.game.memory.stage[node.game.getPreviousStep(2)].fetch());
+
         // I get the signals from the signal step and put them in one String
         var signals="";
         if(node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal1')[0][0]!==""){
@@ -690,23 +666,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           var playerId = node.game.pl.first();
           playerId = playerId.id;
 
-          // Permanent.
-          // Contains all the data about the player.
-          //var client = channel.registry.getClient(playerId);
 
-          //console.log(client);
-
-          // Ternary Assignment.
-          //client.win = client.win ? (client.win + paid) : paid;
-          // Same as:
-//          if (client.win) {
-//              client.win = client.win + paid;
-//          }
-//          else {
-//              client.win = paid;
-//          }
-
-          //console.log(client);
 
           // The information is sent to the players.
           var d={
@@ -724,7 +684,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           }
 
 
-                    //console.log(d);
 
           node.say('DATA', playerId, d);
       }
@@ -748,7 +707,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       //This is the anchor, the feedback of the last round.
       // From this step, we can retrace all previous steps we need
       var Pstep1=node.game.getPreviousStep(1);
-      console.log(Pstep1);
+      //console.log(Pstep1);
 
       //TUT 1
      var TUT1_feedback= (Pstep1.stage-2) + '.' + (Pstep1.step) + '.' + (Pstep1.round-5);
@@ -790,7 +749,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       var GAME1_feedback= (Pstep1.stage) + '.' + (Pstep1.step) + '.' + (Pstep1.round-5);
       var GAME1_voting= (Pstep1.stage) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-5);
       var GAME1_signaling= (Pstep1.stage) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-5);
-      console.log(node.game.memory.stage[GAME1_feedback].fetch());
+      //console.log(node.game.memory.stage[GAME1_feedback].fetch());
       var GAME1_decision=node.game.memory.stage[GAME1_feedback].fetchArray('fdecision')[0][0];
       var GAME1_signals= node.game.memory.stage[GAME1_signaling].fetchArray('sharesignal1')[0][0]+", "+
                         node.game.memory.stage[GAME1_voting].fetchArray('b1signals')[0][0]+", "+
@@ -829,7 +788,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       var GAME4_feedback= (Pstep1.stage) + '.' + (Pstep1.step) + '.' + (Pstep1.round-2);
       var GAME4_voting= (Pstep1.stage) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-2);
       var GAME4_signaling= (Pstep1.stage) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-2);
-      console.log(node.game.memory.stage[GAME4_feedback].fetch());
+      //console.log(node.game.memory.stage[GAME4_feedback].fetch());
       var GAME4_decision=node.game.memory.stage[GAME4_feedback].fetchArray('fdecision')[0][0];
       var GAME4_signals= node.game.memory.stage[GAME4_signaling].fetchArray('sharesignal1')[0][0]+", "+
                         node.game.memory.stage[GAME4_voting].fetchArray('b1signals')[0][0]+", "+
@@ -862,10 +821,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       var GAME6_paid=node.game.memory.stage[GAME6_feedback].fetchArray('payoff')[0][0];
       GAME6_signals=cut_comma(GAME6_signals);
 
-      //var Pstep2=node.game.getPreviousStep(2);
-      //var Pstep2_s= Pstep2.stage + '.' + Pstep2.step + '.' + Pstep2.round;
-      // console.log(node.game.memory.stage[Pstep1_s].fetch());
-       //console.log(node.game.memory.stage[node.game.getPreviousStep(2)].fetch());
+
       // I get the signals from the signal step and put them in one String
 
 
@@ -1040,69 +996,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       }
 
 
-                console.log(d);
+              //  console.log(d);
 
       node.say('DATA', playerId, d);
 
     }
   })
 
-    stager.extendStep('risk_feedback',{
-      cb: function(){
-        var Pstep1=node.game.getPreviousStep(1);
-        var Pstep1_s= Pstep1.stage + '.' + Pstep1.step + '.' + Pstep1.round;
-
-        var cell=Math.ceil(Math.random() * 10);
-        var item=node.game.memory.stage[Pstep1_s].fetchArray('items')[0][cell-1];
-
-        var choice=item.choice;
-        var lottery=String(item.value);
-            lottery=lottery.replace("and", " and ")
-        var dice=Math.ceil(Math.random() * 10);
-        var win=0;
-        if(choice==0){
-          if(dice<=cell){
-            win=40;
-          }
-          if(dice>cell){
-            win=32;
-          }
-        }
-        if(choice==1){
-          if(dice<=cell){
-            win=77;
-          }
-          if(dice>cell){
-            win=2;
-          }
-        }
-
-        var d={
-          "cell": cell,
-          "lottery": lottery,
-          "dice": dice,
-          "win": win
-        }
-
-
-
-        var playerId = node.game.pl.first();
-        playerId = playerId.id;
-
-
-        var client = channel.registry.getClient(playerId);
-
-        // Ternary Assignment.
-        client.win = client.win ? (client.win + win) : win;
-
-
-        //console.log(typeof lottery);
-        //console.log(playerId);
-        node.say('RISK', playerId, d);
-      }
-
-
-    });
 
     // in the last stage the data is saved.
     stager.extendStep('end', {

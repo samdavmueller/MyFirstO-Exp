@@ -198,6 +198,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           parent.scrollTo(0,0);
 
           this.infoButton.disabled=false;
+          this.infoButton.innerHTML='Show Player Behavior';
 
           node.on.step(function(){
             W.infoPanel.close();
@@ -297,6 +298,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           infoPanel.infoPanelDiv.appendChild(this.infoDiv);*/
 
           this.infoButton.disabled=false;
+          this.infoButton.innerHTML='Show Player Behavior';
 
           node.on.step(function(){
             W.infoPanel.close();
@@ -476,6 +478,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       // timer: settings.bidTime,
       init:function() {
         parent.scrollTo(0,0);
+        this.infoButton.innerHTML='Show Player Behavior';
+
       },
 
       cb: function() {
@@ -543,6 +547,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       frame: 'feedbackTUT.htm',
       init:function() {
         parent.scrollTo(0,0);
+        this.infoButton.innerHTML='Show Player Behavior';
+
       },
 
       // timer: settings.bidTime,
@@ -598,6 +604,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         donebutton: true,
         init:function() {
           parent.scrollTo(0,0);
+          this.infoButton.innerHTML='Show Player Behavior';
+
         }
       });
 
@@ -614,6 +622,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         frame: 'game.htm',
         init:function() {
           parent.scrollTo(0,0);
+          this.infoButton.innerHTML='Show Player Behavior';
+
         },
         // I did not change the name of the time variable.
         // But I decided I do not need time pressure at all.
@@ -815,6 +825,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // timer: settings.bidTime,
         init:function() {
           parent.scrollTo(0,0);
+          this.infoButton.innerHTML='Show Player Behavior';
+
         },
         cb: function() {
             var vote, Red_button, Blue_button, fdecision, signal2, signal3;
@@ -881,6 +893,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         frame: 'feedback.htm',
         init:function() {
           parent.scrollTo(0,0);
+          this.infoButton.innerHTML='Show Player Behavior';
+
         },
 
         // timer: settings.bidTime,
@@ -933,6 +947,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         frame: 'belief_elicitation.htm',
         init:function() {
           parent.scrollTo(0,0);
+          this.infoButton.innerHTML='Show Player Behavior';
+
         },
 
         cb: function() {
@@ -1354,18 +1370,21 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
 
-    stager.extendStep('preEnd', {
-      donebutton: true,
-      frame: 'end.htm',
-      cb: function(){
-        var root = W.getElementById('container');
-        var feedback = node.widgets.append('Feedback', root, {
-          mainText: 'Please leave some short feedback what you liked or did not like about the experiment:<br>',
-          minWords: 10,
-          minChars: 50,
-          showSubmit: false
-        });
+  stager.extendStep('preEnd', {
+    widget: {
+      name: 'Feedback',
+      root: 'container',
+      options: {
+        className: 'centered',
+        mainText: 'Please leave some short feedback what you liked or did not like about the experiment:<br>',
+        minChars: 50,
+        minWords: 10,
+        showSubmit: false,
+        requiredChoice: true,
+        panel: false,
+        title: false
       }
+    }
   });
 
 
@@ -1381,14 +1400,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             options: {
                 title: false, // Disable title for seamless Widget Step.
                 panel: false, // No border around.
-                showEmailForm: true,
+                showEmailForm: false,
                 showFeedbackForm: false,
-                email: {
+                /*email: {
                     texts: {
                         label: 'Enter your email (optional):',
                         errString: 'Please enter a valid email and retry'
                     }
-                }
+                }*/
             }
         }
     });

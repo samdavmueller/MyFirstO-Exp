@@ -329,7 +329,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         }
         // Else they receive nothing
         else{
-          correct='false';
+          correct='incorrect';
           paid=0;
         }
 
@@ -662,7 +662,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         }
         // Else they receive nothing
         else{
-          correct='false';
+          correct='incorrect';
           paid=0;
         }
 

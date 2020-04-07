@@ -13,7 +13,7 @@ module.exports = {
      *
      * If TRUE, authorization files will be imported and checked
      */
-    enabled: false, // [true, false] Default: TRUE.
+    enabled: true, // [true, false] Default: TRUE.
 
     /**
      * ## mode
@@ -44,7 +44,7 @@ module.exports = {
      * Modes: 'dummy', 'auto'
      * Default: 100
      */
-    // nCodes: 20,
+    // nCodes: 10000,
 
     /**
      * ## addPwd
@@ -107,7 +107,7 @@ module.exports = {
      * Modes: 'dummy', 'auto', 'local', 'remote', 'custom'
      * Default: 'codes.imported.csv'
      */
-    // outFile: 'my.imported.codes.csv',
+     //outFile: 'my.imported.codes.csv',
 
     /**
      * ## claimId
@@ -116,7 +116,7 @@ module.exports = {
      *
      * Default: FALSE
      */
-    // claimId: true,
+     claimId: true,
 
     /**
      * ## claimIdValidateRequest

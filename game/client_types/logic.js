@@ -1017,6 +1017,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           client.win = client.win ? (client.win + 20) : 20;
 
             gameRoom.computeBonus({
+                amt: true,
                 say: true,   // default false
                 dump: true,  // default false
                 print: true  // default false

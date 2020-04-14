@@ -1014,7 +1014,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           var client = channel.registry.getClient(playerId);
 
           // Ternary Assignment.
-          client.win = client.win ? (client.win + 20) : 20;
+          client.win = client.win ? (client.win + 0) : 0;
 
             gameRoom.computeBonus({
                 amt: true,

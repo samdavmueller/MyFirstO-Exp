@@ -1225,7 +1225,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 title: false, // Disable title for seamless Widget Step.
                 panel: false, // No border around.
                 showEmailForm: false,
-                showFeedbackForm: false
+                showFeedbackForm: false,
+                texts:{
+                  totalWin:"Your total bonus:"
+                }
             }
         }
     });

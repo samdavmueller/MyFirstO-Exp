@@ -133,7 +133,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         //some variables for the welcome stage
         W.setInnerHTML('time', 20);
         W.setInnerHTML('low_money', 0.50);
-        W.setInnerHTML('high_money', 5.98);
+        W.setInnerHTML('high_money', 5.48);
       }
     });
 

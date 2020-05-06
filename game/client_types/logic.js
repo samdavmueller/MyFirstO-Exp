@@ -54,7 +54,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });*/
 
     stager.extendStep('quiz', {
-    
+
       cb: function() {
           //console.log('Quiz.cb');
           var playerId = node.game.pl.first();
@@ -130,7 +130,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             }
 
 
-            console.log(i);
+            //console.log(i);
 
 
 

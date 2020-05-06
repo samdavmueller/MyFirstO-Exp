@@ -91,13 +91,14 @@ module.exports = {
      *       function(treatments, roomCounter) {
      *           return treatments[roomCounter % treatments.length];
      *       }
-     *
+     * old way:
+     *CHOSEN_TREATMENT: function(treatments, roomCounter) {
+      *   var x=roomCounter % 5;
+      *   return treatments[Math.ceil(x/2)];
+     *},
      * Default: undefined, random treatment
      */
-    CHOSEN_TREATMENT: function(treatments, roomCounter) {
-        var x=roomCounter % 5;
-        return treatments[Math.ceil(x/2)];
-    },
+    CHOSEN_TREATMENT:"treatment_rotate",
 
     /**
      * ## PLAYER_SORTING

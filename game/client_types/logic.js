@@ -51,13 +51,34 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         cb: function() {
             console.log('Instructions.');
         }
-    });
+    });*/
 
     stager.extendStep('quiz', {
-        cb: function() {
-            console.log('Quiz');
-        }
-    });*/
+    
+      cb: function() {
+          //console.log('Quiz.cb');
+          var playerId = node.game.pl.first();
+          playerId = playerId.id;
+
+          var client = channel.registry.getClient(playerId);
+
+          client.win = client.win ? (client.win) : 21;
+
+          var check=client.win-1;
+          //console.log(check);
+          node.say("WIN", playerId, check);
+          /*var Pstep1=node.game.getPreviousStep();
+          var Pstep1_s= Pstep1.stage + '.' + Pstep1.step + '.' + Pstep1.round;
+          var understand_task=node.game.memory.stage[Pstep1_s].fetch();
+          console.log(understand_task);
+          var i=1;
+          var wait=20;
+          node.on.data('done', function(msg){
+
+            i=i+1;
+          });*/
+      }
+    });
 
 
 
@@ -65,6 +86,58 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
         cb: function() {
+          //console.log(node.game.getPreviousStep());
+          var Pstep1=node.game.getPreviousStep();
+
+          var Pstep1_s= Pstep1.stage + '.' + Pstep1.step + '.' + Pstep1.round;
+          if(Pstep1_s==="3.1.1"){
+            var test=node.game.memory.stage[Pstep1_s].fetch();
+            var x=test.length-1;
+            var understand_task=node.game.memory.stage[Pstep1_s].fetchArray('forms')[x][0];
+            var possible_action=node.game.memory.stage[Pstep1_s].fetchArray('forms')[x][1];
+            var automated_players=node.game.memory.stage[Pstep1_s].fetchArray('forms')[x][2];
+            var treatment=node.game.memory.stage[Pstep1_s].fetchArray('forms')[x][3];
+            /*console.log(x);
+            console.log(understand_task);
+            console.log(possible_action);
+            console.log(automated_players);
+            console.log(treatment);*/
+
+            var i=1;
+
+            var playerId = node.game.pl.first();
+            playerId = playerId.id;
+
+            var client = channel.registry.getClient(playerId);
+
+            //console.log(client);
+
+            // Ternary Assignment.
+
+
+            //client.win = client.win ? (client.win - 5) : paid;
+            if(understand_task.choice==='0' & possible_action.choice==='0' &
+            automated_players.choice==='3' & treatment.choice===node.game.settings.correct_decision){
+              i=0;
+              client.win = client.win - 1;
+            }
+            else{
+              if(client.win>0){
+                client.win = client.win - 5;
+                client.win = (client.win>0) ? (client.win) : 1;
+              }
+
+            }
+
+
+            console.log(i);
+
+
+
+            node.say("FAIL", playerId, i);
+          }
+
+
           var decision1, decision2, urncolor, noturncolor,
               plyrsignal1, plyrsignal2, sharesignals;
               //console.log('SIGNALSTUT');

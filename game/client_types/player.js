@@ -122,7 +122,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // Additional debug information while developing the game.
         //this.debugInfo = node.widgets.append('DebugInfo', header)
 
-
+        //BackButton is not working, I don't know why...
+        this.backButton = node.widgets.append('BackButton',
+                                          W.getHeader(), {
+                                              acrossStages:  true
+                                            });
 
 
     });
@@ -133,8 +137,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         //some variables for the welcome stage
         W.setInnerHTML('time', 20);
         W.setInnerHTML('low_money', 0.50);
-        W.setInnerHTML('high_money', 5.48);
-      }
+        W.setInnerHTML('high_money', 5.98);
+
+        //var treatment= node.game.settings.treat_number;
+
+      //  node.done({ treatment: treatment});
+    }
     });
 
     stager.extendStep('instructions', {
@@ -173,23 +181,56 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           this.infoButton.disabled=false;
           this.infoButton.innerHTML='Show Player Behavior';
 
+
+
           node.on.step(function(){
             W.infoPanel.close();
           })
 
       },
+      cb:function(){
+
+        //var button=getElementById('donebutton');
+        //das muss alles irgendwie über die logic gehen
+        //ich sollte vom player aus es schaffen, dass ich jedes mal wenn done gedrückt wird es entweder zurück zu den instructions geht oder
+        //oder weiter zum Spiel. Dann kann ich fast alles über die exit und init function in der logic machen!
+        //allerdings muss ich dann testen ob die selbst entschieden haben zurück zu gehen oder ob es über done passiert ist...
+        //da muss ich die 20ECU gleich am Anfang auf das Konto laden und dann ziehe ich nach und nach Kohlen ab!
+        //dadurch geht die Veränderung niemals verloren, UND ich kann verhindern, dass das Konto unter 0 springt
+        var wait=0;
+
+        //var button= getElementById('Continue_button');
+
+        //W.body.appendChild(button);
 
 
+        node.on.data('WIN', function(msg) {
+          wait=msg.data;
+          W.setInnerHTML('value', wait);
+        });
+        /*button.onclick=function(){
+          l=l+1;
+          W.setInnerHTML('value', wait[l]);
+        }*/
 
+      },
 	    widget: {
 	       name: 'ChoiceManager',
 	       root: 'container',
-	       options: {
+         options: {
 		         className: 'centered',
-		         mainText: 'Here we test your understanding of the instructions',
-		         hint: 'Good luck!',
-		         forms: [
-		             {
+		         mainText: 'Here we test your understanding of the instructions.'+
+             '<p><strong>If you answer all questions correctly, you will earn ' +
+             '<span id=value></span>'+
+             ' ECU and the game starts.</strong></p>'+
+             '<p>A failed attempt to answer the questions correctly '+
+             'reduces the payoff by 5 ECU.</p>'+
+             '<p><i>Press the Back button to re-read the instructions.</i></p>'
+             //'<input type="button" value="Check Solutions" name="Continue" id="Continue_button" class="btn-success" style="font-size:20px; font-weight: bold; height:75px; width:150px"/>'
+             ,
+		         hint: 'Press the Back button to re-read the instructions.',
+             forms: [
+                {
 			            name: 'ChoiceTable',
 			            id: 'understand_task',
 			            mainText: 'What do you have to decide on in your group?',
@@ -200,7 +241,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 			              'I don\'t know.',
 			              "The color preferred by most people."
 			               ],
-			            correctChoice: 0,
+			            //correctChoice: 0,
 			            shuffleChoices: true,
 			            orientation: 'V' //vertical
 		             },
@@ -215,7 +256,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                            'I don\'t know.',
                            'I can decide which players receives which of the signals, while I can provide any signal only to a single automated player.'
 			                      ],
-			            correctChoice: 0,
+			            //correctChoice: 0,
 			            shuffleChoices: true,
 			            orientation: 'V' //horizontal
                 },
@@ -232,13 +273,30 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                           '21',
                           '30'
                            ],
-                 correctChoice: 3,
+                 //correctChoice: 3,
                  shuffleChoices: true,
                  orientation: 'V' //horizontal
                 }
+                ,
+                {
+                 name: 'ChoiceTable',
+                 id: 'treatment',
+                 mainText: 'The automated players see the signals '+
+                 settings.signals+
+                 '. What will be their voting decision?',
+                 choices: [
+                          '<span style="color:blue">blue</span>',
+                          '<span style="color:red">red</span>',
+                          'The decision is random.'
+                           ],
+                 //correctChoice: settings.correct_decision,
+                 shuffleChoices: true,
+                 orientation: 'V',
+                 //requiredChoice: false
+                }
 		        ]
 	    }
-	   }
+    }
   });
 
 
@@ -246,6 +304,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
   // The stage in which all participants receive their signals and the urn color
   // is decided.
   stager.extendStep('signalsTUT', {
+      backbutton: false,
       donebutton: false,
       frame: 'gameTUT.htm',
 
@@ -262,6 +321,27 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
       cb: function() {
+
+        var i=0;
+
+        node.on.data('FAIL', function(msg) {
+          i = msg.data;
+
+          if(i===1){
+            var res;
+            res = node.game.stepBack(this.stepOptions);
+            if (res) this.disable();
+          }
+          if(i===0){
+            node.game.backButton.destroy();
+          }
+
+        });
+
+
+
+
+
         var csig=Math.round(100*node.game.settings.correctsignal);
         var wsig=Math.round(100*(1-node.game.settings.correctsignal));
         W.setInnerHTML('correctsignal', csig);
@@ -406,6 +486,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               sharesignals = sharesignals.slice(1);
               button.disabled = true;
 
+              // quickly save the treatment
+              var treatment= node.game.settings.treat_number;
+
+
               // Mark the end of the round, and
               // store the decision in the server.
               node.done({ decision1: decision1,
@@ -415,7 +499,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                           plyrsignal1:plyrsignal1,
                           plyrsignal2:plyrsignal2,
                           sharesignal1: sharesignals,
-                          sig_array: shar_sig_array});
+                          sig_array: shar_sig_array,
+                          treatment: treatment});
           };
       }
 

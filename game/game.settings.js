@@ -55,6 +55,7 @@ module.exports = {
         control: {
             description: "The bots are not biased at all",
             //bidTime: 30000,
+            treat_number: 0,
             getsignal: 0.9,
             correctsignal: 0.6,
             bias: 10,
@@ -63,12 +64,20 @@ module.exports = {
             second_decision: '<span style="color: blue">blue</span>',
             third_decision: '<span style="color: red">red</span>',
             fourth_decision: '<span style="color: red">red</span>',
-            fifth_decision: '<span style="color: blue">blue</span>'
+            fifth_decision: '<span style="color: blue">blue</span>',
+            signals: '<span style="color:blue">blue</span>,'+
+            '<span style="color:blue">blue</span>,'+
+            '<span style="color:red">red</span>,'+
+            '<span style="color:red">red</span>,'+
+            '<span style="color:blue">blue</span>',
+            correct_decision: '0',
+            wait: 20
         },
 
         under: {
             description: "The bots are heavily biased and it is rational to hide blue signals.",
             //bidTime: 30000,
+            treat_number: 1,
             getsignal: 0.9,
             correctsignal: 0.6,
             bias: 3,
@@ -77,12 +86,19 @@ module.exports = {
             second_decision: '<span style="color: blue">blue</span>',
             third_decision: '<span style="color: red">red</span>',
             fourth_decision: '<span style="color: blue">blue</span>',
-            fifth_decision: '<span style="color: blue">blue</span>'
+            fifth_decision: '<span style="color: blue">blue</span>',
+            signals: '<span style="color:red">red</span>,'+
+            '<span style="color:red">red</span>,'+
+            '<span style="color:blue">blue</span>,'+
+            '<span style="color:red">red</span>',
+            correct_decision: '0',
+            wait: 20
         },
 
         over: {
             description: "The bots are heavily biased and it is rational to hide red signals.",
             //bidTime: 30000,
+            treat_number: 2,
             getsignal: 0.9,
             correctsignal: 0.6,
             bias: 18,
@@ -91,7 +107,14 @@ module.exports = {
             second_decision: '<span style="color: red">red</span>',
             third_decision: '<span style="color: red">red</span>',
             fourth_decision: '<span style="color: red">red</span>',
-            fifth_decision: '<span style="color: blue">blue</span>'
+            fifth_decision: '<span style="color: blue">blue</span>',
+            signals: '<span style="color:blue">blue</span>,'+
+            '<span style="color:blue">blue</span>,'+
+            '<span style="color:red">red</span>,'+
+            '<span style="color:red">red</span>,'+
+            '<span style="color:blue">blue</span>',
+            correct_decision: '1',
+            wait: 20
         }
       }
 };

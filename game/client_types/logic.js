@@ -124,7 +124,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             else{
               if(client.win>0){
                 client.win = client.win - 5;
-                client.win = (client.win>0) ? (client.win) : 1;
+                //client.win = (client.win>0) ? (client.win) : 1;
               }
 
             }

@@ -197,6 +197,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         //allerdings muss ich dann testen ob die selbst entschieden haben zurück zu gehen oder ob es über done passiert ist...
         //da muss ich die 20ECU gleich am Anfang auf das Konto laden und dann ziehe ich nach und nach Kohlen ab!
         //dadurch geht die Veränderung niemals verloren, UND ich kann verhindern, dass das Konto unter 0 springt
+        var div;
         var wait=0;
 
         //var button= getElementById('Continue_button');
@@ -207,7 +208,17 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         node.on.data('WIN', function(msg) {
           wait=msg.data;
           W.setInnerHTML('value', wait);
+
+          if(wait<0){
+            this.infoButton.disabled= true;
+            node.game.backButton.destroy();
+            node.game.doneButton.destroy();
+            div = W.getElementById('over').style.display = '';
+
+          }
         });
+
+
         /*button.onclick=function(){
           l=l+1;
           W.setInnerHTML('value', wait[l]);
@@ -219,7 +230,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 	       root: 'container',
          options: {
 		         className: 'centered',
-		         mainText: 'Here we test your understanding of the instructions.'+
+		         mainText:
+             '<div id=over style="display:none; font-size:32px; font-weight:bold; color: red">'+
+             'You did not read the instructions thoroughly.<br>Please leave the game.<br>'+
+             'Your HIT will not be approved. </div>'+
+             'Here we test your understanding of the instructions.'+
              '<p><strong>If you answer all questions correctly, you will earn ' +
              '<span id=value></span>'+
              ' ECU and the game starts.</strong></p>'+

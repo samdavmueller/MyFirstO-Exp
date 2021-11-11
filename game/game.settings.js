@@ -58,6 +58,7 @@ module.exports = {
             treat_number: 0,
             getsignal: 0.9,
             correctsignal: 0.6,
+            biasIndicator: 0,
             bias: 10,
             bias2: 10,
             first_decision: '<span style="color: red">red</span>',
@@ -80,6 +81,7 @@ module.exports = {
             treat_number: 1,
             getsignal: 0.9,
             correctsignal: 0.6,
+            biasIndicator: -1,
             bias: 3,
             bias2: 10,
             first_decision: '<span style="color: blue">blue</span>',
@@ -93,14 +95,15 @@ module.exports = {
             '<span style="color:red">red</span>',
             correct_decision: '0',
             wait: 20
-        },
+        }
 
-        over: {
+    /*    over: {
             description: "The bots are heavily biased and it is rational to hide red signals.",
             //bidTime: 30000,
             treat_number: 2,
             getsignal: 0.9,
             correctsignal: 0.6,
+            biasIndicator: 1,
             bias: 18,
             bias2: 10,
             first_decision: '<span style="color: red">red</span>',
@@ -115,6 +118,6 @@ module.exports = {
             '<span style="color:blue">blue</span>',
             correct_decision: '1',
             wait: 20
-        }
+        }*/
       }
 };

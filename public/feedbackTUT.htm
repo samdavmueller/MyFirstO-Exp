@@ -4,27 +4,76 @@
 <link rel="stylesheet" href="css/style.css" />
 <body>
   <div id="container">
-    <div id="tutorial" style="font-size:32px; font-weight:bold; color: red">
-        This is a learning stage. There are no payments in this round.
-    </div>
     <div id="feedback">
-      <h3> This is a summary of the last round. </h3></br>
-      <h4>The signals you received were <span id="signals", style="font-weight: bold"> </span>. </h4></br>
-      <h4>The signals you shared were <span id="signals1", style="font-weight: bold"> </span>. </h4>
-      <h4>The signals the automated player 1 shared were <span id="signals2", style="font-weight: bold"> </span>. </h4>
-      <h4>The signals the automated player 2 shared were <span id="signals3", style="font-weight: bold"> </span>. </h4></br>
-      <h4>The true color of the urn was <span id="urncolor", style="font-weight: bold"></span>.</h4>
-
-      <h4>Your vote was <span id="vdecision", style="font-weight: bold"></span> and it was <span id="v_correct", style="font-weight: bold"></span>.</h4>
-      <h4>The comittee's decision was <span id="committee_decision", style="font-weight: bold"></span> and it was <span id="wrong_right", style="font-weight: bold"></span>.</h4>
+      <table style="width:98%; margin-left:1%; margin-right:1%">
+        <tr>
+          <th style="border: 1px solid black"> Urn Number </th>
+          <th style="border: 1px solid black"> Signals </th>
+          <th style="border: 1px solid black"> Your Decision </th>
+          <th style="border: 1px solid black"> Color of the Urn </th>
+        </tr>
+        <tr>
+          <th style="border: 1px solid black"> Urn 1 </th>
+          <td style="border: 1px solid black">  <span style="color:blue">blue</span>,
+                <span style="color:red">red</span>,
+                <span style="color:red">red</span>,
+                <span style="color:red">red</span>,
+                <span style="color:blue">blue</span>,
+                <span style="color:red">red</span></td>
+          <td style="border: 1px solid black"> <span> <div id="decision1">
+                </br>
+      </div></span> </td>
+      <td style="border: 1px solid black"> <span id="urn1" style="color:red">red</span> </td>
+        </tr>
+        <tr>
+          <th style="border: 1px solid black"> Urn 2 </th>
+          <td style="border: 1px solid black">  <span style="color:blue">blue</span>,
+                <span style="color:blue">blue</span>,
+                <span style="color:red">red</span>,
+                <span style="color:red">red</span>,
+                <span style="color:blue">blue</span></td>
+          <td style="border: 1px solid black"><span> <div id="decision2">
           </br>
-    <h4>Your resulting payoff for this round would be <span id="payoff", style="font-weight: bold"></span> <strong>ECU</strong>.
-    </h4>
-      <br/>
-    <h4>Click 'Continue' to continue to the next stage.</h4>
+      </div></span> </td>
+      <td style="border: 1px solid black"><span id="urn2" style="color:blue">blue</span> </td>
+        </tr>
+        <tr>
+          <th style="border: 1px solid black"> Urn 3 </th>
+          <td style="border: 1px solid black">  <span style="color:red">red</span></td>
+          <td style="border: 1px solid black"> <span>  <div id="decision3">
+          </br>
+      </div></span> </td>
+      <td style="border: 1px solid black"> <span id="urn3" style="color:red">red</span> </td>
+        </tr>
+        <tr>
+          <th style="border: 1px solid black"> Urn 4 </th>
+          <td style="border: 1px solid black">  <span style="color:red">red</span>,
+                <span style="color:red">red</span>,
+                <span style="color:blue">blue</span>,
+                <span style="color:red">red</span></td>
+          <td style="border: 1px solid black"> <span>  <div id="decision4">
+          </br>
+      </div></span> </td>
+      <td style="border: 1px solid black"> <span id="urn4" style="color:red">red</span> </td>
+        </tr>
+        <tr>
+          <th style="border: 1px solid black"> Urn 5 </th>
+          <td style="border: 1px solid black">  <span style="color:blue">blue</span>,
+                <span style="color:red">red</span>,
+                <span style="color:red">red</span>,
+                <span style="color:blue">blue</span>,
+                <span style="color:blue">blue</span>,
+                <span style="color:blue">blue</span></td>
+          <td style="border: 1px solid black"> <span>  <div id="decision5">
+          </br>
+      </div></span> </td>
+      <td style="border: 1px solid black"> <span id="urn5" style="color:blue">blue</span> </td>
+        </tr>
+      </table>
 
     <br/>
     <br/>
+    <div><span id="wrong_right"> </span> <span id="payoff"> </span> ECU will be added to your bonus.</div> 
     <center>
   <input type="button" value="Continue" name="Continue" id="Continue_button" class="btn-success" style="font-size:20px; font-weight: bold; height:75px; width:150px"/>
     </center>

@@ -53,93 +53,15 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         }
     });*/
 
-    stager.extendStep('quiz', {
-
-      cb: function() {
-          //console.log('Quiz.cb');
-          var playerId = node.game.pl.first();
-          playerId = playerId.id;
-
-          var client = channel.registry.getClient(playerId);
-
-          client.win = client.win ? (client.win) : 21;
-
-          var check=client.win-1;
-          //console.log(check);
-          node.say("WIN", playerId, check);
-          /*var Pstep1=node.game.getPreviousStep();
-          var Pstep1_s= Pstep1.stage + '.' + Pstep1.step + '.' + Pstep1.round;
-          var understand_task=node.game.memory.stage[Pstep1_s].fetch();
-          console.log(understand_task);
-          var i=1;
-          var wait=20;
-          node.on.data('done', function(msg){
-
-            i=i+1;
-          });*/
-      }
-    });
-
 
 
     stager.extendStep('signalsTUT', {
 
 
         cb: function() {
-          //console.log(node.game.getPreviousStep());
-          var Pstep1=node.game.getPreviousStep();
-
-          var Pstep1_s= Pstep1.stage + '.' + Pstep1.step + '.' + Pstep1.round;
-          if(Pstep1_s==="3.1.1"){
-            var test=node.game.memory.stage[Pstep1_s].fetch();
-            var x=test.length-1;
-            var understand_task=node.game.memory.stage[Pstep1_s].fetchArray('forms')[x][0];
-            var possible_action=node.game.memory.stage[Pstep1_s].fetchArray('forms')[x][1];
-            var automated_players=node.game.memory.stage[Pstep1_s].fetchArray('forms')[x][2];
-            var treatment=node.game.memory.stage[Pstep1_s].fetchArray('forms')[x][3];
-            /*console.log(x);
-            console.log(understand_task);
-            console.log(possible_action);
-            console.log(automated_players);
-            console.log(treatment);*/
-
-            var i=1;
-
-            var playerId = node.game.pl.first();
-            playerId = playerId.id;
-
-            var client = channel.registry.getClient(playerId);
-
-            //console.log(client);
-
-            // Ternary Assignment.
 
 
-            //client.win = client.win ? (client.win - 5) : paid;
-            if(understand_task.choice==='0' & possible_action.choice==='0' &
-            automated_players.choice==='3' & treatment.choice===node.game.settings.correct_decision){
-              i=0;
-              client.win = client.win - 1;
-            }
-            else{
-              if(client.win>0){
-                client.win = client.win - 5;
-                //client.win = (client.win>0) ? (client.win) : 1;
-              }
-
-            }
-
-
-            //console.log(i);
-
-
-
-            node.say("FAIL", playerId, i);
-          }
-
-
-          var decision1, decision2, urncolor, noturncolor,
-              plyrsignal1, plyrsignal2, sharesignals;
+          var decision1, decision2, decision3, decision4, decision5, correct;
               //console.log('SIGNALSTUT');
           // when the player is done all necessary information is send to the Logic
           // I don't think it is actually necessary to create these variables but I do it anyway
@@ -147,13 +69,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 decision1 = msg.data.decision1;
                 decision2 = msg.data.decision2;
-                urncolor = msg.data.urncolor;
-                noturncolor = msg.data.noturncolor;
-                plyrsignal1 = msg.data.plyrsignal1;
-                plyrsignal2 = msg.data.plyrsignal2;
-                sharesignals = msg.data.sharesignal1;
-
-
+                decision3 = msg.data.decision3;
+                decision4 = msg.data.decision4;
+                decision5 = msg.data.decision5;
+                correct = msg.data.correct;
 
             });
 
@@ -162,7 +81,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     // next the voting step which is mainly done in the logic
-    stager.extendStep('votingTUT', {
+/*    stager.extendStep('votingTUT', {
 
       cb: function() {
 
@@ -329,91 +248,52 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
       }
-    });
+    });*/
 
 
     // In the feedback stage, I just need to recall everything that was done before.
     stager.extendStep('feedbackTUT', {
 
       cb: function(){
-        var v_correct,correct, paid;
+        var decision1b, decision2b, decision3b, decision4b, decision5b,
+         correct_v, paid;
 
         var Pstep1=node.game.getPreviousStep(1);
         var Pstep1_s= Pstep1.stage + '.' + Pstep1.step + '.' + Pstep1.round;
-
-        var Pstep2=node.game.getPreviousStep(2);
-        var Pstep2_s= Pstep2.stage + '.' + Pstep2.step + '.' + Pstep2.round;
+        var c="";
+        var correct="";
+      //  var Pstep2=node.game.getPreviousStep(2);
+      //  var Pstep2_s= Pstep2.stage + '.' + Pstep2.step + '.' + Pstep2.round;
 
         // I get the signals from the signal step and put them in one String
-        var signals="";
-        if(node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal1')[0][0]!==""){
-            var c=node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal1')[0][0];
-            signals='<span style="color:'+c+'">'+ c+'</span>';
-        }
-        if(signals===""){
-            var c=node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal2')[0][0];
-            signals='<span style="color:'+c+'">'+ c+'</span>';
-        }
-        else if(node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal2')[0][0]!==""){
-          var c=node.game.memory.stage[Pstep2_s].fetchArray('plyrsignal2')[0][0];
-          signals= signals + ", " +'<span style="color:'+c+'">'+ c+'</span>';
-        }
 
+        c=node.game.memory.stage[Pstep1_s].fetchArray('decision1')[0][0];
+        decision1b='<span style="color:'+c+'">'+ c+'</span>';
+        c=node.game.memory.stage[Pstep1_s].fetchArray('decision2')[0][0];
+        decision2b='<span style="color:'+c+'">'+ c+'</span>';
+        c=node.game.memory.stage[Pstep1_s].fetchArray('decision3')[0][0];
+        decision3b='<span style="color:'+c+'">'+ c+'</span>';
+        c=node.game.memory.stage[Pstep1_s].fetchArray('decision4')[0][0];
+        decision4b='<span style="color:'+c+'">'+ c+'</span>';
+        c=node.game.memory.stage[Pstep1_s].fetchArray('decision5')[0][0];
+        decision5b='<span style="color:'+c+'">'+ c+'</span>';
 
-        // sharedsignals
-        var sharesignal1=node.game.memory.stage[Pstep2_s].fetchArray('sharesignal1')[0][0];
-
-        var sharesignal2=node.game.memory.stage[Pstep1_s].fetchArray('b1signals')[0][0];
-        var sharesignal3=node.game.memory.stage[Pstep1_s].fetchArray('b2signals')[0][0];
-        // vote
-        var vote=node.game.memory.stage[Pstep1_s].fetchArray('vote')[0][0];
-
-        // I get the urncolor form the signals step
-        var urncolor=node.game.memory.stage[Pstep2_s].fetchArray('urncolor')[0][0];
-
-        // I get the decision from the previous step
-        var fdecision=node.game.memory.stage[Pstep1_s].fetchArray('fdecision')[0][0];
-
-        if(fdecision==='voter'){
-          fdecision=vote;
-        }
-        if(fdecision==='notvoter'){
-          if(vote==='red'){
-              fdecision='blue';
-          }
-          if(vote==='blue'){
-              fdecision='red';
-          }
-        }
-
-
+        correct_v=node.game.memory.stage[Pstep1_s].fetchArray('correct')[0][0];
 
         // If the decision was correct the players are paid 1.5$.
-        if (urncolor===fdecision){
-          correct='correct';
+        if (correct_v===1){
+          correct='Your decisions were all correct!';
           paid=30;
         }
         // Else they receive nothing
         else{
-          correct='incorrect';
+          correct='Not all of your decisions were correct!';
           paid=0;
         }
 
-        // if the own vote was correct the players are paid additional 0.5$.
-        if (urncolor===vote){
-          v_correct='correct';
-          paid=paid+10;
-        }
-        // Else they receive nothing
-        else{
-          v_correct='incorrect';
-          paid=paid+0;
-        }
 
 
-        fdecision='<span style="color:'+fdecision+'">'+fdecision+'</span>';
-        urncolor='<span style="color:'+urncolor+'">'+urncolor+'</span>';
-        vote='<span style="color:'+vote+'">'+ vote+'</span>';
+
 
           // Temporary (we just need the id).
           var playerId = node.game.pl.first();
@@ -423,16 +303,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
           // The information is sent to the players.
           var d={
-                  "signals": signals,
-                  "sharesignal1": sharesignal1,
-                  "sharesignal2": sharesignal2,
-                  "sharesignal3": sharesignal3,
-                  "vote": vote,
-                  "v_correct": v_correct,
+                  "decision1b": decision1b,
+                  "decision2b": decision2b,
+                  "decision3b": decision3b,
+                  "decision4b": decision4b,
+                  "decision5b": decision5b,
                   "correct": correct,
-                  "urncolor": urncolor,
-                  "paid": paid,
-                  "fdecision": fdecision
+                  "paid": paid
 
           }
 
@@ -446,11 +323,35 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
 
+    stager.extendStep('quiz', {
 
+      cb: function() {
+          //console.log('Quiz.cb');
+          var playerId = node.game.pl.first();
+          var Pstep1=node.game.getPreviousStep(2);
+          var Pstep1_s= Pstep1.stage + '.' + (Pstep1.step) + '.' + Pstep1.round;
+          //console.log(node.game.memory.stage[Pstep1_s].fetchArray('correct')[0][0]);
+          playerId = playerId.id;
 
+          var client = channel.registry.getClient(playerId);
 
+          client.win = client.win ? (client.win) : 21;
 
+          var check=client.win-1;
+          //console.log(check);
+          node.say("WIN", playerId, check);
+          /*var Pstep1=node.game.getPreviousStep();
+          var Pstep1_s= Pstep1.stage + '.' + Pstep1.step + '.' + Pstep1.round;
+          var understand_task=node.game.memory.stage[Pstep1_s].fetch();
+          console.log(understand_task);
+          var i=1;
+          var wait=20;
+          node.on.data('done', function(msg){
 
+            i=i+1;
+          });*/
+      }
+    });
 
 
 
@@ -458,6 +359,58 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
         cb: function() {
+
+          //console.log(node.game.getPreviousStep());
+          var Pstep1=node.game.getPreviousStep();
+
+          var Pstep1_s= Pstep1.stage + '.' + Pstep1.step + '.' + Pstep1.round;
+          if(Pstep1_s==="5.1.1"){
+            var test=node.game.memory.stage[Pstep1_s].fetch();
+            var x=test.length-1;
+            var understand_task=node.game.memory.stage[Pstep1_s].fetchArray('forms')[x][0];
+            var possible_action=node.game.memory.stage[Pstep1_s].fetchArray('forms')[x][1];
+            var treatment=node.game.memory.stage[Pstep1_s].fetchArray('forms')[x][2];
+            //console.log(x);
+            //console.log(understand_task);
+            //console.log(possible_action);
+            //console.log(treatment);
+
+            var i=1;
+
+            var playerId = node.game.pl.first();
+            playerId = playerId.id;
+
+            var client = channel.registry.getClient(playerId);
+
+            //console.log(client);
+
+            // Ternary Assignment.
+
+
+            //client.win = client.win ? (client.win - 5) : paid;
+            if(understand_task.choice==='0' & possible_action.choice==='0' & treatment.choice===node.game.settings.correct_decision){
+              i=0;
+              client.win = client.win - 1;
+            }
+            else{
+              if(client.win>0){
+                client.win = client.win - 5;
+                //client.win = (client.win>0) ? (client.win) : 1;
+              }
+
+            }
+
+
+            //console.log(i);
+
+
+
+            node.say("FAIL", playerId, i);
+          }
+
+
+
+
           var decision1, decision2, urncolor, noturncolor,
               plyrsignal1, plyrsignal2, sharesignals;
               //console.log('SIGNALS');
@@ -718,7 +671,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // if the own vote was correct the players are paid additional 0.5$.
         if (urncolor===vote){
           v_correct='correct';
-          paid=paid+10;
+          paid=paid+0;
         }
         // Else they receive nothing
         else{
@@ -781,42 +734,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       // From this step, we can retrace all previous steps we need
       var Pstep1=node.game.getPreviousStep(1);
       //console.log(Pstep1);
-
-      //TUT 1
-     var TUT1_feedback= (Pstep1.stage-2) + '.' + (Pstep1.step) + '.' + (Pstep1.round-5);
-     var TUT1_voting= (Pstep1.stage-2) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-5);
-     var TUT1_signaling= (Pstep1.stage-2) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-5);
-
-     var TUT1_decision=node.game.memory.stage[TUT1_feedback].fetchArray('fdecision')[0][0];
-     var TUT1_signals= node.game.memory.stage[TUT1_signaling].fetchArray('sharesignal1')[0][0]+", "+
-                       node.game.memory.stage[TUT1_voting].fetchArray('b1signals')[0][0]+", "+
-                       node.game.memory.stage[TUT1_voting].fetchArray('b2signals')[0][0];
-
-    TUT1_signals=cut_comma(TUT1_signals);
-
-
-     //TUT 2
-     var TUT2_feedback= (Pstep1.stage-2) + '.' + (Pstep1.step) + '.' + (Pstep1.round-4);
-     var TUT2_voting= (Pstep1.stage-2) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-4);
-     var TUT2_signaling= (Pstep1.stage-2) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-4);
-
-     var TUT2_decision=node.game.memory.stage[TUT2_feedback].fetchArray('fdecision')[0][0];
-     var TUT2_signals= node.game.memory.stage[TUT2_signaling].fetchArray('sharesignal1')[0][0]+", "+
-                       node.game.memory.stage[TUT2_voting].fetchArray('b1signals')[0][0]+", "+
-                       node.game.memory.stage[TUT2_voting].fetchArray('b2signals')[0][0];
-
-     TUT2_signals=cut_comma(TUT2_signals);
-     //TUT 3
-     var TUT3_feedback= (Pstep1.stage-2) + '.' + (Pstep1.step) + '.' + (Pstep1.round-3);
-     var TUT3_voting= (Pstep1.stage-2) + '.' + (Pstep1.step-1) + '.' + (Pstep1.round-3);
-     var TUT3_signaling= (Pstep1.stage-2) + '.' + (Pstep1.step-2) + '.' + (Pstep1.round-3);
-
-     var TUT3_decision=node.game.memory.stage[TUT3_feedback].fetchArray('fdecision')[0][0];
-     var TUT3_signals= node.game.memory.stage[TUT3_signaling].fetchArray('sharesignal1')[0][0]+", "+
-                       node.game.memory.stage[TUT3_voting].fetchArray('b1signals')[0][0]+", "+
-                       node.game.memory.stage[TUT3_voting].fetchArray('b2signals')[0][0];
-
-     TUT3_signals=cut_comma(TUT3_signals);
 
       //GAME 1
       var GAME1_feedback= (Pstep1.stage) + '.' + (Pstep1.step) + '.' + (Pstep1.round-5);
@@ -904,12 +821,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         var playerId = node.game.pl.first();
         playerId = playerId.id;
         //console.log(playerId);
-        var d={ "TUT1_signals": TUT1_signals,
-                "TUT1_decision": TUT1_decision,
-                "TUT2_signals": TUT2_signals,
-                "TUT2_decision": TUT2_decision,
-                "TUT3_signals": TUT3_signals,
-                "TUT3_decision": TUT3_decision,
+        var d={ //"TUT1_decision": TUT1_decision,
                 "GAME1_decision": GAME1_decision,
                 "GAME1_signals": GAME1_signals,
                 "GAME2_decision": GAME2_decision,
@@ -944,7 +856,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       var box, bomb, prize, paid2, paid3, paid4;
       var GAME1_paid, GAME2_paid, GAME3_paid,
           GAME4_paid, GAME5_paid, GAME6_paid,
-          guess, truth, paid;
+          guess, guess_b, truth, truth_b, wrong_right, paid;
 
       var Pstep1=node.game.getPreviousStep(1);
       var Pstep1_s= Pstep1.stage + '.' + (Pstep1.step) + '.' + Pstep1.round;
@@ -969,6 +881,16 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       GAME4_paid=node.game.memory.stage[Pstep2_s].fetchArray('GAME4_paid')[0][0];
       GAME5_paid=node.game.memory.stage[Pstep2_s].fetchArray('GAME5_paid')[0][0];
       GAME6_paid=node.game.memory.stage[Pstep2_s].fetchArray('GAME6_paid')[0][0];
+
+
+      //console.log(Pstep1);
+      //console.log(Pstep6);
+      var Pstep6_s= '3.2.1';
+      //console.log(node.game.memory.stage['3.2.1'].fetch());
+      //console.log(Pstep6_s);
+      var paid6=node.game.memory.stage[Pstep6_s].fetchArray('paid')[0][0];
+      var singleCorrect=node.game.memory.stage[Pstep6_s].fetchArray('correct')[0][0];
+
 
       //only one randomly drawn game is paid:
       var random_game=Math.round(Math.random()*5+1);
@@ -1018,21 +940,30 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       }
 
       guess=node.game.memory.stage[Pstep2_s].fetchArray('guess')[0][0];
-
-      truth= node.game.settings.bias;
-
+      if(guess==1){
+        guess_b="more strongly"
+      }
+      if(guess==-1){
+        guess_b="less strongly"
+      }
+      if(guess==0){
+        guess_b="equally strongly"
+      }
+      truth= node.game.settings.biasIndicator;
+      if(truth==1){
+        truth_b="more strongly"
+      }
+      if(truth==-1){
+        truth_b="less strongly"
+      }
+      if(guess==0){
+        truth_b="equally strongly"
+      }
       if(guess==truth){
         paid=40;
+        wrong_right='correct';
       }
-      if(Math.abs(guess-truth)===1){
-        paid=30;
-      }
-      if(Math.abs(guess-truth)===2){
-        paid=10;
-      }
-      if(Math.abs(guess-truth)>2){
-        paid=0;
-      }
+
       // Temporary (we just need the id).
       var playerId = node.game.pl.first();
       playerId = playerId.id;
@@ -1049,8 +980,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       client.win = client.win ? (client.win + paid3) : paid3;
 
       client.win = client.win ? (client.win + paid4) : paid4;
+
+      client.win = client.win ? (client.win + paid6) : paid6;
       //console.log(playerId);
-      var d={ "guess": guess,
+      var d={ "guess": guess_b,
               "GAME1_paid": GAME1_paid,
               "GAME2_paid": GAME2_paid,
               "GAME3_paid": GAME3_paid,
@@ -1058,11 +991,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               "GAME5_paid": GAME5_paid,
               "GAME6_paid": GAME6_paid,
               "win": paid,
+              "wrong_right":wrong_right,
+              "single_game_paid":paid6,
+              "single_game_correct":singleCorrect,
               "random_game": random_game,
               "random_game2": random_game2,
               "win3": paid3,
               "win4": paid4,
-              "truth": truth,
+              "truth": truth_b,
               "box":box,
               "bomb":bomb,
               "win2": paid2
@@ -1075,6 +1011,108 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     }
   })
+
+
+      stager.extendStep('Raven1', {
+          cb: function() {
+            var RavenDecision1, Raven1correct;
+                //console.log('SIGNALSTUT');
+            // when the player is done all necessary information is send to the Logic
+            // I don't think it is actually necessary to create these variables but I do it anyway
+             node.on.data('done', function(msg) {
+
+                  RavenDecision1 = msg.data.RavenDecision1;
+                  Raven1correct = msg.data.Raven1correct;
+
+              });
+          }
+      });
+
+
+
+            stager.extendStep('Raven2', {
+                cb: function() {
+                  var RavenDecision2, Raven2correct;
+                      //console.log('SIGNALSTUT');
+                  // when the player is done all necessary information is send to the Logic
+                  // I don't think it is actually necessary to create these variables but I do it anyway
+                   node.on.data('done', function(msg) {
+
+                        RavenDecision2 = msg.data.RavenDecision2;
+                        Raven2correct = msg.data.Raven2correct;
+
+                    });
+                }
+            });
+
+
+                  stager.extendStep('Raven3', {
+                      cb: function() {
+                        var RavenDecision3, Raven3correct;
+                            //console.log('SIGNALSTUT');
+                        // when the player is done all necessary information is send to the Logic
+                        // I don't think it is actually necessary to create these variables but I do it anyway
+                         node.on.data('done', function(msg) {
+
+                              RavenDecision3 = msg.data.RavenDecision3;
+                              Raven3correct = msg.data.Raven3correct;
+
+                          });
+                      }
+                  });
+
+
+                        stager.extendStep('Raven4', {
+                            cb: function() {
+                              var RavenDecision4, Raven4correct;
+                                  //console.log('SIGNALSTUT');
+                              // when the player is done all necessary information is send to the Logic
+                              // I don't think it is actually necessary to create these variables but I do it anyway
+                               node.on.data('done', function(msg) {
+
+                                    RavenDecision4 = msg.data.RavenDecision4;
+                                    Raven4correct = msg.data.Raven4correct;
+
+                                });
+                            }
+                        });
+
+
+
+                              stager.extendStep('Raven5', {
+                                  cb: function() {
+                                    var RavenDecision5, Raven5correct;
+                                        //console.log('SIGNALSTUT');
+                                    // when the player is done all necessary information is send to the Logic
+                                    // I don't think it is actually necessary to create these variables but I do it anyway
+                                     node.on.data('done', function(msg) {
+
+                                          RavenDecision5 = msg.data.RavenDecision5;
+                                          Raven5correct = msg.data.Raven5correct;
+
+                                      });
+                                  }
+                              });
+
+
+                                    stager.extendStep('Raven6', {
+                                        cb: function() {
+                                          var RavenDecision6, Raven6correct;
+                                              //console.log('SIGNALSTUT');
+                                          // when the player is done all necessary information is send to the Logic
+                                          // I don't think it is actually necessary to create these variables but I do it anyway
+                                           node.on.data('done', function(msg) {
+
+                                                RavenDecision6 = msg.data.RavenDecision6;
+                                                Raven6correct = msg.data.Raven6correct;
+
+                                            });
+                                        }
+                                    });
+
+
+
+
 
 
     // in the last stage the data is saved.

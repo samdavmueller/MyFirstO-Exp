@@ -14,25 +14,35 @@ module.exports = function(stager, settings) {
      stager
         .next('welcome')
         .next('instructions')
-        .next('quiz')
-        .repeat('gameTUT', 3)
+        .next('gameTUT')
         .next('START')
+        .next('quiz')
         .repeat('game', settings.REPEAT)
         .next('belief')
         .next('bomb')
         .next('belief_feedback')
-        .next('CRT')
+        //.next('CRT')
+        .next('Raven')
         .next('questionnaire')
         .next('preEnd')
         .next('end')
         .gameover();
 
 
-
+        stager.extendStage('Raven', {
+                steps: [
+                    'Raven1',
+                    'Raven2',
+                    'Raven3',
+                    'Raven4',
+                    'Raven5',
+                    'Raven6'
+                ]
+            });
         stager.extendStage('gameTUT', {
                 steps: [
                     'signalsTUT',
-                    'votingTUT',
+                  //  'votingTUT',
                     'feedbackTUT'
                 ]
             });
@@ -56,6 +66,6 @@ module.exports = function(stager, settings) {
       stager.skip('bomb');
       stager.skip('CRT');
       stager.skip('questionnaire');*/
-    
+
 
 };

@@ -48,18 +48,6 @@
                <span style="color:blue">blue</span></td>
          <td> <span id="fifth_decision"></span> </td>
        </tr>
-       <tr>
-          <td>  <span id="TUT_signals1"></span></td>
-          <td> <span id="TUT_decision1"></span> </td>
-      </tr>
-      <tr>
-         <td>  <span id="TUT_signals2"></span></td>
-         <td> <span id="TUT_decision2"></span> </td>
-     </tr>
-     <tr>
-        <td>  <span id="TUT_signals3"></span></td>
-        <td> <span id="TUT_decision3"></span> </td>
-    </tr>
       <tr>
          <td>  <span id="GAME_signals1"></span></td>
          <td> <span id="GAME_decision1"></span> </td>
@@ -89,32 +77,18 @@
 
      <br/>
 
-     Please remember that the auomated players make their voting decision as follows:
-     <br>
-       1. They count the <strong>number of shared signals that show
-          '<span style="color:blue">blue</span>'</strong> and multiply it by
-          <span id="bias2" style="font-weight:bold; color: blue"></span>.<br>
-       2. Then they count the <strong>number of shared signals that show
-         '<span style="color:red">red</span>'</strong> and multiply it by
-         <span id="bias" style="font-weight:bold; color: red">x</span>, which is
-         a number between 0 and 30.<br>
-       3. Finally, the automated players compare the numbers they calculated and
-       <strong>vote for the color that has the larger number</strong>.
-       If both numbers are the <strong>same</strong>, a coin toss decides the
-       color they choose.<br><br>
-
-  <strong>What do you believe is the value of <span id="bias" style="font-weight:bold; color: red">x</span>?</strong> <br> <br>
-  When you can guess the correct number, 40 ECU are added to your final bonus.<br>
-  When your guess is off by one 30 ECU are added to your final bonus. <br>
-  When your guess is off by two 10 ECU are added to your final bonus. <br>
-  Else, nothing is added to your final payoff. <br>
-  Please type in your guess below in the box below.<br>
-  <input type="number" id="guess"/>
-  <div id="warning" style="display: none; font-size:20px; font-weight:bold; color:red">
-    You have to type a number between 0 and 30!
+  <strong>Based on the decisions above, what would you say the automated players usage of signals?<br>
+  <input type="radio" id="redBelief" name="Belief"/>
+  <label for ="redBelief">Automated players believe more strongly in <span style="color:red">red</span> signals compared to <span style="color:blue">blue</span> signals.</label><br>
+  <input type="radio" id="blueBelief" name="Belief"/>
+  <label for ="blueBelief">Automated players believe less strongly in <span style="color:red">red</span> signals compared to <span style="color:blue">blue</span> signals.</label><br>
+  <input type="radio" id="neutralBelief" name="Belief"/>
+  <label for ="neutralBelief">Automated players believe equally strongly in <span style="color:red">red</span> signals compared to <span style="color:blue">blue</span> signals.</label>
+  <div id="warning" style="display: none; font-size:20px; font-weight:bold; color:red"><br>
+    You have to select an option!
   </div>
 <br><br>
-
+  <h3>If your guess about the automated players evaluation of red and blue signals is correct, you will receive 40 ECU.</h3>
    <h4>Click 'Send' to send your guess and continue to the next stage.</h4>
 
    <br/>

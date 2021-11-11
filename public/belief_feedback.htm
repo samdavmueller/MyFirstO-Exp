@@ -5,8 +5,10 @@
 <body>
   <div id="container">
     <div id="feedback">
-      <h3> This is an information how many ECU you collected in the experiment:</h3></br>
-      The committee game:
+      <h2> This is an information how many ECU you collected in the experiment:</h3></br>
+      <h3>'Guess the urn' single player version: </h3>
+      <div><span id="SINGLE_correct"> </span> <span id="SINGLE_payment"> </span> ECU were added to your bonus.</div></br>
+      <h3>'Guess the urn' group version:</h3>
       <table style="width:60%; margin-left:20%; margin-right:20%">
         <tr>
           <th> Round </th>
@@ -40,19 +42,10 @@
        <br><br>
        The computer chose randomly that Round <span id="Random_Game"></span> and Round <span id="Random_Game2"></span> are added to your final bonus.
        <span id="Win3"></span> ECU are added to your final bonus.
-       <h3> Your guess about the automated players number: </h3></br>
-       <table style="width:60%; margin-left:20%; margin-right:20%">
-         <tr>
-           <th> Guess </th>
-           <th> True Value </th>
-           <th> Payment </th>
-         </tr>
-         <tr>
-            <td>  <span id="Guess"></span></td>
-            <td> <span id="Value"></span> </td>
-            <td> <span id="Win"></span> ECU</td>
-         </tr>
-        </table>
+       <h3> Your guess about the automated players behavior: </h3>
+       <h4> Automated players belief <span id="Guess"></span> in <span style="color:red">red</span> signals compared to <span style="color:blue">blue</span> signals.</h4>
+       <h4> Your guess was <span id="Wrong_Right"></span>. Automated players belief <span id="Truth"></span> in <span style="color:red">red</span> signals compared to <span style="color:blue">blue</span> signals.</h4>
+       <h4> You win <span id="Win"></span> ECU.</h4>
         <br><br>
         <br><br>
 

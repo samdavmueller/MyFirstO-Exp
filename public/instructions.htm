@@ -8,39 +8,18 @@
     <h3>Please read these instructions carefully!</h3>
     <div id="instructions">
       <br>
-      This game is played by one human player and two automated players.
+      In this game, you have to guess the color of an urn.
       <br><br>
-      In each round, you and the automated players have to <strong>decide as a
-      group whether an urn is <span style="color:blue">blue</span> or
+      There are two versions of this game. In the first version you guess on your own
+      which color different urns have. In the second, you guess the color of the urn
+      together with a group of two other players by voting. You receive information about
+      your performance and bonus payment in the end of the game.
+      <br><br>
+      <h3>Single-Player version of 'Guess the Urn'</h3>
+      The urn can be  <span style="color:blue">blue</span> or
       <span style="color:red">red</span></strong>.
-      <strong> You are paid when your group decision matches the true color of
-      the urn. </strong>
       Both colors are equally likely.
-      <br><br>
-      In the beginning, each player receives between
-      <strong> 0 and 2 signals</strong>. No other player has the same signals or
-      knows how many or which signals you received.<br>
-      The exact probability of receiving 0, 1, or 2 signals is shown in the
-      table below. <br><br>
-      <table style="width:60%; margin-left:20%; margin-right:20%">
-        <tr>
-          <th> Number of signals </th>
-          <th> Probability </th>
-        </tr>
-        <tr>
-          <td> 0 </td>
-          <td> 1% </td>
-        </tr>
-        <tr>
-          <td> 1 </td>
-          <td> 18% </td>
-        </tr>
-        <tr>
-          <td> 2 </td>
-          <td> 81% </td>
-        </tr>
-      </table>
-<br><br>
+      You receive signals that can help you make your decision.
       All signals you receive contain a color, either
       <span style="color:red">red</span> or <span style="color:blue">blue</span>.
       On average, six out of ten signals contain the same color as the urn they
@@ -50,95 +29,12 @@
       signal you receive is <span style="color:blue">blue</span>
       and a <span id="wrongsignal" style="font-weight:bold"></span>% chance that
       it is <span style="color:red">red</span>.<br><br>
-      In the first part of the game you have to decide whether you want to
-      <strong>share a signal with the automated players or hide it from
-      them</strong>.<br><br>
-      <strong>The automated players always share all of their signals.</strong>
-<br><br>
-      After your decision to share or hide your signal(s), you will <strong>see all
-        shared signals</strong> (both, from you and the automated players) and you have to
-        <strong>make a voting decision</strong> that indicates your belief about
-        the true color of the urn.<br><br>
-      The automated players will see all signals that were shared as well.
-      <strong>They will then make their voting decision as follows:</strong><br>
-        1. They count the <strong>number of shared signals that show
-          '<span style="color:blue">blue</span>'</strong> and multiply it by
-          <span id="bias2" style="font-weight:bold; color: blue"></span>.<br>
-        2. Then they count the <strong>number of shared signals that show
-          '<span style="color:red">red</span>'</strong> and multiply it by
-          <span id="bias" style="font-weight:bold; color: red">x</span>, which is
-          a number between 0 and 30.<br>
-        3. Finally, the automated players compare the numbers they calculated and
-        <strong>vote for the color that has the larger number</strong>.
-        If both numbers are the <strong>same</strong>, a coin toss decides the
-        color they choose.<br><br>
-The automated players are identical and made the following choices after seeing the signals given below: <br><br>
-<table style="width:60%; margin-left:20%; margin-right:20%">
-  <tr>
-    <th> Signals </th>
-    <th> Decision </th>
-  </tr>
-  <tr>
-    <td>  <span style="color:blue">blue</span>,
-          <span style="color:red">red</span>,
-          <span style="color:red">red</span>,
-          <span style="color:red">red</span>,
-          <span style="color:blue">blue</span>,
-          <span style="color:red">red</span></td>
-    <td> <span id="first_decision"></span> </td>
-  </tr>
-  <tr>
-    <td>  <span style="color:blue">blue</span>,
-          <span style="color:blue">blue</span>,
-          <span style="color:red">red</span>,
-          <span style="color:red">red</span>,
-          <span style="color:blue">blue</span></td>
-    <td> <span id="second_decision"></span> </td>
-  </tr>
-  <tr>
-    <td>  <span style="color:red">red</span></td>
-    <td> <span id="third_decision"></span> </td>
-  </tr>
-  <tr>
-    <td>  <span style="color:red">red</span>,
-          <span style="color:red">red</span>,
-          <span style="color:blue">blue</span>,
-          <span style="color:red">red</span></td>
-    <td> <span id="fourth_decision"></span> </td>
-  </tr>
-  <tr>
-    <td>  <span style="color:blue">blue</span>,
-          <span style="color:red">red</span>,
-          <span style="color:red">red</span>,
-          <span style="color:blue">blue</span>,
-          <span style="color:blue">blue</span>,
-          <span style="color:blue">blue</span></td>
-    <td> <span id="fifth_decision"></span> </td>
-  </tr>
-</table>
+      <strong> You are paid when all your decisions match the true color of
+      the different urns. </strong> During the game we use an Experimental Currency (ECU).
+      10 ECU are equal to $<span id="exchange-rate"></span>. If you guess
+      the color of all urns correctly, you receive 30 ECU.
 
-<br><h4><i>During the game you can use the yellow button above to re-read the
-  information about the automated players' behavior.</i></h4><br>
-
-      In the end all the votes for '<span style="color:blue">blue</span>' and
-      '<span style="color:red">red</span>' are counted and the <strong>color
-      with more votes is the group decision</strong>.<br>
-      If the <strong>group decision</strong> on a color and the <strong>true color</strong> of
-      the urn <strong>match</strong>, the possible payoff for the round is <strong>30 ECU</strong> (Experimental Currency).<br>
-      Additional <strong>10 ECU</strong> are added to the payoff if <strong>your vote
-      decision</strong> matched the color of the urn. 10 ECU are equal to
-      $<span id="exchange-rate"></span>. Only two randomly chosen rounds are paid in US$ in the end.
-      <br>
-      <br>
-      First you play <strong> three unpaid training rounds</strong>. <br>
-      Then, the game is <strong>played over six rounds</strong>.</br>
-      <strong>Only two rounds are randomly chosen and their payoffs are added to your final bonus</strong>.</br>
-      <strong>Be aware that the color of the urn might change in each round</strong>.</br>
-      <strong>The automated players and the <span style="font-weight:bold; color: red">x</span> stay the same through all rounds</strong>.
-      <br><br>
-      After the game you can earn <strong>more money by completing additional tasks</strong>.
-    </div>
     If you understand the instructions press the 'Done' button to
-    proceed to a quiz about the instructions. 
+    proceed to single player game of 'Guess the Urn'.
   </div>
 </body>

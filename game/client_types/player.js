@@ -137,9 +137,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       frame: 'welcome.htm',
       cb: function(){
         //some variables for the welcome stage
-        W.setInnerHTML('time', 20);
-        W.setInnerHTML('low_money', 0.50);
-        W.setInnerHTML('high_money', 5.98);
+        W.setInnerHTML('time', 30);
+        W.setInnerHTML('low_money', 1.00);
+        W.setInnerHTML('high_money', 6.23);
+        W.setInnerHTML('middle_money', 4.25);
 
         //var treatment= node.game.settings.treat_number;
 
@@ -1167,15 +1168,20 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 }
                 if (W.getElementById('option4').checked){
                     RavenDecision1 = 4;
+                    Raven1correct = true;
                 }
                 if (W.getElementById('option5').checked){
                     RavenDecision1 = 5;
                 }
                 if (W.getElementById('option6').checked){
                     RavenDecision1 = 6;
-                    Raven1correct = true;
                 }
-
+                if (W.getElementById('option7').checked){
+                    RavenDecision1 = 7;
+                }
+                if (W.getElementById('option8').checked){
+                    RavenDecision1 = 8;
+                }
 
                 // Now, it is checked whether there has bee a decuision made for all signals.
                 // An error message is written.
@@ -1231,10 +1237,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 }
                 if (W.getElementById('option2').checked){
                     RavenDecision2 = 2;
-                    Raven2correct = true;
                 }
                 if (W.getElementById('option3').checked){
                     RavenDecision2 = 3;
+                    Raven2correct = true;
                 }
                 if (W.getElementById('option4').checked){
                     RavenDecision2 = 4;
@@ -1318,13 +1324,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 }
                 if (W.getElementById('option6').checked){
                     RavenDecision3 = 6;
+                    Raven3correct = true;
                 }
                 if (W.getElementById('option7').checked){
                     RavenDecision3 = 7;
                 }
                 if (W.getElementById('option8').checked){
                     RavenDecision3 = 8;
-                    Raven3correct = true;
                 }
 
 
@@ -1379,10 +1385,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     // the decision is saved in the different decision variables
                     if (W.getElementById('option1').checked){
                         RavenDecision4 = 1;
+                        Raven4correct = true;
                     }
                     if (W.getElementById('option2').checked){
                         RavenDecision4 = 2;
-                        Raven4correct = true;
                     }
                     if (W.getElementById('option3').checked){
                         RavenDecision4 = 3;
@@ -1454,7 +1460,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     // the decision is saved in the different decision variables
                     if (W.getElementById('option1').checked){
                         RavenDecision5 = 1;
-                        Raven5correct = true;
                     }
                     if (W.getElementById('option2').checked){
                         RavenDecision5 = 2;
@@ -1470,6 +1475,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     }
                     if (W.getElementById('option6').checked){
                         RavenDecision5 = 6;
+                        Raven5correct = true;
                     }
                     if (W.getElementById('option7').checked){
                         RavenDecision5 = 7;
@@ -1529,7 +1535,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     // the decision is saved in the different decision variables
                     if (W.getElementById('option1').checked){
                         RavenDecision6 = 1;
-                        Raven6correct = true;
                     }
                     if (W.getElementById('option2').checked){
                         RavenDecision6 = 2;
@@ -1542,6 +1547,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     }
                     if (W.getElementById('option5').checked){
                         RavenDecision6 = 5;
+                        Raven6correct = true;
                     }
                     if (W.getElementById('option6').checked){
                         RavenDecision6 = 6;
@@ -1577,6 +1583,217 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         });
 
+
+                stager.extendStep('Raven7', {
+                    backbutton: false,
+                    donebutton: false,
+                    frame: 'Raven7.htm',
+
+                    init: function() {
+                        parent.scrollTo(0,0);
+                    },
+
+
+                    cb: function() {
+
+                        // variables I need
+                        var button, RavenDecision7, Raven7correct,
+                            div;
+
+                        Raven7correct = false;
+                        RavenDecision7 = -99;
+                        // button is identified that submit the signals to the next stage
+                        button = W.getElementById('submitSignals');
+                        // Listen on click event.
+                        button.onclick = function() {
+
+                            // now it is checked for each signal whether it should be shared or hided
+                            // the decision is saved in the different decision variables
+                            if (W.getElementById('option1').checked){
+                                RavenDecision7 = 1;
+                            }
+                            if (W.getElementById('option2').checked){
+                                RavenDecision7 = 2;
+                            }
+                            if (W.getElementById('option3').checked){
+                                RavenDecision7 = 3;
+                            }
+                            if (W.getElementById('option4').checked){
+                                RavenDecision7 = 4;
+                            }
+                            if (W.getElementById('option5').checked){
+                                RavenDecision7 = 5;
+                            }
+                            if (W.getElementById('option6').checked){
+                                RavenDecision7 = 6;
+                                Raven7correct = true;
+                            }
+                            if (W.getElementById('option7').checked){
+                                RavenDecision7 = 7;
+                            }
+                            if (W.getElementById('option8').checked){
+                                RavenDecision7 = 8;
+                            }
+
+
+                            // Now, it is checked whether there has bee a decuision made for all signals.
+                            // An error message is written.
+
+                            if(RavenDecision7<0){
+
+                                div = W.getElementById('warning').style.display = '';
+                                return;
+                            }
+
+
+                            // A String variable that is used to display the signals in the next stage.
+
+                            button.disabled = true;
+
+                            // Mark the end of the round, and
+                            // store the decision in the server.
+                            node.done({ RavenDecision7: RavenDecision7,
+                                         Raven7correct: Raven7correct});
+                        };
+                    }
+
+                });
+
+
+                        stager.extendStep('Raven8', {
+                            backbutton: false,
+                            donebutton: false,
+                            frame: 'Raven8.htm',
+
+                            init: function() {
+                                parent.scrollTo(0,0);
+                            },
+
+
+                            cb: function() {
+
+                                // variables I need
+                                var button, RavenDecision8, Raven8correct,
+                                    div;
+
+                                Raven8correct = false;
+                                RavenDecision8 = -99;
+                                // button is identified that submit the signals to the next stage
+                                button = W.getElementById('submitSignals');
+                                // Listen on click event.
+                                button.onclick = function() {
+
+                                    // now it is checked for each signal whether it should be shared or hided
+                                    // the decision is saved in the different decision variables
+                                    if (W.getElementById('option1').checked){
+                                        RavenDecision8 = 1;
+                                    }
+                                    if (W.getElementById('option2').checked){
+                                        RavenDecision8 = 2;
+                                    }
+                                    if (W.getElementById('option3').checked){
+                                        RavenDecision8 = 3;
+                                    }
+                                    if (W.getElementById('option4').checked){
+                                        RavenDecision8 = 4;
+                                    }
+                                    if (W.getElementById('option5').checked){
+                                        RavenDecision8 = 5;
+                                    }
+                                    if (W.getElementById('option6').checked){
+                                        RavenDecision8 = 6;
+                                    }
+                                    if (W.getElementById('option7').checked){
+                                        RavenDecision8 = 7;
+                                        Raven8correct = true;
+                                    }
+                                    if (W.getElementById('option8').checked){
+                                        RavenDecision8 = 8;
+                                    }
+
+
+                                    // Now, it is checked whether there has bee a decuision made for all signals.
+                                    // An error message is written.
+
+                                    if(RavenDecision8<0){
+
+                                        div = W.getElementById('warning').style.display = '';
+                                        return;
+                                    }
+
+
+                                    // A String variable that is used to display the signals in the next stage.
+
+                                    button.disabled = true;
+
+                                    // Mark the end of the round, and
+                                    // store the decision in the server.
+                                    node.done({ RavenDecision8: RavenDecision8,
+                                                 Raven8correct: Raven8correct});
+                                };
+                            }
+
+                        });
+            // I use the cognitive reflection test by Frederick.
+            // The questions have to be answered by providing an input as an integer.
+            // Input that does not meake sense is not allowed.
+            stager.extendStep('CRT',{
+                // frame: 'questionnaire.htm',
+                // cb: function() {
+                widget: {
+                    name: 'ChoiceManager',
+                    root: 'container',
+                    options: {
+                        mainText: 'Please answer the questions below',
+                        className: 'centered',
+                        forms: [
+                            {
+                                name: 'CustomInput',
+                                id: 'CRT1',
+                                mainText: 'A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost in cents?',
+                                type: 'int',
+                                min: 0,
+                                max: 110
+                            },
+                            {
+                                name: 'CustomInput',
+                                id: 'CRT2',
+                                mainText: 'If it takes 5 machines 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets?',
+                                type: 'int',
+                                min: 0,
+                                max: 120
+                            },
+                            {
+                                name: 'CustomInput',
+                                id: 'CRT3',
+                                mainText: 'In a lake, there is a patch of lily pads. Every day, the patch doubles in size. If it takes 48 days for the patch to cover the entire lake, how long would it take for the patch to cover half of the lake?',
+                                type: 'int',
+                                min: 0,
+                                max: 48
+                            },
+                            {
+                                name: 'CustomInput',
+                                id: 'CRT4',
+                                mainText: 'Imagine you are driving a car in a race. You overtake the car on the second position. On which position are you now?',
+                                type: 'int',
+                                min: 0,
+                                max: 10
+                            },
+                            {
+                                name: 'CustomInput',
+                                id: 'CRT5',
+                                mainText: 'A shephard has 15 sheep. All but 8 sheep die. How many sheep are left?',
+                                type: 'int',
+                                min: 0,
+                                max: 15
+                            }
+                        ],
+                        formsOptions: { requiredChoice: true }
+                    }
+
+                }
+
+            });
 
     // a questionnaire that gives me some general information
     // is the data saved somewhere?

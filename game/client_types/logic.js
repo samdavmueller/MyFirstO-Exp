@@ -1013,105 +1013,133 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
   })
 
 
-      stager.extendStep('Raven1', {
-          cb: function() {
-            var RavenDecision1, Raven1correct;
-                //console.log('SIGNALSTUT');
-            // when the player is done all necessary information is send to the Logic
-            // I don't think it is actually necessary to create these variables but I do it anyway
-             node.on.data('done', function(msg) {
+  stager.extendStep('Raven1', {
+      cb: function() {
+        var RavenDecision1, Raven1correct;
+        //console.log('SIGNALSTUT');
+        // when the player is done all necessary information is send to the Logic
+        // I don't think it is actually necessary to create these variables but I do it anyway
+        node.on.data('done', function(msg) {
 
-                  RavenDecision1 = msg.data.RavenDecision1;
-                  Raven1correct = msg.data.Raven1correct;
+          RavenDecision1 = msg.data.RavenDecision1;
+          Raven1correct = msg.data.Raven1correct;
 
-              });
-          }
+        });
+    }
+  });
+
+
+
+  stager.extendStep('Raven2', {
+    cb: function() {
+      var RavenDecision2, Raven2correct;
+      //console.log('SIGNALSTUT');
+      // when the player is done all necessary information is send to the Logic
+      // I don't think it is actually necessary to create these variables but I do it anyway
+      node.on.data('done', function(msg) {
+
+        RavenDecision2 = msg.data.RavenDecision2;
+        Raven2correct = msg.data.Raven2correct;
+
       });
+    }
+  });
+
+
+  stager.extendStep('Raven3', {
+    cb: function() {
+      var RavenDecision3, Raven3correct;
+      //console.log('SIGNALSTUT');
+      // when the player is done all necessary information is send to the Logic
+      // I don't think it is actually necessary to create these variables but I do it anyway
+      node.on.data('done', function(msg) {
+
+        RavenDecision3 = msg.data.RavenDecision3;
+        Raven3correct = msg.data.Raven3correct;
+
+      });
+    }
+  });
+
+
+  stager.extendStep('Raven4', {
+    cb: function() {
+      var RavenDecision4, Raven4correct;
+      //console.log('SIGNALSTUT');
+      // when the player is done all necessary information is send to the Logic
+      // I don't think it is actually necessary to create these variables but I do it anyway
+      node.on.data('done', function(msg) {
+
+        RavenDecision4 = msg.data.RavenDecision4;
+        Raven4correct = msg.data.Raven4correct;
+
+      });
+    }
+  });
 
 
 
-            stager.extendStep('Raven2', {
-                cb: function() {
-                  var RavenDecision2, Raven2correct;
-                      //console.log('SIGNALSTUT');
-                  // when the player is done all necessary information is send to the Logic
-                  // I don't think it is actually necessary to create these variables but I do it anyway
-                   node.on.data('done', function(msg) {
+  stager.extendStep('Raven5', {
+    cb: function() {
+      var RavenDecision5, Raven5correct;
+      //console.log('SIGNALSTUT');
+      // when the player is done all necessary information is send to the Logic
+      // I don't think it is actually necessary to create these variables but I do it anyway
+      node.on.data('done', function(msg) {
 
-                        RavenDecision2 = msg.data.RavenDecision2;
-                        Raven2correct = msg.data.Raven2correct;
+        RavenDecision5 = msg.data.RavenDecision5;
+        Raven5correct = msg.data.Raven5correct;
 
-                    });
-                }
-            });
-
-
-                  stager.extendStep('Raven3', {
-                      cb: function() {
-                        var RavenDecision3, Raven3correct;
-                            //console.log('SIGNALSTUT');
-                        // when the player is done all necessary information is send to the Logic
-                        // I don't think it is actually necessary to create these variables but I do it anyway
-                         node.on.data('done', function(msg) {
-
-                              RavenDecision3 = msg.data.RavenDecision3;
-                              Raven3correct = msg.data.Raven3correct;
-
-                          });
-                      }
-                  });
+      });
+    }
+  });
 
 
-                        stager.extendStep('Raven4', {
-                            cb: function() {
-                              var RavenDecision4, Raven4correct;
-                                  //console.log('SIGNALSTUT');
-                              // when the player is done all necessary information is send to the Logic
-                              // I don't think it is actually necessary to create these variables but I do it anyway
-                               node.on.data('done', function(msg) {
+  stager.extendStep('Raven6', {
+    cb: function() {
+      var RavenDecision6, Raven6correct;
+      //console.log('SIGNALSTUT');
+      // when the player is done all necessary information is send to the Logic
+      // I don't think it is actually necessary to create these variables but I do it anyway
+      node.on.data('done', function(msg) {
 
-                                    RavenDecision4 = msg.data.RavenDecision4;
-                                    Raven4correct = msg.data.Raven4correct;
+        RavenDecision6 = msg.data.RavenDecision6;
+        Raven6correct = msg.data.Raven6correct;
 
-                                });
-                            }
-                        });
-
-
-
-                              stager.extendStep('Raven5', {
-                                  cb: function() {
-                                    var RavenDecision5, Raven5correct;
-                                        //console.log('SIGNALSTUT');
-                                    // when the player is done all necessary information is send to the Logic
-                                    // I don't think it is actually necessary to create these variables but I do it anyway
-                                     node.on.data('done', function(msg) {
-
-                                          RavenDecision5 = msg.data.RavenDecision5;
-                                          Raven5correct = msg.data.Raven5correct;
-
-                                      });
-                                  }
-                              });
+      });
+    }
+  });
 
 
-                                    stager.extendStep('Raven6', {
-                                        cb: function() {
-                                          var RavenDecision6, Raven6correct;
-                                              //console.log('SIGNALSTUT');
-                                          // when the player is done all necessary information is send to the Logic
-                                          // I don't think it is actually necessary to create these variables but I do it anyway
-                                           node.on.data('done', function(msg) {
+  stager.extendStep('Raven7', {
+    cb: function() {
+      var RavenDecision7, Raven7correct;
+      //console.log('SIGNALSTUT');
+      // when the player is done all necessary information is send to the Logic
+      // I don't think it is actually necessary to create these variables but I do it anyway
+      node.on.data('done', function(msg) {
 
-                                                RavenDecision6 = msg.data.RavenDecision6;
-                                                Raven6correct = msg.data.Raven6correct;
+        RavenDecision7 = msg.data.RavenDecision7;
+        Raven7correct = msg.data.Raven7correct;
 
-                                            });
-                                        }
-                                    });
+      });
+    }
+  });
 
+  stager.extendStep('Raven8', {
+    cb: function() {
+      var RavenDecision8, Raven8correct;
+      //console.log('SIGNALSTUT');
+      // when the player is done all necessary information is send to the Logic
+      // I don't think it is actually necessary to create these variables but I do it anyway
+      node.on.data('done', function(msg) {
 
+        RavenDecision8 = msg.data.RavenDecision8;
+        Raven8correct = msg.data.Raven8correct;
 
+      });
+    }
+  });
 
 
 

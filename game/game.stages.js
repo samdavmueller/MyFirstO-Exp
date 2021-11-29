@@ -21,7 +21,7 @@ module.exports = function(stager, settings) {
         .next('belief')
         .next('bomb')
         .next('belief_feedback')
-        //.next('CRT')
+        .next('CRT')
         .next('Raven')
         .next('questionnaire')
         .next('preEnd')
@@ -36,7 +36,9 @@ module.exports = function(stager, settings) {
                     'Raven3',
                     'Raven4',
                     'Raven5',
-                    'Raven6'
+                    'Raven6',
+                    'Raven7',
+                    'Raven8'
                 ]
             });
         stager.extendStage('gameTUT', {
@@ -57,15 +59,16 @@ module.exports = function(stager, settings) {
     // Modify the stager to skip one stage.
       //stager.skip('welcome');
 
-    /*  stager.skip('instructions');
-      stager.skip('quiz');
-      stager.skip('gameTUT');
-      stager.skip('game');
-      stager.skip('belief');
-      stager.skip('belief_feedback');
-      stager.skip('bomb');
-      stager.skip('CRT');
-      stager.skip('questionnaire');*/
+    //  stager.skip('instructions');
+    //  stager.skip('quiz');
+    //  stager.skip('gameTUT');
+    //  stager.skip('game');
+    //  stager.skip('belief');
+    //  stager.skip('belief_feedback');
+    //  stager.skip('bomb');
+    //  stager.skip('CRT');
+    //  stager.skip('questionnaire');
+    // stager.skip('Raven');
 
 
 };

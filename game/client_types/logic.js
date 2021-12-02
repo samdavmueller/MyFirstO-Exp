@@ -282,12 +282,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // If the decision was correct the players are paid 1.5$.
         if (correct_v===1){
-          correct='Your decisions were all correct!';
+          correct='Your guesses were all correct!';
           paid=30;
         }
         // Else they receive nothing
         else{
-          correct='Not all of your decisions were correct!';
+          correct='Not all of your guesses were correct!';
           paid=0;
         }
 
@@ -941,23 +941,23 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
       guess=node.game.memory.stage[Pstep2_s].fetchArray('guess')[0][0];
       if(guess==1){
-        guess_b="more strongly"
+        guess_b="more"
       }
       if(guess==-1){
-        guess_b="less strongly"
+        guess_b="less"
       }
       if(guess==0){
-        guess_b="equally strongly"
+        guess_b="equally"
       }
       truth= node.game.settings.biasIndicator;
       if(truth==1){
-        truth_b="more strongly"
+        truth_b="more"
       }
       if(truth==-1){
-        truth_b="less strongly"
+        truth_b="less"
       }
       if(guess==0){
-        truth_b="equally strongly"
+        truth_b="equally"
       }
       if(guess==truth){
         paid=40;

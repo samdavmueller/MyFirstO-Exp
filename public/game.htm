@@ -4,28 +4,34 @@
 <link rel="stylesheet" href="css/style.css" />
 <body>
   <div id="container">
-    <h2>Your Signals</h2>
+    <h2>Your Information</h2>
     <div id="game">
       </br>
       <h4>
-        In this stage you receive up to <strong>2 independent signals</strong> about the urn you are facing.
-        The other players do not know which signals you received.
+        In this stage you receive up to <strong>2 independently drawn balls</strong> out of the urn you are facing.
+        The other players do not know which or how many balls you have seen.
       </h4>
       </br>
       <h4>
-        For each signal there is a <span id="correctsignal", style="font-weight:bold"></span>%
-        chance that the true color of the urn is shown. With a probability of <span id="wrongsignal", style="font-weight:bold"></span>%
-        the wrong color is shown.
+        In the <span style="color:blue">blue</span> urn there are
+        <span id="correctsignal" style="font-weight:bold"></span>
+        <span style="color:blue">blue</span> balls and <span id="wrongsignal" style="font-weight:bold"></span>
+        <span style="color:red">red</span> balls.
+        In the <span style="color:red">red</span> urn there are
+        <span id="correctsignal2" style="font-weight:bold"></span>
+        <span style="color:red">red</span> balls and
+        <span id="wrongsignal2" style="font-weight:bold"></span> <span style="color:blue">blue</span> balls.
       </h4>
       </br>
       <h3>
-        If you hide a signal, the other players will not see it. If you share a signal, they take the signal into account when making their voting decision.
-        Please, choose which signals you want to <strong>share</strong> or <strong>hide</strong>:
+        If you hide a ball, the other players will not see its color. If you share a ball,
+        they take the ball's color into account when making their vote choice.
+        Please, choose which balls you want to <strong>share</strong> or <strong>hide</strong>:
       </h3>
 </br>
       <h3>
         <div id="signal1">
-      Signal 1: <span id="ps1" , style="font-weight:bold"></span>
+      Ball 1: <span id="ps1" , style="font-weight:bold"></span>
       <input type="radio" id="share1" name="decision1"/>
       <label for ="share1" >Share</label>
       <input type="radio" id="hide1" name="decision1"/>
@@ -34,7 +40,7 @@
     </div>
 
     <div id="signal2">
-    Signal 2: <span id="ps2", style="font-weight:bold"></span>
+    Ball 2: <span id="ps2", style="font-weight:bold"></span>
     <input type="radio" id="share2" name="decision2"/>
     <label for ="share2" >Share</label>
     <input type="radio" id="hide2" name="decision2"/>
@@ -50,7 +56,7 @@
       <br>
       <br>
     <div id="warning" style="display: none; font-size:20px; font-weight:bold; color:red">
-      You have to make a decision for all signals!
+      You have to make a decision for all balls!
     </div>
 
   </h3>

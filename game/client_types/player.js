@@ -56,12 +56,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // Add a new div to the info panel.
         this.infoDiv = document.createElement('div');
         this.infoDiv.innerHTML = '<h3>Behavior of automated players</h3>'+
-        "The automated players are identical and made the following choices after seeing the signals given below: <br><br>"+
+        "The automated players are identical and made the following guesses after seeing the colored balls given below: <br><br>"+
         '<table style="width:80%; margin-left:10%; margin-right:10%">'+
           '<tr>'+
-            '<th style="border: 1px solid black"> Urn Number </th>'+
-            '<th style="border: 1px solid black"> Signals </th>'+
-            '<th style="border: 1px solid black"> Decision </th>'+
+            '<th style="border: 1px solid black">  </th>'+
+            '<th style="border: 1px solid black"> Balls </th>'+
+            '<th style="border: 1px solid black"> Guess </th>'+
           '</tr>'+
           '<tr>'+
           '<th style="border: 1px solid black"> Urn 1 </th>'+
@@ -111,6 +111,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         infoPanel.infoPanelDiv.appendChild(this.infoDiv);
 
         header.appendChild(this.infoButton);
+        this.infoButton.style.display = 'none';
 
         // Add widgets.
         this.visualRound = node.widgets.append('VisualRound', header, {
@@ -162,6 +163,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             W.setInnerHTML('blue_count', bsig);
             W.setInnerHTML('correctsignal', csig);
             W.setInnerHTML('wrongsignal', wsig);
+            W.setInnerHTML('correctsignal2', csig);
+            W.setInnerHTML('wrongsignal2', wsig);
             W.setInnerHTML('bias2', node.game.settings.bias2);
             W.setInnerHTML('exchange-rate', node.game.settings.EXCHANGE_RATE_INSTRUCTIONS);
             W.setInnerHTML('first_decision', node.game.settings.first_decision);
@@ -183,7 +186,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
           this.infoButton.disabled=false;
           this.infoButton.innerHTML='Show Player Behavior';
-
+          this.infoButton.style.display = '';
 
 
           node.on.step(function(){
@@ -267,13 +270,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 		             {
 			            name: 'ChoiceTable',
 			            id: 'possible_action',
-			            mainText: 'What can you do with the private signals that you receive?',
+			            mainText: 'What can you do with the balls that you are shown in the first stage?',
 			            choices: [
-			                     'Either share the signals with the automated players or hide them.',
-                           'Either share the true values of the signals or lie about them.',
+			                     'Either share the balls with the automated players or hide them.',
+                           'Either share the true colors of the balls or lie about them.',
                            'Nothing.',
                            'I don\'t know.',
-                           'I can decide which players receives which of the signals, while I can provide any signal only to a single automated player.'
+                           'I can decide which players receives which of the balls, while I can provide any ball only to a single automated player.'
 			                      ],
 			            //correctChoice: 0,
 			            shuffleChoices: true,
@@ -282,7 +285,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 {
                  name: 'ChoiceTable',
                  id: 'treatment',
-                 mainText: 'The automated players saw the signals '+
+                 mainText: 'The automated players saw the following balls '+
                  settings.signals+
                  '. What was their voting decision?',
                  choices: [
@@ -333,7 +336,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         var wsig=Math.round(100*(1-node.game.settings.correctsignal));
         W.setInnerHTML('correctsignal', csig);
         W.setInnerHTML('wrongsignal', wsig);
-
+        W.setInnerHTML('correctsignal2', csig);
+        W.setInnerHTML('wrongsignal2', wsig);
           // variables I need
           var button, decision1, decision2,
               decision3, decision4, decision5,
@@ -572,7 +576,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           parent.scrollTo(0,0);
           this.infoButton.disabled=false;
           this.infoButton.innerHTML='Show Player Behavior';
-
+          this.infoButton.style.display = '';
         },
         cb:function(){
             //Instructions differ between treatments.
@@ -585,6 +589,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             W.setInnerHTML('blue_count', bsig);
             W.setInnerHTML('correctsignal', csig);
             W.setInnerHTML('wrongsignal', wsig);
+            W.setInnerHTML('correctsignal2', csig);
+            W.setInnerHTML('wrongsignal2', wsig);
             W.setInnerHTML('bias2', node.game.settings.bias2);
             W.setInnerHTML('exchange-rate', node.game.settings.EXCHANGE_RATE_INSTRUCTIONS);
             W.setInnerHTML('first_decision', node.game.settings.first_decision);
@@ -636,6 +642,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           var wsig=Math.round(100*(1-node.game.settings.correctsignal));
           W.setInnerHTML('correctsignal', csig);
           W.setInnerHTML('wrongsignal', wsig);
+          W.setInnerHTML('correctsignal2', csig);
+          W.setInnerHTML('wrongsignal2', wsig);
 
             // variables I need
             var button, decision1, decision2,

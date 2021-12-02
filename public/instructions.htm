@@ -4,37 +4,43 @@
 <link rel="stylesheet" href="css/style.css" />
 <body>
   <div id="container">
-    <h1>Instructions for the 'Guess the Urn'-Game</h1>
+    <h1>Instructions for the first task</h1>
     <h3>Please read these instructions carefully!</h3>
     <div id="instructions">
       <br>
-      In this game, you have to guess the color of an urn.
-      <br><br>
-      There are two versions of this game. In the first version you guess on your own
-      which color different urns have. In the second, you guess the color of the urn
-      together with a group of two other players by voting. You receive information about
-      your performance and bonus payment in the end of the game.
-      <br><br>
-      <h3>Single-Player version of 'Guess the Urn'</h3>
+      In this task, you have to guess the color of an urn.
       The urn can be  <span style="color:blue">blue</span> or
       <span style="color:red">red</span></strong>.
       Both colors are equally likely.
-      You receive signals that can help you make your decision.
-      All signals you receive contain a color, either
-      <span style="color:red">red</span> or <span style="color:blue">blue</span>.
-      On average, six out of ten signals contain the same color as the urn they
-      are describing, while four signals show a different color.
-      For example, if the urn is <span style="color:blue">blue</span>, there is
-      a <span id="correctsignal" style="font-weight:bold"></span>% chance that the
-      signal you receive is <span style="color:blue">blue</span>
-      and a <span id="wrongsignal" style="font-weight:bold"></span>% chance that
-      it is <span style="color:red">red</span>.<br><br>
-      <strong> You are paid when all your decisions match the true color of
-      the different urns. </strong> During the game we use an Experimental Currency (ECU).
+      <br>
+      In each urn there are 100 balls. In the <span style="color:blue">blue</span>
+      urn there are <span id="correctsignal" style="font-weight:bold"></span>
+      <span style="color:blue">blue</span> balls and <span id="wrongsignal" style="font-weight:bold"></span>
+      <span style="color:red">red</span> balls. While in the <span style="color:red">red</span>
+      urn there are <span id="correctsignal2" style="font-weight:bold"></span>
+      <span style="color:red">red</span> balls and
+      <span id="wrongsignal2" style="font-weight:bold"></span> <span style="color:blue">blue</span> balls.
+      <br>
+      To help you guess the correct color of the urn, one ball is randomly drawn out of the urn,
+      the color shown to you and then ball is returned to the urn. This procedure is possibly
+      repeated several times. Your hint might then look for example as follows:<br>
+      <span style="color:blue">blue</span>, <span style="color:blue">blue</span>, <span style="color:red">red</span>
+      <br>
+      In this task you have to guess which color the urn probably has.
+      <br>
+      <strong> You are paid when all your different guesses match the most likely color of
+      the different urns. </strong>
+      <br>
+      During the game we use an Experimental Currency (ECU).
       10 ECU are equal to $<span id="exchange-rate"></span>. If you guess
       the color of all urns correctly, you receive 30 ECU.
+      <br>
+      You receive information about
+      your performance and bonus payment in the end of the game.
+      <br>
+      If you understand the instructions press the 'Done' button to
+      proceed to the first task.
+      <br>
 
-    If you understand the instructions press the 'Done' button to
-    proceed to single player game of 'Guess the Urn'.
   </div>
 </body>

@@ -956,8 +956,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       if(truth==-1){
         truth_b="less"
       }
-      if(guess==0){
+      if(truth==0){
         truth_b="equally"
+      }
+      if(guess!=truth){
+        paid=0;
+        wrong_right='incorrect';
       }
       if(guess==truth){
         paid=40;

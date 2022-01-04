@@ -126,10 +126,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         //this.debugInfo = node.widgets.append('DebugInfo', header)
 
         //BackButton is not working, I don't know why...
-        this.backButton = node.widgets.append('BackButton',
-                                          W.getHeader(), {
-                                              acrossStages:  true
-                                            });
+      //  this.backButton = node.widgets.append('BackButton',
+      //                                    W.getHeader(), {
+      //                                        acrossStages:  true
+      //                                      });
 
 
     });
@@ -308,12 +308,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
   // The stage in which all participants receive their signals and the urn color
   // is decided.
   stager.extendStep('signalsTUT', {
-      backbutton: false,
+      //backbutton: false,
       donebutton: false,
       frame: 'gameTUT.htm',
 
       init: function() {
-          node.game.backButton.destroy();
+          //node.game.backButton.destroy();
 
           this.infoButton.innerHTML='Show Player Behavior';
 
@@ -632,7 +632,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               if (res) this.disable();
             }
             if(i===0){
-              node.game.backButton.destroy();
+              //node.game.backButton.destroy();
             }
 
           });
